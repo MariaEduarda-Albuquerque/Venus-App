@@ -1,0 +1,267 @@
+body{
+    background-color: rgb(242, 242, 242);
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+/* hamburguer menu */
+
+.sidebar{
+    width: 250px;
+    background-color: rgb(153, 24, 42);
+    padding: 30px 20px;
+    border-right: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;      /* mudou aqui */
+    transition: 0.3s;
+}
+
+.sidebar h1{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.sidebar.fechado{
+    width: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+li{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.sidebar h3{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.sidebar > ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    padding: 0px;
+}
+
+.itemsSidebar {
+  display: flex;
+  flex-direction: column; 
+  width: 100%;
+}
+
+.topoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  width: 100%;
+}
+
+.topoItem-sup-msg {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  flex-direction:row;
+  gap: 20px;
+  width: 100%;
+}
+
+.sidebar li{
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s;
+}
+
+.sidebar .ativo{
+    color: white;
+}
+
+.sidebar .tituloFechado{
+    display: none;
+}
+
+.sidebar.compacta {
+    width: 60px; 
+}
+
+.sidebar.compacta ul li {
+    display: none;
+}
+
+.sidebar.compacta .imgMaisOpcoes{
+    display: none;
+}
+
+.sidebar.compacta .tituloAberto{
+    display: none;
+}
+
+.sidebar.compacta .tituloFechado{
+    display: block;
+}
+
+.sidebar .iconeOpcoes{
+    display: none;
+}
+
+.sidebar.compacta .iconeOpcoes{
+    display: block;
+}
+
+.submenu {
+  display: none;
+  list-style: none;
+  padding-left: 30px;
+  margin-top: 5px;
+}
+
+.submenu.ativo {
+  display: block;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+/* Resto (lado direito) */
+
+.direita {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: flex-start;
+    width: 100%;  
+    border-top: 50px;     
+}
+
+.direita .form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 100%;
+}
+
+input{
+    border-left: 0.5px solid #fff;  
+    border-right: 0px solid #fff;  
+    border-top: 0.5px solid #fff;  
+    border-bottom: 0.5px solid #fff; 
+    color: rgb(170, 27, 49);
+    height: 30px;
+    padding: 10px;
+    width: 1000px;
+}
+
+.btn-pesquisar{
+    border-right: 0px solid #fff;  
+    border-top: 0.5px solid #fff;  
+    border-bottom: 0.5px solid #fff;  
+    background-color: white;
+    height: 30px;
+    padding: 10px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-pesquisar img{
+    width: 30px;
+    height: auto;
+}
+
+button{
+    background-color: white;
+    border: 0px solid white;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.conteudo{
+    display: flex;
+    justify-content: flex-start;
+    width: 90%;
+}
+
+
+
+.conteudo h1{
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.menu-btn{
+    font-size: 25px;
+    cursor: pointer;
+    padding: 10px 20px;
+    user-select: none;
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    border-right: 10px solid rgb(242, 242, 242);
+}
+
+.form a{
+    text-decoration: none;
+}
+
+.titulo-tela{
+    font-size: 20px;
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mini-header-titulo{
+
+    background-color: white;
+    height: 80px;
+    width:  800px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.direita .mini-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.btn-miniHeader{
+    border-right: 0px solid #fff;  
+    border-top: 0.5px solid #fff;  
+    border-bottom: 0.5px solid #fff;  
+    background-color: white;
+    height: 60px;
+    padding: 10px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-miniHeader img{
+    width: 30px;
+    height: auto;
+}

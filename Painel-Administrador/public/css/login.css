@@ -1,0 +1,113 @@
+body{
+    background-color: #FBF3F6;
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.direita {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: 
+        url('/images/linha1.svg'), 
+        url('/images/linha2.svg'), 
+        url('/images/linha3.svg'), 
+        url('/images/fundo.svg');
+
+    background-size: cover, cover, cover, cover; 
+
+    background-position: bottom center, bottom center, bottom center, top left; 
+    
+    background-repeat: no-repeat;
+}
+
+
+/* formulario: */
+
+.esquerda{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.esquerda form{
+    background-color: white;
+    margin: 50px auto;
+    padding: 30px; 
+    max-width: 500px; 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+
+    border-radius: 35px;
+}
+
+.colocar-ladoAlado{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.colocar-ladoAlado2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+a{
+    color: rgb(170, 27, 49);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p{
+    opacity: 0.5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.titulo-subtitulo p{
+    width: 70%;
+}
+
+label{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.input-label{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    border: 1px solid #ccc;  
+    border-radius: 10px;
+    height: 20px;
+    padding: 10px;
+}
+
+.lembrar-container{
+    display: flex;
+    align-items: center;
+}
+
+button{
+    background-color: rgb(158, 24, 43);
+    color: white;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+}

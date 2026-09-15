@@ -1,0 +1,152 @@
+body{
+    background-color: rgb(242, 242, 242);
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+/* hamburguer menu */
+
+.sidebar{
+    width: 250px;
+    background-color: rgb(153, 24, 42);
+    padding: 30px 20px;
+    border-right: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    transition: 0.3s;
+    overflow: hidden;
+}
+
+.sidebar h1,a{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.sidebar.fechado{
+    width: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+li{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.sidebar h3{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.sidebar ul{
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sidebar li{
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s;
+}
+
+.sidebar .ativo{
+    color: white;
+}
+
+/* Resto (lado direito) */
+
+.direita {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: flex-start;
+    width: 100%;       
+}
+
+.direita .form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 100%;
+}
+
+input{
+    border-left: 0.5px solid #fff;  
+    border-right: 0px solid #fff;  
+    border-top: 0.5px solid #fff;  
+    border-bottom: 0.5px solid #fff; 
+    color: rgb(170, 27, 49);
+    height: 30px;
+    padding: 10px;
+    width: 400px;
+}
+
+.btn-pesquisar{
+    border-right: 0px solid #fff;  
+    border-top: 0.5px solid #fff;  
+    border-bottom: 0.5px solid #fff;  
+    background-color: white;
+    height: 30px;
+    padding: 10px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-pesquisar img{
+    width: 30px;
+    height: auto;
+}
+
+button{
+    background-color: white;
+    border: 0px solid white;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.conteudo{
+    display: flex;
+    justify-content: flex-start;
+    width: 90%;
+}
+
+.conteudo h1{
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.menu-btn{
+    font-size: 25px;
+    cursor: pointer;
+    padding: 10px 20px;
+    user-select: none;
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    border-right: 10px solid rgb(242, 242, 242);
+}
+
+.form a{
+    text-decoration: none;
+}
