@@ -13,7 +13,7 @@ class AdmModel extends Authenticatable
     protected $table = 'tbadmin';
 
     // Define a chave primária
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'codAdmin';
 
     // Campos que podem ser preenchidos em massa
     protected $fillable = [

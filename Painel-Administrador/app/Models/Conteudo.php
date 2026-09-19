@@ -12,7 +12,16 @@ class Conteudo extends Model
     protected $fillable = [
         'tituloConteudo',
         'corpoConteudo',
+        'capaConteudo',
+        'tempoLeituraMinutos',
+        'codTipoCategoria',
+        'codTipoConteudo',
+        'codProfissionalSaude',
+        'statusConteudo',
+        'dataCriacao',
+        'dataAtualizacao',
         'tbtipocategoria_id',
         'tbtipoconteudo_id',
+        ''
     ];
 }

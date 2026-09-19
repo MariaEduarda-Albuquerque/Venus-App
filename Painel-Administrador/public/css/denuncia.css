@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.content-wrapper {
+    width: 100%;
+    flex: 1; 
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Título */
+.page-title {
+    color: #801326;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+
+.tickets-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.ticket-info h2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666666;
+}
+
+.ticket-id {
+    color: #801326;
+    font-weight: 700;
+}
+
+.ticket-date {
+    font-size: 13px;
+    color: #999999;
+    margin-top: 4px;
+    display: block;
+}
+
+
+.navigation-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-btn {
+    border: 1.5px solid #801326;
+    background: transparent;
+    color: #801326;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.nav-btn:hover {
+    background-color: #801326;
+    color: #ffffff;
+}
+
+.user-info, .support-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.avatar-icon {
+    width: 48px;
+    height: 48px;
+    color: #801326;
+    flex-shrink: 0;
+}
+
+.user-name {
+    font-size: 18px;
+    color: #801326;
+    font-weight: 700;
+}
+
+.user-email {
+    font-size: 13px;
+    color: #888888;
+    text-decoration: underline;
+}
+
+.message-body {
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+.divider {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 24px 0;
+}
+
+.support-name {
+    color: #801326;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.response-box {
+    background-color: #7a1228;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.response-textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 15px;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.response-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+.response-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.attach-button {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.attach-button:hover {
+    opacity: 0.8;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.send-button {
+    background-color: #a8243c;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.send-button:hover {
+    background-color: #be2b45;
+}

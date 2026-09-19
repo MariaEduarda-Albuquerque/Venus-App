@@ -13,14 +13,12 @@ body{
     justify-content: center;
 
     background-image: 
-        url('/images/linha1.svg'), 
-        url('/images/linha2.svg'), 
-        url('/images/linha3.svg'), 
-        url('/images/fundo.svg');
+        url('/images/fundo-login.png');
+      
 
-    background-size: cover, cover, cover, cover; 
+    background-size: cover; 
 
-    background-position: bottom center, bottom center, bottom center, top left; 
+    background-position: top left; 
     
     background-repeat: no-repeat;
 }

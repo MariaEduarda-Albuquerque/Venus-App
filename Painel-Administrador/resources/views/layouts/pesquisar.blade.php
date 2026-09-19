@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{ asset('css/adm.css') }}">
 </head>
 <body>
-            <div class="form">
+        <div class="form">
 
             <div class="menu-btn" id="menuBtn">
                 ☰

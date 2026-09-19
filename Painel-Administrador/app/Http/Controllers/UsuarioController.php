@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use App\Models\ProfissionalModel;
+use App\Models\DenunciaModel;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -13,9 +15,20 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios = Usuario::all();
+        $totalUsuarios = Usuario::count();
 
-        return view('admin.usuario', compact('usuarios'));
+        return view('admin.usuario', compact('usuarios', 'totalUsuarios'));
     }
+
+    public function dashboard()
+{
+    $usuarios = Usuario::all();
+    $totalUsuarios = Usuario::where('statusUsuario', 'ativa')->count();
+    $totalProsissionais = ProfissionalModel::count();
+    $DenunciasAltaGravidade = DenunciaModel::where('gravidade', 'alta')->take(3)->get();
+
+    return view('dashboard', compact('usuarios', 'totalUsuarios', 'totalProsissionais', 'DenunciasAltaGravidade'));
+}
 
     /**
      * Show the form for creating a new resource.

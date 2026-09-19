@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="direita">
-        <img src="{{ asset('images/logoVenusLogin.png') }}" alt="">
+        <!-- <img src="{{ asset('images/logoVenusLogin.png') }}" alt=""> -->
     </div>
 
     <div class="esquerda">

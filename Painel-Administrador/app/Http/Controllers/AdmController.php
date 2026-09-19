@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+ use Illuminate\Http\Request;
  use App\Models\AdmModel;
+ use App\Models\Usuario;
+ use App\Models\ProfissionalModel;
+ use App\Models\DenunciaModel;
+ use App\Models\Conteudo;
  use Illuminate\Support\Facades\Auth;
  use Illuminate\Auth\AuthenticationException;
  use Illuminate\Support\Facades\Hash;
+ use Carbon\Carbon;
+ use Illuminate\Support\Facades\DB;
 
 class AdmController extends Controller
 {
@@ -15,8 +21,31 @@ class AdmController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = Usuario::all();
+        $totalUsuarios = Usuario::count();
+
+        return view('admin.usuario', compact('usuarios', 'totalUsuarios'));
     }
+
+    public function dashboard()
+{
+    $usuarios = Usuario::all();
+    $totalUsuarios = Usuario::where('statusUsuario', 'ativa')->count();
+
+    $DenunciasAltaGravidade = DenunciaModel::where('gravidade', 'alta')->take(3)->get();
+    $DenunciasAltaGravidadeAlta= DenunciaModel::where('gravidade', 'alta')->count();
+    $totalDenunciasUltimas24h = DenunciaModel::where('gravidade', 'alta')
+    ->where('dataDenuncia', '>=', Carbon::now()->subDay())
+    ->count();
+
+    $totalProsissionais = ProfissionalModel::count();
+    $profissionaisPendentes = ProfissionalModel::where('statusVerificacao', 'aprovado')->take(3)->get();
+    $profissionaisEmEspera = ProfissionalModel::where('statusVerificacao', 'em_analise')->count();
+
+    $conteudosAguardandoRevisao = Conteudo::where('statusConteudo', 'em_revisao')->count();
+
+    return view('admin.painel', compact('usuarios', 'totalUsuarios', 'totalProsissionais', 'DenunciasAltaGravidade', 'profissionaisPendentes', 'profissionaisEmEspera', 'conteudosAguardandoRevisao', 'totalDenunciasUltimas24h'));
+}
 
     /**
      * Show the form for creating a new resource.
