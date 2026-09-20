@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DenunciaModel;
 
 class denunciaController extends Controller
 {
@@ -48,7 +49,29 @@ class denunciaController extends Controller
             ],
         ];
 
-        return view('admin.denuncias', compact('tickets'));
+        return view('admin.suporte', compact('tickets'));
+    }
+
+    public function index2(){
+        $denuncias = DenunciaModel::with('tbusuario')->get();
+        $totalDenuncias = DenunciaModel::count();
+        $totalDenunciasPendentes = DenunciaModel::where('statusDenuncia', 'pendente')->count();
+        $totalDenunciasEmResolvidas = DenunciaModel::where('statusDenuncia', 'resolvida')->count();
+
+
+        return view('admin.denuncias', compact('totalDenuncias', 'totalDenunciasPendentes', 'totalDenunciasEmResolvidas', 'denuncias'));
+    }
+
+        public function DenunciasMensagens(){
+        $denuncias = DenunciaModel::with('tbusuario')->get();
+        $totalDenuncias = DenunciaModel::count();
+        $totalDenunciasPendentes = DenunciaModel::where('statusDenuncia', 'pendente')->count();
+        $totalDenunciasEmResolvidas = DenunciaModel::where('statusDenuncia', 'resolvida')->count();
+
+        $mensagem = DenunciaModel::with('tbmensagem')->get();
+
+
+        return view('admin.denuncias-mensagens', compact('totalDenuncias', 'totalDenunciasPendentes', 'totalDenunciasEmResolvidas', 'denuncias', 'mensagem'));
     }
 }
 

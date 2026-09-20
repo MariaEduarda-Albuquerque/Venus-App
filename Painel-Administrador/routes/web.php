@@ -5,10 +5,26 @@ use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\AdmController;
 use App\Http\Controllers\ConteudoController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\DenunciaController;
 
 Route::get('/', function () {
     return view('welcome');
 })->middleware('auth:admin');
+
+Route::get('/perfil-adm', [AdmController::class, 'perfil'])
+    ->name('perfil-config.perfil-adm')
+    ->middleware('auth:admin');
+
+    //  Route::get('/editar-perfil', [AdmController::class, 'editar'])
+    //  ->name('perfil-config.editar-perfil')
+    //  ->middleware('auth:admin');
+
+//     Route::get('/editar-perfil', function () {
+//     return view('perfil-config.editar-perfil');
+// })->name('login')->middleware('auth:admin');
+
+Route::get('/perfil/editar', [AdmController::class, 'editar'])->middleware('auth:admin');
+Route::post('/perfil/atualizar', [AdmController::class, 'atualizar'])->middleware('auth:admin');
 
 Route::get('/login', function () {
     return view('login');
@@ -23,7 +39,7 @@ Route::get('/novaSenha', function () {
 });
 
 Route::get('/Conteudo-Aprender', function () {
-    return view('adm.ConteudoAprender-Screen');
+    return view('adim.ConteudoAprender-Screen');
  })->middleware('auth:admin');
 
 Route::middleware(['web'])->group(function () {
@@ -47,7 +63,15 @@ Route::get('/admin/usuarios', [UsuarioController::class, 'index'])
     ->name('admin.usuarios')
     ->middleware('auth:admin');
 
-Route::get('/denuncias', [DenunciaController::class, 'index'])
+Route::get('/suporte', [DenunciaController::class, 'index'])
+    ->name('admin.suporte')
+    ->middleware('auth:admin');
+
+Route::get('/denuncias-mensagens', [DenunciaController::class, 'DenunciasMensagens'])
+->name('admin.denuncias-mensagens')
+->middleware('auth:admin');
+
+Route::get('/denuncias', [DenunciaController::class, 'index2'])
     ->name('admin.denuncias')
     ->middleware('auth:admin');
 

@@ -1,111 +1,626 @@
-body{
-    background-color: #FBF3F6;
-    display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-    margin: 0;
+* {
+  box-sizing: border-box;
 }
 
-.direita {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background-image: 
-        url('/images/fundo-login.png');
-      
-
-    background-size: cover; 
-
-    background-position: top left; 
-    
-    background-repeat: no-repeat;
+:root {
+  --wine: #8f0734;
+  --wine-dark: #76052b;
+  --wine-mid: #b5144b;
+  --pink: #d85d83;
+  --text: #76052b;
+  --muted: #8d939a;
+  --border: #dfe1e5;
+  --page: #fcf9fa;
 }
 
-
-/* formulario: */
-
-.esquerda{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
 }
 
-.esquerda form{
-    background-color: white;
-    margin: 50px auto;
-    padding: 30px; 
-    max-width: 500px; 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--page);
+  color: #202124;
+  overflow-x: hidden;
+}
 
-    display: flex;
+button,
+input {
+  font: inherit;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(48%, 51%) minmax(49%, 52%);
+  background: #fcf9fa;
+}
+
+/* =========================
+   PAINEL VÊNUS
+   ========================= */
+
+.brand-panel {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 62% 48%, rgba(186, 22, 76, .34), transparent 34%),
+    linear-gradient(145deg, #ad3158 0%, #9c0c3a 31%, #760026 70%, #9f1949 100%);
+  clip-path: ellipse(92% 82% at 36% 52%);
+}
+
+.brand-panel::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  top: -5%;
+  right: -4px;
+  width: 120px;
+  height: 110%;
+  background: var(--page);
+  border-radius: 55% 0 0 45% / 50% 0 0 50%;
+  transform: translateX(55%);
+  filter: blur(0.2px);
+}
+
+/* Formas orgânicas */
+.decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.decor-top {
+  width: 82%;
+  height: 35%;
+  top: -14%;
+  left: 0;
+  background: rgba(235, 112, 148, .32);
+  border-radius: 0 0 70% 30%;
+  transform: rotate(-8deg);
+}
+
+.decor-top::after {
+  content: "";
+  position: absolute;
+  width: 62%;
+  height: 100%;
+  right: -12%;
+  top: 24%;
+  background: rgba(245, 157, 182, .12);
+  border-radius: 50%;
+}
+
+.decor-middle {
+  width: 100%;
+  height: 34%;
+  left: -15%;
+  bottom: 10%;
+  background: rgba(224, 73, 121, .23);
+  border-radius: 0 58% 35% 0;
+  transform: rotate(9deg);
+}
+
+.decor-bottom {
+  width: 82%;
+  height: 27%;
+  left: -9%;
+  bottom: -9%;
+  background: rgba(225, 87, 132, .22);
+  border-radius: 50% 60% 0 0;
+  transform: rotate(-4deg);
+}
+
+.fine-line {
+  position: absolute;
+  width: 48%;
+  height: 26%;
+  fill: none;
+  stroke: rgba(255, 190, 211, .65);
+  stroke-width: 1.15;
+  z-index: 2;
+}
+
+.line-one {
+  left: -1%;
+  bottom: 4%;
+}
+
+.line-two {
+  left: -3%;
+  top: -5%;
+  transform: rotate(18deg);
+}
+
+/* Logo */
+.brand-content {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 51%;
+  transform: translate(-50%, -50%);
+  width: 430px;
+  max-width: 70%;
+  text-align: center;
+  color: #fff;
+}
+
+.venus-symbol {
+  position: relative;
+  width: 166px;
+  height: 205px;
+  margin: 0 auto 9px;
+}
+
+.venus-circle {
+  position: absolute;
+  width: 166px;
+  height: 166px;
+  left: 0;
+  top: 0;
+  border: 7px solid rgba(255, 186, 207, .78);
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(245, 127, 165, .14);
+  box-shadow:
+    inset 0 0 0 5px rgba(255, 213, 226, .13),
+    0 0 20px rgba(255, 181, 208, .08);
+}
+
+.venus-circle::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background:
+    linear-gradient(165deg,
+      transparent 0 16%,
+      rgba(255, 225, 235, .82) 17% 27%,
+      transparent 28% 39%,
+      rgba(255, 213, 226, .78) 40% 51%,
+      transparent 52% 62%,
+      rgba(255, 221, 232, .83) 63% 75%,
+      transparent 76%);
+  transform: rotate(-7deg);
+}
+
+.stripe {
+  position: absolute;
+  left: -20%;
+  width: 140%;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 225, 235, .84);
+  transform: rotate(-7deg);
+  z-index: 2;
+}
+
+.s1 { top: 32px; }
+.s2 { top: 72px; left: -28%; transform: rotate(5deg); }
+.s3 { top: 111px; left: -16%; transform: rotate(-5deg); }
+
+.venus-cross {
+  position: absolute;
+  left: 50%;
+  top: 158px;
+  width: 7px;
+  height: 47px;
+  transform: translateX(-50%);
+  background: rgba(255, 190, 211, .85);
+}
+
+.venus-cross::after {
+  content: "";
+  position: absolute;
+  width: 55px;
+  height: 7px;
+  left: 50%;
+  top: 25px;
+  transform: translateX(-50%);
+  background: rgba(255, 190, 211, .85);
+}
+
+.brand-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(40px, 4vw, 57px);
+  letter-spacing: 12px;
+  line-height: 1;
+  padding-left: 12px;
+  text-shadow: 0 1px 12px rgba(60, 0, 20, .1);
+}
+
+.brand-tagline {
+  margin-top: 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  letter-spacing: .15px;
+  color: #f7dbe4;
+}
+
+/* =========================
+   ÁREA DO LOGIN
+   ========================= */
+
+.form-area {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 7%;
+  background:
+    radial-gradient(circle at 78% 12%, rgba(242, 209, 219, .32), transparent 24%),
+    #fcf9fa;
+  overflow: hidden;
+}
+
+.ambient-circle {
+  position: absolute;
+  border: 1px solid rgba(217, 93, 130, .35);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ambient-one {
+  width: 250px;
+  height: 250px;
+  right: -120px;
+  top: -120px;
+}
+
+.ambient-two {
+  width: 180px;
+  height: 180px;
+  right: -55px;
+  bottom: -85px;
+  background: rgba(237, 179, 196, .08);
+}
+
+.login-card {
+  position: relative;
+  z-index: 3;
+  width: min(100%, 605px);
+  padding: 43px 48px 42px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow:
+    0 20px 55px rgba(95, 26, 48, .08),
+    0 3px 15px rgba(95, 26, 48, .04);
+  border: 1px solid rgba(235, 231, 233, .95);
+}
+
+.title-line {
+  width: 51px;
+  height: 4px;
+  margin-bottom: 15px;
+  border-radius: 99px;
+  background: #d85b81;
+}
+
+.login-card h1 {
+  margin: 0;
+  color: #7b092f;
+  font-size: 36px;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -.8px;
+}
+
+.intro {
+  margin: 14px 0 27px;
+  color: #8b9198;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #252525;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.input-wrap {
+  position: relative;
+  height: 50px;
+}
+
+.input-wrap input {
+  width: 100%;
+  height: 100%;
+  padding: 0 48px 0 52px;
+  border: 1px solid #d9dce0;
+  border-radius: 18px;
+  outline: none;
+  background: #fff;
+  color: #343434;
+  font-size: 15px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.input-wrap input::placeholder {
+  color: #adb2b8;
+}
+
+.input-wrap input:focus {
+  border-color: #c64c72;
+  box-shadow: 0 0 0 3px rgba(198, 76, 114, .10);
+}
+
+.field-icon {
+  position: absolute;
+  z-index: 2;
+  left: 17px;
+  top: 50%;
+  width: 21px;
+  height: 21px;
+  transform: translateY(-50%);
+  fill: none;
+  stroke: #9da4aa;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.password-toggle {
+  position: absolute;
+  z-index: 3;
+  right: 14px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.password-toggle svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #929aa1;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 2px 0 25px;
+  font-size: 14px;
+}
+
+.remember {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #343434;
+  cursor: pointer;
+  user-select: none;
+}
+
+.remember input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fake-checkbox {
+  width: 19px;
+  height: 19px;
+  border: 1px solid #cdd1d5;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.remember input:checked + .fake-checkbox {
+  background: var(--wine);
+  border-color: var(--wine);
+  box-shadow: inset 0 0 0 4px #fff;
+}
+
+.forgot {
+  color: #c34b72;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.forgot:hover,
+.request-access a:hover {
+  text-decoration: underline;
+}
+
+.submit-button {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 0;
+  border-radius: 17px;
+  background: linear-gradient(90deg, #970735, #a80a3e);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(145, 6, 52, .16);
+  transition: transform .15s, box-shadow .15s, filter .15s;
+}
+
+.submit-button:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 10px 24px rgba(145, 6, 52, .22);
+}
+
+.submit-button:active {
+  transform: translateY(1px);
+}
+
+.submit-button svg {
+  position: absolute;
+  right: 19px;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.divider {
+  height: 1px;
+  margin: 18px 0 18px;
+  background: #ececef;
+}
+
+.request-access {
+  margin: 0;
+  text-align: center;
+  color: #a0a4a9;
+  font-size: 14px;
+}
+
+.request-access a {
+  color: #c34b72;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+/* =========================
+   RESPONSIVO
+   ========================= */
+
+@media (max-width: 1050px) {
+  .login-page {
+    grid-template-columns: 46% 54%;
+  }
+
+  .brand-content {
+    max-width: 86%;
+  }
+
+  .brand-name {
+    font-size: 43px;
+  }
+
+  .brand-tagline {
+    font-size: 14px;
+  }
+
+  .venus-symbol {
+    transform: scale(.82);
+    transform-origin: bottom center;
+    margin-bottom: -23px;
+  }
+
+  .login-card {
+    padding: 36px 35px;
+  }
+}
+
+@media (max-width: 800px) {
+  .login-page {
+    display: block;
+  }
+
+  .brand-panel {
+    min-height: 320px;
+    height: 40vh;
+    max-height: 430px;
+    clip-path: none;
+    border-radius: 0 0 45% 0;
+  }
+
+  .brand-panel::after {
+    display: none;
+  }
+
+  .brand-content {
+    top: 50%;
+    width: 400px;
+    max-width: 90%;
+  }
+
+  .venus-symbol {
+    transform: scale(.55);
+    transform-origin: bottom center;
+    margin-bottom: -70px;
+  }
+
+  .brand-name {
+    font-size: 39px;
+  }
+
+  .brand-tagline {
+    font-size: 13px;
+  }
+
+  .form-area {
+    min-height: 60vh;
+    padding: 35px 18px 50px;
+  }
+
+  .login-card {
+    width: min(100%, 590px);
+  }
+}
+
+@media (max-width: 520px) {
+  .brand-panel {
+    min-height: 285px;
+  }
+
+  .brand-name {
+    font-size: 33px;
+    letter-spacing: 8px;
+  }
+
+  .brand-tagline {
+    font-size: 12px;
+  }
+
+  .login-card {
+    padding: 30px 22px;
+    border-radius: 21px;
+  }
+
+  .login-card h1 {
+    font-size: 30px;
+  }
+
+  .intro {
+    font-size: 14px;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .options {
+    align-items: flex-start;
     flex-direction: column;
-    justify-content: center;
-    gap: 20px;
+  }
 
-    border-radius: 35px;
-}
-
-.colocar-ladoAlado{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.colocar-ladoAlado2{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-}
-
-a{
-    color: rgb(170, 27, 49);
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-h1{
-    color: rgb(170, 27, 49);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-p{
-    opacity: 0.5;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.titulo-subtitulo p{
-    width: 70%;
-}
-
-label{
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.input-label{
-    display: flex;
-    flex-direction: column;
-}
-
-input{
-    border: 1px solid #ccc;  
-    border-radius: 10px;
-    height: 20px;
-    padding: 10px;
-}
-
-.lembrar-container{
-    display: flex;
-    align-items: center;
-}
-
-button{
-    background-color: rgb(158, 24, 43);
-    color: white;
-    height: 40px;
-    border-radius: 10px;
-    border: none;
+  .forgot {
+    align-self: flex-end;
+  }
 }

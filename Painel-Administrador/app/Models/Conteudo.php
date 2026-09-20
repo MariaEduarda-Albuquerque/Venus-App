@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProfissionalModel;
 
 class Conteudo extends Model
 {
@@ -19,9 +20,15 @@ class Conteudo extends Model
         'codProfissionalSaude',
         'statusConteudo',
         'dataCriacao',
-        'dataAtualizacao',
-        'tbtipocategoria_id',
-        'tbtipoconteudo_id',
-        ''
+        'dataAtualizacao'
     ];
+
+    public function tbprofissionalsaude()
+    {
+        return $this->belongsTo(
+                    ProfissionalModel::class, 
+                    'codProfissionalSaude', // Chave estrangeira que está na tabela 'tbconteudo'
+                    'codProfissionalSaude'  // Chave primária que está na tabela 'profissionais' (ou 'id' se lá for 'id')
+                );
+    }
 }

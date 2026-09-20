@@ -4,18 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
  use App\Models\Conteudo;
+ use App\Models\ProfissionalModel;
 
 class ConteudoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-                $Conteudos = Conteudo::all();
+        // 1. Primeiro cria as coleções
+        $ConteudosRecusados  = Conteudo::with('tbProfissionalSaude')->where('statusConteudo', 'recusado')->get();
+        $ConteudosPublicados = Conteudo::with('tbProfissionalSaude')->where('statusConteudo', 'publicado')->get();
+        $ConteudosEmRevisao  = Conteudo::with('tbProfissionalSaude')->where('statusConteudo', 'em_revisao')->get();
 
-        return view('adm.ConteudoAprender-Screen', compact('Conteudos'));
+        // 2. Totais
+        $totalConteudosRecusados  = $ConteudosRecusados->count();
+        $totalConteudosPublicados = $ConteudosPublicados->count();
+        $totalConteudosEmRevisao  = $ConteudosEmRevisao->count();
+
+        // 3. Depois escolhe qual mostrar (sem ?status, mostra todos)
+        $Conteudos = match ($request->query('status')) {
+            'publicado'  => $ConteudosPublicados,
+            'em_revisao' => $ConteudosEmRevisao,
+            'recusado'   => $ConteudosRecusados,
+            default      => Conteudo::with('tbProfissionalSaude')->get(),
+        };
+
+        return view('admin.ConteudoAprender-Screen', compact(
+            'Conteudos',
+            'totalConteudosRecusados',
+            'totalConteudosPublicados',
+            'totalConteudosEmRevisao',
+            'ConteudosRecusados',
+            'ConteudosPublicados',
+            'ConteudosEmRevisao'
+        ));
     }
 
     /**

@@ -57,9 +57,7 @@
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    color: var(--venus-cinza-claro);
-    background: var(--venus-branco);
-    border: 1px solid var(--venus-borda);
+    color: var(--venus-cinza-texto);
     border-radius: 8px;
     padding: 8px 14px;
 }
@@ -71,13 +69,13 @@
     justify-content: space-between;
     gap: 16px;
     border-radius: 10px;
-    padding: 14px 18px;
+    padding: 5px 15px;
     margin-bottom: 20px;
 }
 
 .vns-alerta--danger {
     background: #fbe4e7;
-    border: 1px solid #f2c3ca;
+    border: 3px solid var(--venus-vinho);
 }
 
 .vns-alerta-texto {
@@ -87,6 +85,17 @@
     font-size: 14px;
     color: var(--venus-vinho-escuro);
 }
+
+.btn-ver-denuncias{
+    color: white;
+    font-size: 15px;
+    text-align: center;
+
+    background-color: var(--venus-vinho-escuro);
+    border-radius: 5px;
+    padding: 10px;
+}
+
 
 .vns-alerta-texto .vns-icone-svg {
     flex-shrink: 0;
@@ -134,7 +143,7 @@
     border-radius: 12px;
     border: 1px solid var(--venus-borda);
     box-shadow: var(--vns-sombra-card);
-    padding: 20px;
+    padding: 40px;
 }
 
 .vns-card-titulo {
@@ -188,8 +197,7 @@
 }
 
 .vns-card-icone {
-    width: 44px;
-    height: 44px;
+    padding: 20px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -204,6 +212,7 @@
     font-size: 24px;
     font-weight: 700;
     color: #1f1f1f;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
     line-height: 1.2;
 }
 
@@ -244,22 +253,40 @@
     gap: 20px;
 }
 
+hr{
+    border: 1px solid var(--venus-borda);
+}
+
 
 .vns-lista-fila,
 .vns-lista-aprovacoes {
     list-style: none;
     margin: 0;
     padding: 0;
+    
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    flex-direction: column;
+    gap: 18px;
 }
 
 .vns-item-fila {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: flex-start;
+    gap: 150px;
     padding: 10px 0;
     border-bottom: 1px solid var(--venus-borda);
     font-size: 13px;
 }
+
+.sub-vns-item-fila {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
 
 .vns-item-fila:last-child {
     border-bottom: none;
@@ -279,6 +306,7 @@
     width: 32px;
     text-align: right;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .vns-badge {
@@ -295,10 +323,16 @@
 .vns-item-aprovacao {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 170px;
     padding: 10px 0;
     border-bottom: 1px solid var(--venus-borda);
     font-size: 13px;
+}
+
+.sub-vns-item-aprovacao{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
 }
 
 .vns-item-aprovacao:last-child {
@@ -326,6 +360,7 @@
     width: 24px;
     text-align: right;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 
@@ -418,15 +453,81 @@
 .vns-card-revisao {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
+    padding: 24px;
+}
+
+.vns-card-icone--revisao {
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    border-radius: 14px;
+    background: #f0d3d8;
+}
+
+.vns-card-icone--revisao img {
+    width: 34px;
+    height: 34px;
 }
 
 .vns-card-revisao-info {
     flex: 1;
+    min-width: 0;
+}
+
+.vns-card-revisao-info .vns-card-titulo {
+    font-size: 17px;
+    color: #1f1f1f;
+    margin: 0;
 }
 
 .vns-card-revisao-info .vns-card-numero {
-    margin: 2px 0;
+    font-size: 30px;
+    margin: 0 0 6px;
+}
+
+.vns-revisao-detalhes {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.vns-revisao-legenda {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--venus-cinza-claro);
+}
+
+.vns-revisao-divisor {
+    width: 1px;
+    background: #cfcfcf;
+}
+
+.vns-revisao-botao {
+    align-self: flex-end;
+    flex-shrink: 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--venus-vinho);
+    border: 1px solid var(--venus-vinho);
+    border-radius: 6px;
+    padding: 5px 35px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.vns-revisao-botao:hover {
+    background: var(--venus-rosa-fundo);
+}
+
+@media (max-width: 640px) {
+    .vns-card-revisao {
+        flex-wrap: wrap;
+    }
+    .vns-revisao-botao {
+        align-self: flex-start;
+    }
 }
 
 
@@ -454,4 +555,139 @@
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+.btn-cards{
+    color: var(--venus-vinho);
+    text-decoration: none;
+    border: 1px solid var(--venus-vinho);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+}
+a{
+    text-decoration: none;
+}
+
+/* calendario> */
+
+/* ===== Botão do calendário ===== */
+.vns-data-btn {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.vns-data-btn:hover {
+    opacity: 0.75;
+}
+
+/* ===== Modal do calendário ===== */
+.vns-cal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.vns-cal-overlay[hidden] {
+    display: none;
+}
+
+.vns-cal {
+    width: 100%;
+    max-width: 340px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 18px 22px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.vns-cal-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 14px;
+    color: var(--venus-vinho-escuro);
+    font-size: 15px;
+}
+
+.vns-cal-topo strong {
+    flex: 1;
+    text-align: center;
+}
+
+.vns-cal-nav,
+.vns-cal-fechar {
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--venus-rosa-fundo);
+    color: var(--venus-vinho);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.vns-cal-nav:hover,
+.vns-cal-fechar:hover {
+    background: var(--venus-rosa-claro);
+}
+
+.vns-cal-fechar {
+    background: var(--venus-vinho);
+    color: #fff;
+    margin-left: 6px;
+}
+
+.vns-cal-fechar:hover {
+    background: var(--venus-vinho-escuro);
+}
+
+.vns-cal-semana,
+.vns-cal-dias {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: 4px;
+}
+
+.vns-cal-semana {
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--venus-cinza-claro);
+}
+
+.vns-cal-dia {
+    padding: 8px 0;
+    font-size: 13px;
+    border-radius: 8px;
+    color: var(--venus-cinza-texto);
+}
+
+.vns-cal-dia:hover {
+    background: var(--venus-rosa-fundo);
+}
+
+.vns-cal-hoje {
+    background: var(--venus-vinho);
+    color: #fff;
+    font-weight: 700;
+}
+
+.vns-cal-hoje:hover {
+    background: var(--venus-vinho-escuro);
 }

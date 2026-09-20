@@ -1,49 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vênus — Login ADM</title>
+  <link rel="stylesheet" href="{{asset('css/login.css')}}">
 </head>
 <body>
-    <div class="direita">
-        <!-- <img src="{{ asset('images/logoVenusLogin.png') }}" alt=""> -->
-    </div>
+  <main class="login-page">
 
-    <div class="esquerda">
-        <form action="/fazerLogin" method="post">
-            @csrf
-            <div class="titulo-subtitulo">
-                <h1>Login ADM</h1>
-                <p>Entre no site para gerenciar e administrar o nosso aplicativo e o site de profissional.</p>
-            </div>
+    <!-- Painel esquerdo -->
+    <section class="brand-panel" aria-label="Vênus">
+      <div class="decor decor-top"></div>
+      <div class="decor decor-bottom"></div>
+      <div class="decor decor-middle"></div>
 
-            <div class="input-label">
-                <label for="">E-mail</label>
-                <input type="email" id="emailAdmin" name="emailAdmin" placeholder="email@endereço">
-            </div>
+      <svg class="fine-line line-one" viewBox="0 0 420 180" aria-hidden="true">
+        <path d="M-20 145 C80 55 180 210 330 55 C370 15 400 0 440 -5"/>
+      </svg>
 
-            <div class="input-label">
-                <label for="">Senha</label>
-                <input type="password" id="password" name="password" placeholder="Digite sua senha">
-            </div>
+      <svg class="fine-line line-two" viewBox="0 0 420 180" aria-hidden="true">
+        <path d="M-20 35 C75 125 150 20 265 90 C330 130 380 160 440 145"/>
+      </svg>
 
-            <div class="colocar-ladoAlado">
-                <div class="lembrar-container">
-                <input type="checkbox" id="lembrar" name="lembrar">
-                <label for="lembrar">Lembrar de mim</label>
-                </div>
+      <div class="brand-content">
+        <div class="venus-symbol" aria-hidden="true">
+          <div class="venus-circle">
+            <span class="stripe s1"></span>
+            <span class="stripe s2"></span>
+            <span class="stripe s3"></span>
+            <span class="stripe s4"></span>
+            <span class="stripe s5"></span>
+          </div>
+          <span class="venus-cross"></span>
+        </div>
 
-                <a href="/esqueciSenha">Esqueci minha senha</a>
-            </div>
-            <button type="submit">Entrar</button>
+        <div class="brand-name">Vênus</div>
+        <div class="brand-tagline">A saúde da mulher na palma da sua mão.</div>
+      </div>
+    </section>
 
-            <div class="colocar-ladoAlado2">
-                <p>Ainda não é cadastrado?</p>
-                <a href="">Solicitar acesso</a>
-            </div>
-        </form>
-    </div>
+    <!-- Área direita -->
+    <section class="form-area">
+      <div class="ambient-circle ambient-one"></div>
+      <div class="ambient-circle ambient-two"></div>
+
+      <form class="login-card" action="/fazerLogin" method="post">
+        @csrf
+        <div class="title-line"></div>
+        <h1>Login ADM</h1>
+        <p class="intro">
+          Entre no site para gerenciar e administrar o<br class="desktop-only">
+          nosso aplicativo e o site de profissional.
+        </p>
+
+        <div class="field">
+          <label for="email">E-mail</label>
+          <div class="input-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="m4 7 8 6 8-6"></path>
+            </svg>
+            <input id="email" name="emailAdmin" type="email" placeholder="email@endereço" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Senha</label>
+          <div class="input-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+              <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+            </svg>
+            <input id="password" name="password" type="password" placeholder="Digite sua senha" autocomplete="current-password">
+            <button class="password-toggle" type="button" aria-label="Mostrar senha">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2.5 12s3.2-5 9.5-5 9.5 5 9.5 5-3.2 5-9.5 5-9.5-5-9.5-5Z"></path>
+                <circle cx="12" cy="12" r="2.5"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="options">
+          <label class="remember">
+            <input type="checkbox" name="lembrar">
+            <span class="fake-checkbox"></span>
+            <span>Lembrar de mim</span>
+          </label>
+          <a href="/esqueciSenha" class="forgot">Esqueci minha senha</a>
+        </div>
+
+        <button class="submit-button" type="submit">
+          <span>Entrar</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 12h15"></path>
+            <path d="m13 6 6 6-6 6"></path>
+          </svg>
+        </button>
+
+        <div class="divider"></div>
+
+        <p class="request-access">
+          Ainda não é cadastrado?
+          <a href="#">Solicitar acesso</a>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const toggle = document.querySelector(".password-toggle");
+    const password = document.querySelector("#password");
+
+    toggle.addEventListener("click", () => {
+      const isPassword = password.type === "password";
+      password.type = isPassword ? "text" : "password";
+      toggle.setAttribute("aria-label", isPassword ? "Ocultar senha" : "Mostrar senha");
+    });
+  </script>
 </body>
 </html>

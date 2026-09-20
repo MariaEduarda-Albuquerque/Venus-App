@@ -1,90 +1,141 @@
-@extends('layouts.dashboard')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Denúncias</title>
+    <link rel="stylesheet" href="{{asset('css/listas.css')}}">
+</head>
+<body>
+    @include('layouts.sidebar')
 
-@section('title', 'Painel Administrativo')
+    <div class="direita">
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/denuncia.css') }}">
-@endpush
+            <div class="header">
+            <div class="mini-header-titulo">
+                <h1 class="titulo-tela">Lista de Denúncias</h1>
+            </div>
 
-@section('content')
-    <div class="content-wrapper">
-        <h1 class="page-title">Resposta à denúncia</h1>
+            <div class="perfil-notificacao">
+                <a href="">
+                    <div class="btn-miniHeader">
+                        <img src="{{ asset('images/notification-off.png') }}" alt="">
+                    </div>
+                </a>
 
-        <div class="tickets-wrapper">
-            @foreach($tickets as $ticket)
-                <article class="card">
-                    
-                    <header class="card-header">
-                        <div class="ticket-info">
-                            <h2>
-                                <span class="ticket-id">ID {{ $ticket['id'] }}</span> - 
-                                <span class="ticket-subject">{{ $ticket['subject'] }}</span>
-                            </h2>
-                            <span class="ticket-date">
-                                {{ $ticket['date'] }}
-                            </span>
-                        </div>
-                        <div class="navigation-buttons">
-                            <button type="button" class="nav-btn" aria-label="Anterior">&lt;</button>
-                            <button type="button" class="nav-btn" aria-label="Próximo">&gt;</button>
-                        </div>
-                    </header>
-
-                    <section class="user-message">
-                        <div class="user-info">
-                            <div class="avatar-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                                </svg>
-                            </div>
-                            <div class="user-details">
-                                <h3 class="user-name">{{ $ticket['user']['name'] }}</h3>
-                                <span class="user-email">{{ $ticket['user']['email'] }}</span>
-                            </div>
-                        </div>
-
-                        <div class="message-body">
-                            {!! nl2br(e($ticket['description'])) !!}
-                        </div>
-                    </section>
-
-                    <hr class="divider">
-
-                    <section class="support-response">
-                        <div class="support-info">
-                            <div class="avatar-icon support-avatar">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                                </svg>
-                            </div>
-                            <h3 class="support-name">{{ $ticket['support_team'] }}</h3>
-                        </div>
-
-                        <form action="#" method="POST" enctype="multipart/form-data" class="response-box">
-                            @csrf
-                            <input type="hidden" name="ticket_id" value="{{ $ticket['id'] }}">
-
-                            <textarea 
-                                name="response_text" 
-                                class="response-textarea" 
-                                placeholder="Digite sua resposta aqui..."
-                            >{{ old('response_text', $ticket['response']) }}</textarea>
-                            
-                            <div class="response-actions">
-                                <label class="attach-button">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
-                                    </svg>
-                                    <span>Anexar</span>
-                                    <input type="file" name="attachment" class="hidden-file-input">
-                                </label>
-
-                                <button type="submit" class="send-button">Responder</button>
-                            </div>
-                        </form>
-                    </section>
-                </article>
-            @endforeach
+                <a href="">
+                    <div class="btn-miniHeader">
+                        <img src="{{ asset('images/perfil.png') }}" alt="">
+                    </div>
+                </a> 
+            </div>
         </div>
+
+        <div class="metrics-grid">
+            <!-- Card 1: Recusados -->
+            <div class="metric-card">
+                <div class="icon-wrapper icon-warning">
+                    <img src="{{ asset('images/alert-octagon.png') }}" alt="">
+                </div>
+                <div class="metric-info">
+                    <span class="metric-value">{{$totalDenuncias}}</span>
+                    <span class="metric-label">Total de Denúncias</span>
+                </div>
+            </div>
+
+            <!-- Card 2: Aguardando revisão -->
+            <div class="metric-card">
+                <div class="icon-wrapper icon-warning">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 22h14"></path>
+                        <path d="M5 2h14"></path>
+                        <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"></path>
+                        <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path>
+                    </svg>
+                </div>
+                <div class="metric-info">
+                    <span class="metric-value">{{$totalDenunciasPendentes}}</span>
+                    <span class="metric-label">Denúncias pendentes</span>
+                </div>
+            </div>
+
+            <!-- Card 3: Publicados -->
+            <div class="metric-card">
+                <div class="icon-wrapper icon-success">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <div class="metric-info">
+                    <span class="metric-value">{{$totalDenunciasEmResolvidas}}</span>
+                    <span class="metric-label">Denúncias resolvidas</span>
+                </div>
+            </div>
+        </div>
+
+            <div class="card-container">
+        <div class="toolbar">
+            <h1>Denúncias</h1>
+            <div class="pesquisa-filtro">
+            <div class="search-box">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 2a8 8 0 015.29 13.71l4.5 4.49-1.42 1.42-4.49-4.5A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"/>
+                </svg>
+                <input type="text" placeholder="Pesquisar...">
+            </div>
+                <div class="filtro">
+                    <img src="{{ asset('images/filtro.png') }}" alt="">
+                    <h2>Filtro</h2>
+                </div>
+            </div>
+        </div>
+
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>SOLICITADO</th>
+                    <th>ASSUNTO</th>
+                    <th>DATA</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($denuncias as $denuncia)
+                    <tr>
+                        <td>{{ $denuncia->codDenuncia }}</td>
+                        <td>{{ $denuncia->tbusuario->nomeUsuario }}</td>
+                        <td>{{ $denuncia->motivoDenuncia }}</td>
+                        <td>{{ \Carbon\Carbon::parse($denuncia->dataDenuncia)->format('d/m/Y') }}</td>
+                        <td>
+                            @if ($denuncia->statusDenuncia == 'resolvida')
+                                <span class="status-publicado">{{ $denuncia->statusDenuncia }}</span>
+                            @elseif ($denuncia->statusDenuncia == 'pendente')
+                                <span class="status-revisao">{{ $denuncia->statusDenuncia }}</span>
+                            @elseif ($denuncia->statusDenuncia == 'arquivada')
+                                <span class="status-recusado">{{ $denuncia->statusDenuncia }}</span>
+                            @elseif ($denuncia->statusDenuncia == 'em_analise')
+                                <span class="status-rascunho">{{ $denuncia->statusDenuncia }}</span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-@endsection
+    </div>
+
+</body>
+</html>
+</body>
+</html>

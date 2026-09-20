@@ -1,0 +1,481 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 80%;
+    height: 60px;
+    padding: 10px 20px; 
+    background-color: white;
+}
+
+.perfil-notificacao{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.header img{
+    width: 40px;
+    height: auto;
+}
+
+  .card-container {
+        background: #ffffff;
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        font-family: Arial, sans-serif;
+        margin-top: 50px;
+        width: 80%;
+        margin-bottom: 50px;
+    }
+
+    h1{
+        font-size: 30px;
+        width: 100%;
+        color: rgb(170, 27, 49);
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        color: #90192d;
+    }
+
+    .search-box {
+        position: relative;
+        width: 300px;
+        color: #90192d;
+    }
+
+    .search-box input {
+        width: 100%;
+        height: 30px;
+        padding: 10px 14px 10px 38px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        background-color: #f9fafb;
+        color: #90192d;
+        font-size: 14px;
+        color: #90192d;
+        outline: none;
+    }
+
+    .search-box input::placeholder{
+        color: rgb(170, 27, 49);
+    }
+
+    .search-box svg {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        fill: #90192d;
+    }
+
+    .btn-filter {
+        background: #800020;
+        border: 1px solid #d1d5db;
+        color: white;
+        padding: 8px 24px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .filtro{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        padding: 4px 14px;
+        background: #800020;
+        border: 1px solid #d1d5db;
+        color: white;
+        
+        border-radius: 10px;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 16px;
+
+    }
+
+    .filtro h2{
+        font-size: 15px;
+    }
+
+    .filtro img{
+        width: 25px;
+        height: auto;
+    }
+
+/* Container pai com posicionamento relativo */
+/* Posicionamento do Wrapper */
+.filter-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estado Padrão do Dropdown */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 99999 !important; /* Mantém acima da tabela */
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    min-width: 160px;
+}
+
+/* Regra disparada pelo JS ao clicar */
+.dropdown-menu.show {
+    display: block !important;
+}
+/* Bloqueia cliques nos elementos filhos do botão para não falhar o clique */
+
+#btnFiltro * {
+    pointer-events: none;
+}
+
+/* Lista do Dropdown */
+.dropdown-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu ul li {
+    text-align: center;
+    border-bottom: 1px solid #f2d6dc;
+}
+
+.dropdown-menu ul li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu ul li a {
+    display: block;
+    padding: 10px 12px;
+    color: #90192d;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu ul li a:hover {
+    background-color: #fce8e6;
+}
+
+/* Item Selecionado (Cabeçalho vermelho) */
+.dropdown-menu ul li.active {
+    background-color: #90192d;
+}
+
+.dropdown-menu ul li.active a {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+    .custom-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .custom-table th {
+        background-color: #90192d;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        padding: 14px 16px;
+        text-align: center;
+    }
+
+    .custom-table th:first-child {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .custom-table th:last-child {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+
+    .custom-table td {
+        padding: 18px 16px;
+        text-align: center;
+        color: #6b7280;
+        font-size: 14px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .badge-ativo {
+        background-color: #dcfce7;
+        color: #166534;
+    }
+
+    .badge-desativado {
+        background-color: #fceeec;
+        color: #991b1b;
+    }
+
+    .pesquisa-filtro{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: flex-end;
+        gap: 67px;
+        align-items: center;
+        margin-right: 50px;
+    }
+
+/* Estilo base para os chips de status */
+.status-publicado,
+.status-revisao,
+.status-recusado,
+.status-rascunho {
+    display: inline-block;
+    padding: 10px 12px;       /* Espaçamento interno sem vírgulas */
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Cores específicas de cada status */
+.status-publicado {
+    color: #15803d;
+    background-color: #dcfce7;
+}
+
+.status-revisao {
+    color: rgb(186, 129, 48);
+    background-color: rgb(254, 238, 217);
+}
+
+.status-recusado {
+    color: #b91c1c;
+    background-color: #fee2e2;
+}
+
+.status-rascunho {
+    color: #4b5563;
+    background-color: #f3f4f6;
+}
+
+/* Container principal dos cards */
+.metrics-grid {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+    font-family: Arial, sans-serif;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+/* Estrutura base de cada Card */
+.metric-card {
+    flex: 1;
+    background-color: #ffffff;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 50px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* Container do Ícone */
+.icon-wrapper {
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Variações de cor dos ícones e fundos */
+
+.icon-danger {
+    background-color: #fce8e6;
+    color: #90192d;
+}
+
+.icon-warning {
+    background-color: #fef0d5;
+    color: #d97706;
+}
+
+.icon-success {
+    background-color: #e2f2e4;
+    color: #2e7d32;
+}
+
+/* Textos do Card */
+.metric-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #90192d;
+    line-height: 1.2;
+}
+
+.metric-label {
+    font-size: 13px;
+    color: #8c8c8c;
+    margin-top: 2px;
+}
+
+/* DENUNCIAS DE MENSAGENS */
+
+/* Card Container */
+.card-denuncia {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 700px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Header */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    background-color: #f3d0d5;
+    color: #90192d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.post-date {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+/* Body */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.post-content {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.denuncia-motivo {
+    margin: 0;
+    font-size: 15px;
+    color: #111827;
+}
+
+.denuncia-mensagem {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+/* Buttons */
+.card-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-outline {
+    background-color: #ffffff;
+    border: 1px solid #9ca3af;
+    color: #6b7280;
+}
+
+.btn-outline:hover {
+    background-color: #f9fafb;
+    color: #374151;
+}
+
+.btn-filled {
+    background-color: #b01c33;
+    border: 1px solid #b01c33;
+    color: #ffffff;
+}
+
+.btn-filled:hover {
+    background-color: #90192d;
+}
+
+.centralizar-card{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}

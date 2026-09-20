@@ -15,12 +15,24 @@ class AdmModel extends Authenticatable
     // Define a chave primária
     protected $primaryKey = 'codAdmin';
 
+    public $timestamps = false;
+
     // Campos que podem ser preenchidos em massa
     protected $fillable = [
         'nomeAdmin',
         'emailAdmin',
+        'telAdmin',
+        'paisAdmin',
+        'cidadeAdmin',
+        'ufAdmin',
+        'cepAdmin',
+        'nrFiscalAdmin',
+        'temaAdmin',
         'senhaAdmin',
-        'tbConteudoAdmin_id',
+        'codPapel',
+        'duasEtapasAtiva',
+        'statusConta',
+        'dataCadastro',
     ];
 
     // Oculta a senha no retorno de arrays/JSON
@@ -33,4 +45,13 @@ class AdmModel extends Authenticatable
     {
         return $this->senhaAdmin;
     }
+
+            public function tbpapel()
+        {
+            return $this->belongsTo(
+                    Papel::class, 
+                    'codPapel', // Chave estrangeira que está na tabela 'tbconteudo'
+                    'codPapel'  // Chave primária que está na tabela 'profissionais' (ou 'id' se lá for 'id')
+                ); 
+        }
 }

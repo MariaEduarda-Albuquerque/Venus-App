@@ -24,4 +24,22 @@ class DenunciaModel extends Model
         'statusDenuncia',
         'dataDenuncia'
     ];
+
+        public function tbusuario()
+        {
+            return $this->belongsTo(
+                    Usuario::class, 
+                    'codUsuarioDenunciante', // Chave estrangeira que está na tabela 'tbconteudo'
+                    'codUsuario'  // Chave primária que está na tabela 'profissionais' (ou 'id' se lá for 'id')
+                ); 
+        }
+
+        public function tbmensagem()
+        {
+            return $this->belongsTo(
+                    Mensagem::class, 
+                    'codAlvo', // Chave estrangeira que está na tabela 'tbconteudo'
+                    'codMensagem'  // Chave primária que está na tabela 'profissionais' (ou 'id' se lá for 'id')
+                ); 
+        }
 }

@@ -3,7 +3,7 @@
     use Illuminate\Support\Str;
 @endphp
 
-@extends('layouts.sidebar')
+@extends('layouts.dashboard')
 
 @section('title', 'Painel Administrativo')
 
@@ -21,30 +21,25 @@
             <h1 class="vns-titulo-pagina">Painel Administrativo</h1>
 
             <div class="vns-data">
-                <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
-                    <path d="M3 9H21" stroke="currentColor" stroke-width="1.6"/>
-                    <path d="M8 3V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M16 3V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-                {{-- futuramente: {{ now()->translatedFormat('d \d\e F \d\e Y') }} --}}
-                <span>23 de maio de 2026</span>
+                <button type="button" class="vns-data-btn" id="btnCalendario" aria-label="Abrir calendário">
+                    <img src="{{ asset('images/calendar-alt.png') }}" alt="">
+                </button>
+                <span>{{$hoje}}</span>
             </div>
         </header>
 
         {{-- futuramente: @if($denunciasGravidadeAltaPendentes > 0) --}}
         <div class="vns-alerta vns-alerta--danger">
             <div class="vns-alerta-texto">
-                <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
-                    <path d="M12 8V13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    <circle cx="12" cy="16.2" r="0.9" fill="currentColor"/>
-                </svg>
+                <img src="{{ asset('images/alert-octagon.png') }}" alt="">
                 <span>
                     <strong>Atenção:</strong>
                     existem <strong>{{$totalDenunciasUltimas24h}}</strong> denúncias de gravidade alta pendentes há mais de 24 horas.
                 </span>
             </div>
+            <a href="/denuncias">
+                <h2 class="btn-ver-denuncias">Ver Denúncias</h2>
+            </a>
         </div>
         {{-- @endif --}}
 
@@ -53,48 +48,34 @@
 
             <div class="vns-card vns-card-estat">
                 <div class="vns-card-icone">
-                    <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/>
-                        <path d="M5.5 20c0-3.6 2.9-6.2 6.5-6.2s6.5 2.6 6.5 6.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    </svg>
+                    <img src="{{ asset('images/woman.png') }}" alt="">
                 </div>
                 <div class="vns-card-info">
                     {{-- futuramente: {{ number_format($totalUsuariasAtivas, 0, ',', '.') }} --}}
-                    <span class="quantidade">{{$totalUsuarios}}</span>
+                    <span class="vns-card-numero">{{$totalUsuarios}}</span>
                     <p class="vns-card-label">Usuárias Ativas</p>
                     <p class="vns-card-variacao vns-card-variacao--positiva">
-                        <span class="vns-seta">&uarr;</span> 8,2% último mês
+                        <span class="vns-seta">&uarr;</span> {{$percentagem}}% último mês
                     </p>
                 </div>
             </div>
 
             <div class="vns-card vns-card-estat">
                 <div class="vns-card-icone">
-                    <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 21V13.5C8 12.1 9.1 11 10.5 11H13.5C14.9 11 16 12.1 16 13.5V21"
-                              stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        <circle cx="12" cy="6.5" r="3" stroke="currentColor" stroke-width="1.6"/>
-                        <path d="M4 21V16.8C4 15.8 4.8 15 5.8 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        <path d="M20 21V16.8C20 15.8 19.2 15 18.2 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    </svg>
+                    <img src="{{ asset('images/face-mask.png') }}" alt="">
                 </div>
                 <div class="vns-card-info">
                     <span class="vns-card-numero">{{$totalProsissionais}}</span>
                     <p class="vns-card-label">Profissionais ativos</p>
                     <p class="vns-card-variacao vns-card-variacao--positiva">
-                        <span class="vns-seta">&uarr;</span> 5,6% último mês
+                        <span class="vns-seta">&uarr;</span> {{$porcentagemProfissionaisUltimoMes}}% último mês
                     </p>
                 </div>
             </div>
 
             <div class="vns-card vns-card-estat">
                 <div class="vns-card-icone">
-                    <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="9" cy="9" r="3.2" stroke="currentColor" stroke-width="1.6"/>
-                        <path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        <path d="M18 8V14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        <path d="M15 11H21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    </svg>
+                   <img src="{{ asset('images/user-plus.png') }}" alt="">
                 </div>
                 <div class="vns-card-info">
                     <span class="vns-card-numero">{{$profissionaisEmEspera}}</span>
@@ -117,6 +98,7 @@
                         @foreach($DenunciasAltaGravidade as $denuncia)
                         <li class="vns-item-fila">
                             <span class="vns-item-fila-texto">{{ Str::limit($denuncia->comentarioDenuncia, 22, '...') }}</span>
+                             <div class="sub-vns-item-fila">
                              @if($denuncia->tipoAlvo == 'forum_publicacao' || $denuncia->tipoAlvo == 'forum_resposta')
                             <span class="vns-badge">Fórum</span>
                             @elseif($denuncia->tipoAlvo == 'mensagem_chat')
@@ -125,25 +107,29 @@
                             <span class="vns-badge">Perfil</span>
                             @endif
                             <span class="vns-item-fila-tempo">{{ \Carbon\Carbon::parse($denuncia->dataDenuncia)->diffForHumans() }}</span>
+                            </div>
                         </li>
                         @endforeach
                     </ul>
-                </div>
-
-                <div class="vns-card vns-card-lista">
+                <hr>
+               
                     <h2 class="vns-card-titulo vns-card-titulo--danger">Aprovações de profissionais</h2>
 
                     <ul class="vns-lista-aprovacoes">
                         @foreach($profissionaisPendentes as $profissional)
                         <li class="vns-item-aprovacao">
                             <span class="vns-item-aprovacao-nome">{{$profissional->nomeProfissionalSaude}}</span>
-                            <span class="vns-item-aprovacao-registro">CRP 06/123456</span>
-                            <span class="vns-item-aprovacao-tempo">{{ \Carbon\Carbon::parse($profissional->dataAtualizacao)->diffForHumans() }}</span>
+                            <div class="sub-vns-item-aprovacao">
+                                <span class="vns-item-aprovacao-registro">CRP 06/123456</span>
+                                <span class="vns-item-aprovacao-tempo">{{ \Carbon\Carbon::parse($profissional->dataAtualizacao)->diffForHumans() }}</span>
+                            </div>
                         </li>
                         @endforeach
                     </ul>
-
-
+                
+                <a href="">
+                    <h1 class="btn-cards">Ver todas as pendências</h1>
+                </a>
                 </div>
 
             </div>
@@ -170,61 +156,62 @@
                     {{-- Placeholder visual do gráfico. Futuramente: substituir por
                          Chart.js / ApexCharts, alimentado por $novosCadastrosUsuarias
                          e $novosCadastrosProfissionais. --}}
-                    <div class="vns-grafico-placeholder">
-                        <svg viewBox="0 0 700 260" preserveAspectRatio="none" class="vns-grafico-svg">
-                            <line x1="40" y1="10" x2="40" y2="220" class="vns-grafico-eixo" />
-                            <line x1="40" y1="220" x2="690" y2="220" class="vns-grafico-eixo" />
+<div class="vns-grafico-placeholder">
+    <svg viewBox="0 0 700 260" preserveAspectRatio="none" class="vns-grafico-svg">
+        <line x1="40" y1="10" x2="40" y2="220" class="vns-grafico-eixo" />
+        <line x1="40" y1="220" x2="690" y2="220" class="vns-grafico-eixo" />
 
-                            <text x="10" y="14" class="vns-grafico-eixo-label">1.000</text>
-                            <text x="10" y="112" class="vns-grafico-eixo-label">750</text>
-                            <text x="10" y="168" class="vns-grafico-eixo-label">500</text>
-                            <text x="10" y="220" class="vns-grafico-eixo-label">0</text>
+        @foreach($rotulosEixoY as $r)
+            <text x="10" y="{{ $r['y'] + 4 }}" class="vns-grafico-eixo-label">{{ number_format($r['valor'], 0, ',', '.') }}</text>
+        @endforeach
 
-                            <polyline class="vns-linha-usuarias" fill="none"
-                                points="60,150 140,120 220,155 300,135 380,110 460,105 540,115 620,75" />
-                            <polyline class="vns-linha-profissionais" fill="none"
-                                points="60,195 140,190 220,200 300,195 380,193 460,190 540,192 620,188" />
+        <polyline class="vns-linha-usuarias" fill="none"
+            points="{{ collect($pontosUsuarias)->map(fn($p) => $p['x'].','.$p['y'])->implode(' ') }}" />
+        <polyline class="vns-linha-profissionais" fill="none"
+            points="{{ collect($pontosProfissionais)->map(fn($p) => $p['x'].','.$p['y'])->implode(' ') }}" />
 
-                            <g class="vns-pontos-usuarias">
-                                <circle cx="60" cy="150" r="4" /><circle cx="140" cy="120" r="4" />
-                                <circle cx="220" cy="155" r="4" /><circle cx="300" cy="135" r="4" />
-                                <circle cx="380" cy="110" r="4" /><circle cx="460" cy="105" r="4" />
-                                <circle cx="540" cy="115" r="4" /><circle cx="620" cy="75" r="4" />
-                            </g>
-                            <g class="vns-pontos-profissionais">
-                                <circle cx="60" cy="195" r="4" /><circle cx="140" cy="190" r="4" />
-                                <circle cx="220" cy="200" r="4" /><circle cx="300" cy="195" r="4" />
-                                <circle cx="380" cy="193" r="4" /><circle cx="460" cy="190" r="4" />
-                                <circle cx="540" cy="192" r="4" /><circle cx="620" cy="188" r="4" />
-                            </g>
-                        </svg>
+        <g class="vns-pontos-usuarias">
+            @foreach($pontosUsuarias as $p)
+                <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="4"><title>{{ $p['valor'] }} usuárias</title></circle>
+            @endforeach
+        </g>
+        <g class="vns-pontos-profissionais">
+            @foreach($pontosProfissionais as $p)
+                <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="4"><title>{{ $p['valor'] }} profissionais</title></circle>
+            @endforeach
+        </g>
+    </svg>
 
-                        <div class="vns-grafico-eixo-x">
-                            <span>23/03</span><span>04/04</span><span>11/04</span><span>18/04</span>
-                            <span>25/04</span><span>02/05</span><span>09/05</span><span>16/05</span>
-                        </div>
-                    </div>
+    <div class="vns-grafico-eixo-x">
+        @foreach($semanas as $semana)
+            <span>{{ $semana }}</span>
+        @endforeach
+    </div>
+</div>
                 </div>
 
                 <div class="vns-card vns-card-revisao">
-                    <div class="vns-card-icone">
-                        <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 3.5H14L18 7.5V20.5H7V3.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                            <path d="M14 3.5V7.5H18" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                            <path d="M9.5 12H15.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                            <path d="M9.5 15.5H15.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        </svg>
+                    <div class="vns-card-icone vns-card-icone--revisao">
+                        <img src="{{ asset('images/file-detail red.png') }}" alt="">
                     </div>
 
                     <div class="vns-card-revisao-info">
                         <h2 class="vns-card-titulo">Conteúdo aguardando revisão</h2>
                         <span class="vns-card-numero">{{$conteudosAguardandoRevisao}}</span>
-                        <p class="vns-card-legenda">
-                            Artigos/Vídeos aguardando moderação
-                            <br>
-                            5 artigos de profissionais &middot; 4 vídeos educativos
-                        </p>
+
+                        <div class="vns-revisao-detalhes">
+                            <p class="vns-revisao-legenda">
+                                Artigos/Vídeos<br>aguardando moderação
+                            </p>
+                            <div class="vns-revisao-divisor"></div>
+                            <p class="vns-revisao-legenda">
+                                5 artigos de profissionais<br>4 vídeos educativos
+                            </p>
+                        </div>
                     </div>
+
+                    <a href="/Conteudo-Aprender" class="vns-revisao-botao">ir para conteúdos</a>
+                </div>
 
 
                 </div>
@@ -237,10 +224,7 @@
 
             <div class="vns-card vns-card-estat vns-card-estat--centro">
                 <div class="vns-card-icone">
-                    <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/>
-                        <path d="M12 7.5V12L15 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <img src="{{ asset('images/clock.png') }}" alt="">
                 </div>
                 <div class="vns-card-info">
                     <span class="vns-card-numero">2h 45min</span>
@@ -250,13 +234,7 @@
 
             <div class="vns-card vns-card-estat vns-card-estat--centro">
                 <div class="vns-card-icone">
-                    <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/>
-                        <path d="M8.5 14.5C9.2 15.6 10.5 16.3 12 16.3C13.5 16.3 14.8 15.6 15.5 14.5"
-                              stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        <circle cx="9" cy="10" r="0.9" fill="currentColor"/>
-                        <circle cx="15" cy="10" r="0.9" fill="currentColor"/>
-                    </svg>
+                    <img src="{{ asset('images/smile.png') }}" alt="">
                 </div>
                 <div class="vns-card-info">
                     <span class="vns-card-numero">4,6/5</span>
@@ -266,22 +244,107 @@
 
             <div class="vns-card vns-card-estat vns-card-estat--centro">
                 <div class="vns-card-icone">
-                    <svg class="vns-icone-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 3.5V20.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        <path d="M6 4.5H16L14 8L16 11.5H6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                    </svg>
+                    <img src="{{ asset('images/flag-alt.png') }}" alt="">
                 </div>
                 <div class="vns-card-info">
-                    <span class="vns-card-numero">23</span>
+                    <span class="vns-card-numero">{{$DenunciasPendentes}}</span>
                     <p class="vns-card-label">
                         Denúncias pendentes
-                        <span class="vns-card-variacao vns-card-variacao--negativa">&uarr; 4 desde ontem</span>
+                        <span class="vns-card-variacao vns-card-variacao--negativa">&uarr; {{$DenunciasDesdeOntem}} desde ontem</span>
                     </p>
                 </div>
             </div>
 
         </div>
 
+
+
+        {{-- Modal do calendário --}}
+<div class="vns-cal-overlay" id="calOverlay" hidden>
+    <div class="vns-cal" role="dialog" aria-modal="true" aria-label="Calendário">
+        <div class="vns-cal-topo">
+            <button type="button" class="vns-cal-nav" id="calAnterior" aria-label="Mês anterior">&lsaquo;</button>
+            <strong id="calTitulo"></strong>
+            <button type="button" class="vns-cal-nav" id="calProximo" aria-label="Próximo mês">&rsaquo;</button>
+            <button type="button" class="vns-cal-fechar" id="calFechar" aria-label="Fechar">&times;</button>
+        </div>
+
+        <div class="vns-cal-semana">
+            <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+        </div>
+
+        <div class="vns-cal-dias" id="calDias"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var overlay = document.getElementById('calOverlay');
+    var titulo  = document.getElementById('calTitulo');
+    var dias    = document.getElementById('calDias');
+    var meses   = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+    var hoje = new Date();
+    var ano  = hoje.getFullYear();
+    var mes  = hoje.getMonth();
+
+    function desenhar() {
+        titulo.textContent = meses[mes] + ' ' + ano;
+        dias.innerHTML = '';
+
+        var primeiroDia = new Date(ano, mes, 1).getDay();
+        var totalDias   = new Date(ano, mes + 1, 0).getDate();
+
+        for (var i = 0; i < primeiroDia; i++) {
+            dias.appendChild(document.createElement('span'));
+        }
+
+        for (var d = 1; d <= totalDias; d++) {
+            var el = document.createElement('span');
+            el.textContent = d;
+            el.className = 'vns-cal-dia';
+            if (d === hoje.getDate() && mes === hoje.getMonth() && ano === hoje.getFullYear()) {
+                el.classList.add('vns-cal-hoje');
+            }
+            dias.appendChild(el);
+        }
+    }
+
+    function abrir() {
+        ano = hoje.getFullYear();
+        mes = hoje.getMonth();
+        desenhar();
+        overlay.hidden = false;
+    }
+
+    function fechar() {
+        overlay.hidden = true;
+    }
+
+    document.getElementById('btnCalendario').addEventListener('click', abrir);
+    document.getElementById('calFechar').addEventListener('click', fechar);
+
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) fechar();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') fechar();
+    });
+
+    document.getElementById('calAnterior').addEventListener('click', function () {
+        mes--;
+        if (mes < 0) { mes = 11; ano--; }
+        desenhar();
+    });
+
+    document.getElementById('calProximo').addEventListener('click', function () {
+        mes++;
+        if (mes > 11) { mes = 0; ano++; }
+        desenhar();
+    });
+});
+</script>
     </div>
 
 @endsection
