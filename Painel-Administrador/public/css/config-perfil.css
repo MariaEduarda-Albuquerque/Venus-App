@@ -232,3 +232,17 @@
     .prf-grid--3 { grid-template-columns: 1fr; }
     .prf-linha-seguranca { flex-direction: column; align-items: flex-start; }
 }
+
+.menu-btn {
+    font-size: 25px;
+    cursor: pointer;
+    color: rgb(170, 27, 49);
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 18px 30px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}

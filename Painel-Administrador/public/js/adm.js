@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".imgMaisOpcoes").forEach(function (botao) {
         botao.addEventListener("click", function (event) {
             event.stopPropagation();
+            this.classList.toggle("virada");
             const item = this.closest(".itemsSidebar");
             const submenu = item ? item.querySelector(".submenu") : null;
             if (submenu) submenu.classList.toggle("ativo");

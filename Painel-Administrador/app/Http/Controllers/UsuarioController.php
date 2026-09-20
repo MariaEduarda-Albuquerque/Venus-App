@@ -12,13 +12,20 @@ class UsuarioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $usuarios = Usuario::all();
-        $totalUsuarios = Usuario::count();
+public function index(Request $request)
+{
+    $totalUsuarios = Usuario::count();
 
-        return view('admin.usuario', compact('usuarios', 'totalUsuarios'));
-    }
+    $usuarios = Usuario::query()
+        ->when($request->query('status'), function ($query, $status) {
+            if (in_array($status, ['ativa', 'suspensa', 'excluida'])) {
+                $query->where('statusUsuario', $status);
+            }
+        })
+        ->get();
+
+    return view('admin.usuario', compact('usuarios', 'totalUsuarios'));
+}
 
     public function dashboard()
 {

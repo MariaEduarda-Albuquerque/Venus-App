@@ -29,12 +29,7 @@
                 <li>Logística</li>
             </ul>
         </li>
-        <div>
-            <a href="/dashboard">
-                <img class="iconeOpcoes" src="{{ asset('images/dashboard.png') }}" alt="">
-            </a> 
-        </div>
-
+        <img class="iconeOpcoes" src="{{ asset('images/dashboard.png') }}" alt="">
     </ul>
 
     <!-- 2. Usuários (CORRIGIDO: user.png no iconeOpcoes) -->
@@ -48,7 +43,7 @@
                 <img class="imgMaisOpcoes" src="{{ asset('images/chevron-down.png') }}" alt="">
             </div>
             <ul class="submenu">
-                <li>Denúncias</li>
+                <li><a href="/denuncias">Denúncias</a></li>
                 <li><a href="admin/usuarios">Contas</a></li>
             </ul>
         </li>
@@ -98,13 +93,13 @@
             <div class="topoItem">
                 <div>
                     <img src="{{ asset('images/file-detail.png') }}" alt="">
-                    <span>Conteúdos</span>
+                    <a href="/Conteudo-Aprender"><span>Conteúdos</span></a>
                 </div>
-                <img class="imgMaisOpcoes" src="{{ asset('images/chevron-down.png') }}" alt="">
+                <!-- <img class="imgMaisOpcoes" src="{{ asset('images/chevron-down.png') }}" alt=""> -->
             </div>
-            <ul class="submenu">
+            <!-- <ul class="submenu">
                 <li><a href="/Conteudo-Aprender">Aprender</a></li>
-            </ul>
+            </ul> -->
         </li>
         <img class="iconeOpcoes" src="{{ asset('images/file-detail.png') }}" alt="">
     </ul>

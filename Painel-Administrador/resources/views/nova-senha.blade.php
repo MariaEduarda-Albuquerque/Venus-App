@@ -23,20 +23,10 @@
         <path d="M-20 35 C75 125 150 20 265 90 C330 130 380 160 440 145"/>
       </svg>
 
-      <div class="brand-content">
-        <div class="venus-symbol" aria-hidden="true">
-          <div class="venus-circle">
-            <span class="stripe s1"></span>
-            <span class="stripe s2"></span>
-            <span class="stripe s3"></span>
-            <span class="stripe s4"></span>
-            <span class="stripe s5"></span>
-          </div>
-          <span class="venus-cross"></span>
-        </div>
-
-        <div class="brand-name">Vênus</div>
-        <div class="brand-tagline">A saúde da mulher na palma da sua mão.</div>
+       <div class="logo">
+        <img src="{{asset('images/logoVenusLogin.png')}}" alt="">
+      </div>
+      </div>
       </div>
     </section>
 

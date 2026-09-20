@@ -18,8 +18,6 @@ body{
     border-right: 1px solid #e5e5e5;
     position: sticky;
     top: 0;
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
     height: fit-content;
     overflow-y: hidden;      /* mudou aqui */
@@ -71,7 +69,7 @@ li{
 .itemsSidebar {
   display: flex;
   flex-direction: column; 
-  width: 100%;
+  width: 90%;
 }
 
 .topoItem {
@@ -150,12 +148,59 @@ li{
 .submenu {
   display: none;
   list-style: none;
-  padding-left: 30px;
+  padding-left: 30%;
   margin-top: 5px;
+  transition: transform 0.3s ease; 
 }
 
 .submenu.ativo {
-  display: block;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
+  flex-direction: column;
+transition: transform 0.3s ease; 
+
+}
+
+/* Configuração do item da lista (li) */
+.submenu li {
+    list-style: none; /* Remove a bolinha padrão do navegador */
+    display: flex;
+    align-items: center; /* Alinha a bolinha verticalmente ao centro do texto */
+    justify-content: flex-start; /* Garante que comecem do início */
+    padding: 6px 0;
+    color: #ffffff; /* Ajustado para branco conforme sua imagem */
+    white-space: nowrap; /* Evita que o texto quebre linha sozinho */
+}
+
+/* Cria a bolinha perfeita antes do texto */
+.submenu li::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background-color: #ffffff; /* Bolinha branca combinando com o texto */
+    border-radius: 50%;
+    margin-right: 10px; /* Espaço entre a bolinha e o texto/link */
+    display: inline-block;
+    flex-shrink: 0; /* Impede a bolinha de amassar */
+}
+
+/* CORREÇÃO AQUI: Garante que o link se comporte de forma flexível e fique lado a lado */
+.submenu li a {
+    text-decoration: none;
+    color: inherit; /* Herda o branco do li */
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.imgMaisOpcoes {
+  transition: transform 0.3s ease; 
+}
+
+.imgMaisOpcoes.virada {
+  transform: rotate(180deg);
 }
 
 .sidebar a {
@@ -172,6 +217,7 @@ li{
 
 .sidebar .btn-logout{
     width: 115px;
+    margin-top: 40px;
     height: 30px;
     border-radius: 10px;
     border: solid 1px white;
@@ -202,32 +248,8 @@ li{
 
 }
 
-.sidebar.compacta .menu-item img{
+.sidebar.compacta .menu-item{
     display: block;
-}
-
-.sidebar .menu-inferior {
-    margin-top: auto;
-    padding-top: 15px;
-    position: relative;
-}
-
-/* Linha divisória acima dos itens inferiores */
-.sidebar .menu-inferior::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    width: 80%;
-    height: 1px;
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.topoItem a {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
 }
 
 /* restante da pagina */

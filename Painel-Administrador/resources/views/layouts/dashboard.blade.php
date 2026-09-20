@@ -43,7 +43,7 @@
                 <img class="imgMaisOpcoes" src="{{ asset('images/chevron-down.png') }}" alt="">
             </div>
             <ul class="submenu">
-                <li>Denúncias</li>
+                <li><a href="/denuncias">Denúncias</a></li>
                 <li><a href="admin/usuarios">Contas</a></li>
             </ul>
         </li>

@@ -23,8 +23,8 @@ class TbadminTableSeeder extends Seeder
             0 => 
             array (
                 'codAdmin' => 1,
-                'nomeAdmin' => 'Otavio',
-                'emailAdmin' => 'otavio@gmail.com',
+                'nomeAdmin' => 'Admin',
+                'emailAdmin' => 'admin@gmail.com',
                 'telAdmin' => '1198461552430',
                 'paisAdmin' => 'Brasil',
                 'cidadeAdmin' => 'São Paulo',

@@ -52,15 +52,27 @@ class denunciaController extends Controller
         return view('admin.suporte', compact('tickets'));
     }
 
-    public function index2(){
-        $denuncias = DenunciaModel::with('tbusuario')->get();
-        $totalDenuncias = DenunciaModel::count();
-        $totalDenunciasPendentes = DenunciaModel::where('statusDenuncia', 'pendente')->count();
-        $totalDenunciasEmResolvidas = DenunciaModel::where('statusDenuncia', 'resolvida')->count();
+        public function index2(Request $request)
+        {
+            $totalDenuncias             = DenunciaModel::count();
+            $totalDenunciasPendentes    = DenunciaModel::where('statusDenuncia', 'pendente')->count();
+            $totalDenunciasEmResolvidas = DenunciaModel::where('statusDenuncia', 'resolvida')->count();
 
+            $denuncias = DenunciaModel::with('tbusuario')
+                ->when($request->query('status'), function ($query, $status) {
+                    if (in_array($status, ['pendente', 'em_analise', 'resolvida', 'arquivada'])) {
+                        $query->where('statusDenuncia', $status);
+                    }
+                })
+                ->get();
 
-        return view('admin.denuncias', compact('totalDenuncias', 'totalDenunciasPendentes', 'totalDenunciasEmResolvidas', 'denuncias'));
-    }
+            return view('admin.denuncias', compact(
+                'totalDenuncias',
+                'totalDenunciasPendentes',
+                'totalDenunciasEmResolvidas',
+                'denuncias'
+            ));
+        }
 
         public function DenunciasMensagens(){
         $denuncias = DenunciaModel::with('tbusuario')->get();
