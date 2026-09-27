@@ -140,14 +140,14 @@
 
                             <div class="esquerda">
                                
-                                <div class="grafico-container">
-                                    <div class="titulo-subtitulo-grafico">
-                                        <h2>Novos Cadastros (usuárias e profissionais)</h2>
-                                        <p>Últimas 8 semanas</p>
-                                    </div>
-
-                                    <canvas id="meuGrafico"></canvas>
+                            <div class="grafico-container">
+                                <div class="titulo-subtitulo-grafico">
+                                    <h2>Novos Cadastros (usuárias e profissionais)</h2>
+                                    <p>Últimas 8 semanas</p>
                                 </div>
+
+                                <div id="meuGrafico"></div>
+                            </div>
 
                                 <div class="revisao-conteudo">
                                     <div>
@@ -222,6 +222,6 @@
     </div>
 
     <script src="{{ asset('js/adm.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 </body>
 </html>
