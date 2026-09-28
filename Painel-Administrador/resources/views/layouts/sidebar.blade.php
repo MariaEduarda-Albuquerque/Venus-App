@@ -11,11 +11,11 @@
                 <div class="topoItem">
                 <div>
                     <a href="/">
-                    <img src="{{ asset('images/dashboard.png') }}" alt="">
+                    <img src="{{asset('images/dashboard.png')}}" alt="">
                     <span>Painel</span>
                     </a>
                 </div>
-                <!-- <img class="imgMaisOpcoes" onclick="abrirSubMenu(this)" src="{{ asset('images/chevron-down.png') }}" alt=""> -->
+                <!-- <img class="imgMaisOpcoes" onclick="abrirSubMenu(this)" src="{{asset('images/chevron-down.png')}}" alt=""> -->
                 </div>
                 <!-- <ul class="submenu">
                     <a href="">
