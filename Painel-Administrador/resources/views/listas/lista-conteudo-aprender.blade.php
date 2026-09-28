@@ -269,7 +269,7 @@
                     </div>
                     <div class="conteudo-card">
                         <h1>Use camisinha sempre</h1>
-                        <p>Ela é o único método que protege contra ISTs e gravidez acidental ao mesmo tempo. É gratuita nos postos do SUS.</p>
+                        <p> Ela é o único método que protege contra ISTs e gravidez acidental ao mesmo tempo. É gratuita nos postos do SUS.</p>
                     </div>
                 </div>
 
