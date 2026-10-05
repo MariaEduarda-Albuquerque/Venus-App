@@ -1,0 +1,656 @@
+body{ 
+    background-color: rgb(242, 242, 242); 
+    display: flex; 
+    flex-direction: row; 
+    min-height: 100vh; 
+    margin: 0; 
+    font-family: Arial, Helvetica, sans-serif; 
+} 
+
+.direita { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;     
+    justify-content: flex-start; 
+    width: 100%;   
+    border-top: 50px;  
+    flex: 1; 
+    min-width: 0; 
+    padding-top: 30px; 
+    padding-bottom: 50px; 
+    box-sizing: border-box; 
+} 
+
+.perfil-container{ 
+    width: 90%; 
+    min-width: 100px;
+    max-width: 1050px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    flex-direction: column; 
+    gap: 35px;
+    background-color: white; 
+    border-radius: 15px; 
+    margin-top: 50px; 
+    padding: 50px 20px; 
+} 
+
+.dividir-partes{ 
+    width: 100%; 
+    border: 1px solid rgb(170, 27, 49); 
+} 
+
+.parte1{ 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 35px; 
+} 
+
+.topo{ 
+    width: 100%; 
+    display: flex; 
+    flex-direction: row; 
+    gap: 15px; 
+    justify-content: space-between;
+} 
+
+.isolar-btn-editar{ 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center; 
+    margin-right: 30px; 
+} 
+
+.btn-editar{ 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background-color: rgb(170, 27, 49); 
+    padding: 10px 15px; 
+    gap: 5px; 
+    border-radius: 10px; 
+} 
+
+.btn-editar h2{ 
+    font-family: Arial, Helvetica, sans-serif; 
+    color: white; 
+    font-size: 20px; 
+} 
+
+.dados-destaque-topo{ 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+} 
+
+.sub-dados-destaque-topo{ 
+    display: flex; 
+    flex-direction: row; 
+    gap: 15px; 
+    white-space: nowrap; 
+    align-items: center; 
+} 
+
+.sub-dados-destaque-topo p{ 
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 17px; 
+    color: gray; 
+} 
+
+.dados-destaque-topo h1{ 
+    color: rgb(170, 27, 49); 
+} 
+
+.sub-dados-destaque-topo hr{ 
+    border: 1px solid gray; 
+    height: 20px; 
+} 
+
+.abaixo{ 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between; 
+    gap: 30px;
+} 
+
+.sub-abaixo{ 
+    display: flex; 
+    flex-direction: column; 
+    gap: 5px; 
+} 
+
+.sub-abaixo h2{ 
+    color: rgb(170, 27, 49); 
+    font-size: 20px; 
+} 
+
+.sub-abaixo p{ 
+    color: gray; 
+} 
+
+.parte2{ 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start; 
+    width: 90%; 
+    gap: 25px; 
+} 
+
+.parte2 h1{ 
+    color: rgb(170, 27, 49); 
+} 
+
+.container-abaixo{ 
+    width: 80%; 
+} 
+
+.btn-2fa {
+    background-color: rgb(170, 27, 49);
+    height: 24px;
+    width: 50px;
+    border-radius: 30px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+.circulo-2fa {
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    flex-shrink: 0;
+}
+
+.parte3{ 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-start; 
+    width: 90%; 
+    gap: 25px;
+} 
+
+.parte3 h1{ 
+    color: rgb(170, 27, 49); 
+} 
+
+.btn-editar-senha{ 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background-color: rgb(170, 27, 49); 
+    padding: 6px 15px; 
+    gap: 5px; 
+    border-radius: 10px; 
+    text-decoration: none; 
+} 
+
+.btn-editar-senha h2{ 
+    font-family: Arial, Helvetica, sans-serif; 
+    color: white; 
+    font-size: 15px; 
+} 
+
+.sub-abaixo-senha{ 
+    display: flex; 
+    align-items: center; 
+    gap: 20px;
+} 
+
+.sub-abaixo-2fa{ 
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-start; 
+    gap: 20px;
+}
+
+
+/* Editar Perfil: */
+
+.circulo-voltar{
+    background-color: rgb(170, 27, 49);
+    padding: 5px;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circulo-voltar img{
+    width: 50px;
+    height: 50px;
+}
+
+.topo p{
+    color: gray;
+}
+
+.editar-perfil{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 30px;
+}
+
+.editar-foto{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.editar-foto-abaixo{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+
+.editar-foto h2{
+    color: rgb(170, 27, 49);
+}
+
+.editar-foto p{
+    color: gray;
+    width: 40%;
+}
+
+
+
+.editar-foto-perfil {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+
+.editar-foto-perfil > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.fundo-camera {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    border: 1px solid rgb(170, 27, 49);
+    border-radius: 50%;
+}
+
+.fundo-camera img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.editar-informacoes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.editar-informacoes h2 {
+    color: rgb(170, 27, 49);
+    font-size: 16px;
+    margin: 0;
+}
+
+.campo-editar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    width: 100%;
+}
+
+.sub-campo-editar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sub-campo-editar label {
+    font-size: 14px;
+    color: black;
+}
+
+.sub-campo-editar input {
+    width: 100%;
+    height: 35px;
+    padding: 10px 8px;
+    border: 1px solid rgb(170, 27, 49);
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.sub-campo-editar input::placeholder{
+    color: gray;
+}
+
+.fechar-salvar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.fechar-salvar a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    padding: 0 10px;
+    border: 1px solid rgb(170, 27, 49);
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.fechar-salvar a h2 {
+    color: rgb(170, 27, 49);
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.fechar-salvar button {
+    height: 35px;
+    padding: 0 15px;
+    background-color: rgb(170, 27, 49);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+
+/*  */
+/* Tela de Configurações  */
+/*  */
+
+.exemplo-icones{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.exemplo-icones hr{
+    border: 1px solid gray;
+    height: 25px;
+}
+
+.tema-site {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tema-site h2 {
+    color: rgb(170, 27, 49);
+    font-size: 16px;
+    margin: 0;
+}
+
+.opcoes-tema {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.opcoes-tema label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgb(170, 27, 49);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.opcoes-tema input {
+    display: none;
+}
+
+.radio-personalizado {
+    width: 19px;
+    height: 19px;
+    border: 1.5px solid rgb(170, 27, 49);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.opcoes-tema input:checked + .radio-personalizado::after {
+    content: "";
+    width: 13px;
+    height: 13px;
+    background-color: rgb(170, 27, 49);
+    border-radius: 50%;
+}
+
+.config-parte2{
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 35px; 
+}
+
+.sub-abaixo-config{ 
+    display: flex; 
+    flex-direction: column; 
+    gap: 5px; 
+    margin-left: 50px;
+} 
+
+.sub-abaixo-config h2{ 
+    color: rgb(170, 27, 49); 
+    font-size: 20px; 
+} 
+
+.sub-abaixo-config p{ 
+    color: gray; 
+} 
+
+ h1{
+    color: rgb(170, 27, 49);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   (o layout de desktop acima permanece exatamente igual)
+   ========================================================= */
+
+/* Tablets */
+@media (max-width: 900px) {
+    .campo-editar {
+        gap: 40px;
+    }
+
+    .abaixo {
+        flex-wrap: wrap;
+        gap: 20px 30px;
+    }
+
+    .container-abaixo {
+        width: 100%;
+    }
+
+    .editar-foto p {
+        width: 70%;
+    }
+}
+
+/* Celulares grandes */
+@media (max-width: 768px) {
+    .perfil-container {
+        width: 94%;
+        margin-top: 25px;
+        padding: 30px 15px;
+        gap: 25px;
+        box-sizing: border-box;
+    }
+
+    /* Topo do perfil */
+    .topo {
+        flex-wrap: wrap;
+    }
+
+    .isolar-btn-editar {
+        margin-right: 0;
+        justify-content: flex-start;
+    }
+
+    .btn-editar h2 {
+        font-size: 16px;
+    }
+
+    .sub-dados-destaque-topo {
+        flex-wrap: wrap;
+        white-space: normal;
+        gap: 8px 12px;
+    }
+
+    .sub-dados-destaque-topo p {
+        font-size: 15px;
+    }
+
+    .sub-dados-destaque-topo hr {
+        display: none;
+    }
+
+    /* Dados do perfil */
+    .abaixo {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .parte2,
+    .parte3 {
+        width: 100%;
+    }
+
+    .sub-abaixo-senha,
+    .sub-abaixo-2fa {
+        flex-wrap: wrap;
+        gap: 10px 20px;
+    }
+
+    /* Editar perfil */
+    .circulo-voltar img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .editar-foto-abaixo {
+        flex-wrap: wrap;
+        gap: 15px 20px;
+    }
+
+    .editar-foto p {
+        width: 100%;
+    }
+
+    .campo-editar {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Configurações */
+    .exemplo-icones {
+        flex-wrap: wrap;
+    }
+
+    .opcoes-tema {
+        flex-wrap: wrap;
+        gap: 10px 20px;
+    }
+
+    .sub-abaixo-config {
+        margin-left: 0;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .perfil-container {
+        width: 96%;
+        padding: 25px 12px;
+    }
+
+    .sub-abaixo h2,
+    .sub-abaixo-config h2 {
+        font-size: 18px;
+    }
+
+    .fechar-salvar {
+        flex-wrap: wrap;
+    }
+
+    .fechar-salvar a,
+    .fechar-salvar button {
+        flex: 1 1 120px;
+    }
+
+    .btn-editar-senha {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   TELAS GRANDES (monitores externos, 2K, 4K)
+   Amplia a página inteira proporcionalmente, sem mudar o layout.
+   Mesmo padrão dos outros arquivos: se mais de um estiver na mesma
+   página, os valores são idênticos e não se acumulam.
+   ========================================================= */
+
+:root {
+    --z: 1;
+}
+
+@media (min-width: 1700px) {
+    :root { --z: 1.15; }
+}
+
+@media (min-width: 2000px) {
+    :root { --z: 1.3; }
+}
+
+@media (min-width: 2500px) {
+    :root { --z: 1.6; }
+}
+
+@media (min-width: 3200px) {
+    :root { --z: 2; }
+}
+
+@media (min-width: 1700px) {
+    body {
+        zoom: var(--z);
+        min-height: calc(100vh / var(--z));
+    }
+}

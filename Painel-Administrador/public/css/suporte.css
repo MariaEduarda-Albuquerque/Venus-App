@@ -1,0 +1,329 @@
+body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    color: #a71930;
+}
+
+.direita {
+    padding: 30px 40px;
+}
+
+.Titulo-Pagina{
+    display: flex;
+    width: 100%;
+    max-width: 1050px;
+    justify-content: flex-start;
+    padding: 30px 20px;
+}
+
+.direita > h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #a71930;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    text-align: start;
+}
+
+
+.container-denuncia {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 25px 30px;
+    max-width: 1050px;
+}
+
+.divisor {
+    border: none;
+    border-top: 1px solid #e1e1e1;
+    margin: 20px 0;
+}
+
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.grupo-de-txt .id-titulo {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.grupo-de-txt .id-titulo h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #a71930;
+    white-space: nowrap;
+}
+
+.grupo-de-txt .id-titulo p {
+    font-size: 15px;
+    font-weight: 400;
+    color: #666666;
+}
+
+.grupo-de-txt > p {
+    font-size: 13px;
+    color: #999999;
+    margin-top: 4px;
+}
+
+.setas-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.setas-nav .seta-voltar,
+.setas-nav .seta-avancar {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #a71930;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.setas-nav h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #a71930;
+}
+
+
+.nome-perfil {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.nome-perfil img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.textos-nome-perfil h1 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a71930;
+}
+
+.textos-nome-perfil p {
+    font-size: 13px;
+    color: #999999;
+}
+
+.mensagem p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555555;
+    white-space: pre-line;
+}
+
+
+.mandar-resposta {
+    background-color: #a71930;
+    border-radius: 12px;
+    padding: 18px 20px;
+}
+
+.mandar-resposta input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.mandar-resposta input::placeholder {
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+.mandar-resposta {
+    display: flex;
+    flex-direction: column;
+}
+
+.mandar-resposta > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mandar-resposta > div img {
+    width: 18px;
+    height: 18px;
+}
+
+.mandar-resposta > div h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+
+.mandar-resposta {
+    position: relative;
+}
+
+.mandar-resposta > div {
+    margin-top: 4px;
+}
+
+.mandar-resposta button {
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+
+    background-color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 22px;
+    cursor: pointer;
+}
+
+.mandar-resposta button h2 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a71930;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   (o layout de desktop acima permanece exatamente igual)
+   ========================================================= */
+
+/* Tablets */
+@media (max-width: 900px) {
+    .direita {
+        padding: 25px 25px;
+    }
+
+    .Titulo-Pagina {
+        padding: 20px 10px;
+    }
+}
+
+/* Celulares grandes */
+@media (max-width: 768px) {
+    .direita {
+        padding: 20px 15px;
+    }
+
+    .Titulo-Pagina {
+        padding: 15px 0;
+    }
+
+    .direita > h1 {
+        font-size: 22px;
+        margin-top: 20px;
+    }
+
+    .container-denuncia {
+        padding: 20px 18px;
+        box-sizing: border-box;
+    }
+
+    .topo {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .grupo-de-txt .id-titulo {
+        flex-wrap: wrap;
+    }
+
+    .grupo-de-txt .id-titulo h1 {
+        white-space: normal;
+        font-size: 17px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .nome-perfil {
+        gap: 10px;
+    }
+
+    .nome-perfil img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .mandar-resposta {
+        padding: 15px;
+    }
+
+    /* o botão deixa de flutuar por cima do conteúdo */
+    .mandar-resposta button {
+        position: static;
+        align-self: flex-end;
+        margin-top: 15px;
+    }
+
+    .mandar-resposta input {
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .direita {
+        padding: 15px 12px;
+    }
+
+    .container-denuncia {
+        padding: 18px 14px;
+    }
+
+    .mandar-resposta button {
+        align-self: stretch;
+        text-align: center;
+    }
+}
+
+/* =========================================================
+   TELAS GRANDES (monitores externos, 2K, 4K)
+   Amplia a página inteira proporcionalmente, sem mudar o layout.
+   Mesmo padrão dos outros arquivos: se mais de um estiver na mesma
+   página, os valores são idênticos e não se acumulam.
+   ========================================================= */
+
+:root {
+    --z: 1;
+}
+
+@media (min-width: 1700px) {
+    :root { --z: 1.15; }
+}
+
+@media (min-width: 2000px) {
+    :root { --z: 1.3; }
+}
+
+@media (min-width: 2500px) {
+    :root { --z: 1.6; }
+}
+
+@media (min-width: 3200px) {
+    :root { --z: 2; }
+}
+
+@media (min-width: 1700px) {
+    body {
+        zoom: var(--z);
+        min-height: calc(100vh / var(--z));
+    }
+}

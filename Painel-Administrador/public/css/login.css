@@ -1,0 +1,302 @@
+body{
+    background-color: #FBF3F6;
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.direita {
+    flex: 0 0 51%;
+    width: 51%;
+    height: 100vh;
+    min-width: 0;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url('/images/fundo-login.png');
+
+    background-size: auto 100%;
+
+    background-position: left center;
+
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+}
+
+
+/* formulario: */
+
+.esquerda{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.esquerda form{
+    background-color: white;
+    margin: 50px auto;
+    padding: 30px; 
+    max-width: 500px; 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+
+    border-radius: 35px;
+}
+
+.colocar-ladoAlado{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.colocar-ladoAlado2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+a{
+    color: rgb(170, 27, 49);
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p{
+    opacity: 0.5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.titulo-subtitulo p{
+    width: 70%;
+}
+
+label{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.input-label{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    border: 1px solid #ccc;  
+    border-radius: 10px;
+    height: 20px;
+    padding: 10px;
+}
+
+.input-com-icone {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icone-input {
+    position: absolute;
+    left: 12px;
+    width: 16px;
+    height: 16px;
+    opacity: 0.6;
+}
+
+.icone-input-direita {
+    position: absolute;
+    right: 12px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.input-com-icone input {
+    width: 100%;
+    padding: 10px 36px 10px 36px;
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 8px;
+}
+
+.lembrar-container{
+    display: flex;
+    align-items: center;
+}
+
+button{
+    background-color: rgb(158, 24, 43);
+    color: white;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+}
+
+
+/* =========================================================
+   CORREÇÃO DAS ONDAS CORTADAS (imagem de fundo)
+
+   Problema: o painel da imagem tinha largura de 51% da TELA, mas a
+   imagem é desenhada com altura de 100% da tela (auto 100%), ou seja,
+   a largura dela depende da ALTURA da tela. Quando a proporção da tela
+   mudava (monitor maior/mais alto), a imagem ficava mais larga que o
+   painel e o overflow: hidden cortava a curva da direita, deixando-a
+   "pontuda". Agora a largura do painel acompanha a altura, mantendo
+   sempre a proporção da imagem, e a curva nunca é cortada.
+
+   --ar-fundo = largura ÷ altura da imagem fundo-login.png.
+   Se mudar a imagem, ajuste este valor (veja nas propriedades do arquivo).
+   Valor um pouco maior que o real é seguro (sobra só área transparente).
+   ========================================================= */
+
+:root {
+    --z: 1;
+    --h: 100vh;
+    --w: 100vw;
+    --ar-fundo: 1.15;
+}
+
+.direita {
+    flex: 0 0 auto;
+    height: var(--h);
+    /* largura pela proporção da imagem, sem passar de (tela - 460px)
+       para o formulário sempre ter espaço */
+    width: min(calc(var(--h) * var(--ar-fundo)), calc(var(--w) - 460px));
+}
+
+.esquerda {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Mesmo tamanho de antes (500px de conteúdo + 30px de padding de cada
+   lado = 560px), só que agora o formulário também encolhe se faltar espaço */
+.esquerda form {
+    width: 100%;
+    max-width: 560px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   (o layout de desktop acima permanece exatamente igual)
+   ========================================================= */
+
+/* Telas "quadradas" ou estreitas (tablet, celular, janela estreita):
+   a imagem vira um banner no topo e o formulário fica embaixo */
+@media (max-width: 900px), (max-aspect-ratio: 17/10) {
+    body {
+        flex-direction: column;
+    }
+
+    .direita {
+        width: 100%;
+        height: 220px;
+        background-size: cover;
+        background-position: center 60%;
+    }
+
+    .esquerda {
+        flex: 1 1 auto;
+        width: 100%;
+        padding: 20px 15px;
+    }
+
+    .esquerda form {
+        margin: 30px auto;
+    }
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .direita {
+        height: 180px;
+    }
+
+    .esquerda {
+        padding: 10px 12px;
+    }
+
+    .esquerda form {
+        padding: 22px 18px;
+        margin: 20px auto;
+        gap: 16px;
+        border-radius: 25px;
+    }
+
+    .esquerda form h1 {
+        font-size: 26px;
+    }
+
+    .titulo-subtitulo p {
+        width: 100%;
+    }
+
+    .colocar-ladoAlado {
+        flex-wrap: wrap;
+        gap: 10px 15px;
+    }
+}
+
+@media (max-width: 380px) {
+    .direita {
+        height: 150px;
+    }
+
+    .esquerda form {
+        padding: 18px 14px;
+    }
+}
+
+
+/* =========================================================
+   TELAS GRANDES (monitores externos, 2K, 4K)
+   Amplia a página inteira proporcionalmente, sem mudar o layout.
+   --h e --w compensam o zoom para a altura/largura da tela, assim a
+   imagem de fundo continua preenchendo a tela sem ser cortada.
+   Mesmo padrão dos outros arquivos.
+   ========================================================= */
+
+@media (min-width: 1700px) {
+    :root {
+        --z: 1.15;
+        --h: calc(100vh / var(--z));
+        --w: calc(100vw / var(--z));
+    }
+}
+
+@media (min-width: 2000px) {
+    :root { --z: 1.3; }
+}
+
+@media (min-width: 2500px) {
+    :root { --z: 1.6; }
+}
+
+@media (min-width: 3200px) {
+    :root { --z: 2; }
+}
+
+@media (min-width: 1700px) {
+    body {
+        zoom: var(--z);
+        min-height: var(--h);
+    }
+}

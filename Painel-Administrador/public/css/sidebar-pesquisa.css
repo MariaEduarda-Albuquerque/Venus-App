@@ -1,0 +1,618 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(242, 242, 242);
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+
+    overflow-x: hidden;
+}
+
+a{
+    color: white;
+   display: flex;
+   align-items: center;
+   gap: 15px;
+}
+
+.submenu a{
+   color: white;
+   display: flex;
+   align-items: center;
+   gap: 15px;
+   width: 100%;
+   justify-content: flex-start;
+   margin-left: 40%;
+}
+
+/* hamburguer menu */
+
+.sidebar{
+    width: 350px;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    background-color: rgb(153, 24, 42);
+    padding: 30px 20px;
+    border-right: 1px solid #e5e5e5;
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    height: fit-content;
+
+    transition: 0.3s;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.topoItem div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.sidebar h1{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.sidebar.fechado {
+    width: 0;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+li{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.sidebar h3{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.sidebar > ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    padding: 0px;
+    width: 100%;
+}
+
+.itemsSidebar {
+  display: flex;
+  flex-direction: column; 
+  width: 100%;
+}
+
+.topoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  width: 100%;
+}
+
+.topoItem-sup-msg {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  flex-direction:row;
+  gap: 20px;
+  width: 100%;
+}
+
+.sidebar li{
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s;
+}
+
+.sidebar .tres-pontos-sidebar{
+    display: none;
+}
+
+.sidebar .ativo{
+    color: white;
+}
+
+.sidebar .tituloFechado{
+    display: none;
+}
+
+.imgMaisOpcoes{
+    transition: transform 0.5s ease;
+}
+
+.virada {
+  transform: rotate(180deg);
+}
+
+.sidebar.compacta {
+    width: 200px;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+}
+
+.sidebar.compacta .tres-pontos-sidebar{
+    display: block;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;  
+    width: 100%;
+    justify-content: center;
+}
+
+.sidebar.compacta .tres-pontos-sidebar span{
+    width: 12px;
+    height: 12px; 
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.sidebar.compacta div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar.compacta ul li {
+    display: none;
+}
+
+.sidebar.compacta .imgMaisOpcoes{
+    display: none;
+}
+
+.sidebar.compacta .tituloAberto{
+    display: none;
+}
+
+.sidebar.compacta .tituloFechado{
+    display: block;
+}
+
+.sidebar .iconeOpcoes{
+    display: none;
+}
+
+.sidebar.compacta .iconeOpcoes{
+    display: block;
+    width: 40px;
+    height: auto;
+}
+
+.submenu {
+  padding-left: 0px;
+  margin-top: 5px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.25s ease;
+}
+
+.submenu.ativo {
+    max-height: 500px;
+    opacity: 1;
+}
+
+
+
+a{
+    text-decoration: none;
+}
+
+
+/* Resto (lado direito) */
+
+.direita {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: flex-start;
+    width: 100%;  
+    border-top: 50px; 
+
+
+    flex: 1;
+    min-width: 0;
+    
+    padding-top: 30px;
+    padding-bottom: 50px;
+    box-sizing: border-box;
+}
+
+/* Barra de pesquisa / demais icones */
+
+.direita .form{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+
+    width: 90%;
+    max-width: 1400px;
+}
+
+.direita .form input {
+    flex: 1;
+    min-width: 820px;
+    max-width: none;
+
+    height: 60px;
+    padding: 10px;
+    box-sizing: border-box;
+
+    border: 1px solid #fff;
+    color: rgb(170, 27, 49);
+}
+
+input::placeholder{
+    color: rgb(170, 27, 49);
+}
+
+.btn-lupa{
+    background-color: white;
+    border: 0px solid white;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 0px;
+    height: 60px;
+}
+
+.btn-lupa img{
+    width: 35px;
+    height: auto;
+}
+
+.btn-sino-perfil{
+    border-right: 0px solid #fff;  
+    border-top: 0.5px solid #fff;  
+    border-bottom: 0.5px solid #fff;  
+    background-color: white;
+    height: 60px;
+    padding: 10px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-sino-perfil img{
+    width: 40px;
+    height: auto;
+}
+
+.sidebar-btn{
+    font-size: 25px;
+    cursor: pointer;
+    padding: 10px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    border-right: 10px solid rgb(242, 242, 242);
+}
+
+.form a{
+    text-decoration: none;
+}
+
+.titulo-tela{
+    font-size: 20px;
+    color: rgb(170, 27, 49);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mini-header-titulo{
+
+    background-color: white;
+    height: 80px;
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.direita .mini-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.btn-miniHeader{
+    border-right: 0px solid #fff;  
+    border-top: 0.5px solid #fff;  
+    border-bottom: 0.5px solid #fff;  
+    background-color: white;
+    height: 60px;
+    padding: 10px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-miniHeader img{
+    width: 30px;
+    height: auto;
+}
+
+.mini-header-container{
+    background-color: white;
+    width: 80%;
+    max-width: 820px;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+}
+.mini-header-container h1{
+    color: rgb(170, 27, 49);
+    font-size: 30px;
+}
+
+
+/* =========================================================
+   CORREÇÕES DO MENU (SIDEBAR)
+   Não alteram a aparência em telas normais; evitam os bugs
+   de espaçamento/corte em telas diferentes.
+   ========================================================= */
+
+/* O menu nunca é "espremido" pelo conteúdo da direita (isso desalinhava
+   os ícones e textos). Também passa a ter altura máxima da tela, com rolagem
+   interna escondida caso o conteúdo seja maior que a tela, em vez de cortar. */
+.sidebar {
+    flex-shrink: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Os itens do submenu tinham width: 100% + margin-left: 40%, ou seja,
+   140% da largura (estourava e era cortado). Com width: auto o texto fica
+   exatamente na mesma posição, só que dentro dos limites do menu. */
+.submenu a {
+    width: auto;
+}
+
+/* Ícones com tamanho padronizado (antes cada um usava o tamanho natural da
+   imagem, então alturas diferentes deixavam o espaçamento irregular e o texto
+   desalinhado, como em "Configurações"). 40px é o mesmo tamanho do modo compacto. */
+.sidebar li img:not(.imgMaisOpcoes) {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.sidebar.compacta .iconeOpcoes {
+    height: 40px;
+    object-fit: contain;
+}
+
+/* No modo compacto, as listas de Configurações e Suporte (dentro de
+   ul.itemsSidebar) ficam vazias, pois o li é escondido, mas continuam
+   ocupando um espaço de 20px cada no layout. Isso deixava o espaçamento
+   desses dois ícones maior que o dos demais. */
+.sidebar.compacta ul.itemsSidebar {
+    display: none;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   (o layout de desktop acima permanece exatamente igual)
+   ========================================================= */
+
+/* Notebooks pequenos: o campo de busca tinha min-width: 820px, o que
+   estourava a tela. Aqui ele passa a poder encolher. */
+@media (max-width: 1400px) {
+    .direita .form input {
+        min-width: 0;
+    }
+}
+
+/* Tablets */
+@media (max-width: 1100px) {
+    .sidebar {
+        width: 300px;
+    }
+
+    .sidebar.compacta {
+        width: 160px;
+        gap: 80px;
+    }
+}
+
+/* Celulares grandes */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 240px;
+        padding: 20px 12px;
+        gap: 15px;
+    }
+
+    .sidebar.compacta {
+        width: 80px;
+        padding: 20px 8px;
+        gap: 60px;
+    }
+
+    .sidebar li {
+        font-size: 17px;
+        padding: 10px;
+    }
+
+    .sidebar a,
+    .topoItem div {
+        gap: 10px;
+    }
+
+    .submenu a {
+        margin-left: 25%;
+    }
+
+    .sidebar.compacta .iconeOpcoes {
+        width: 32px;
+        height: 32px;
+    }
+
+    .sidebar li img:not(.imgMaisOpcoes) {
+        width: 32px;
+        height: 32px;
+    }
+
+    .sidebar.compacta .tres-pontos-sidebar span {
+        width: 9px;
+        height: 9px;
+    }
+
+    /* Cabeçalho */
+    .direita .form {
+        width: 94%;
+    }
+
+    .direita .form input {
+        height: 50px;
+    }
+
+    .btn-lupa,
+    .btn-sino-perfil,
+    .btn-miniHeader {
+        height: 50px;
+    }
+
+    .btn-lupa img {
+        width: 28px;
+    }
+
+    .btn-sino-perfil img {
+        width: 32px;
+    }
+
+    .sidebar-btn {
+        font-size: 20px;
+        padding: 8px 14px;
+    }
+
+    .titulo-tela {
+        font-size: 17px;
+    }
+
+    .mini-header-container {
+        width: auto;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mini-header-container h1 {
+        font-size: 22px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 210px;
+    }
+
+    .sidebar.compacta {
+        width: 70px;
+        padding: 20px 6px;
+    }
+
+    .mini-header-container h1 {
+        font-size: 18px;
+    }
+
+    .direita .form input {
+        font-size: 14px;
+    }
+}
+
+/* =========================================================
+   TELAS GRANDES (monitores externos, 2K, 4K)
+   Amplia a página inteira proporcionalmente, sem mudar o layout.
+   Mesmo padrão dos outros arquivos: se mais de um estiver na mesma
+   página, os valores são idênticos e não se acumulam.
+   O sidebar também é compensado: sem isso, o min-height: 100vh dele
+   ficaria maior que a tela quando o zoom é aplicado.
+   ========================================================= */
+
+:root {
+    --z: 1;
+}
+
+@media (min-width: 1700px) {
+    :root { --z: 1.15; }
+}
+
+@media (min-width: 2000px) {
+    :root { --z: 1.3; }
+}
+
+@media (min-width: 2500px) {
+    :root { --z: 1.6; }
+}
+
+@media (min-width: 3200px) {
+    :root { --z: 2; }
+}
+
+@media (min-width: 1700px) {
+    body {
+        zoom: var(--z);
+        min-height: calc(100vh / var(--z));
+    }
+
+    .sidebar {
+        min-height: calc(100vh / var(--z));
+        max-height: calc(100vh / var(--z));
+    }
+}
