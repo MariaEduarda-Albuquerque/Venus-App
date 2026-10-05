@@ -1,105 +1,209 @@
-body{
+/* =========================================================
+   LOGIN ADM
+   Fiel ao protótipo, responsivo e estável com o zoom do navegador.
+   Sem "zoom" no body: tudo escala via rem + clamp().
+   ========================================================= */
+
+/* Base fluida desta página (tela dividida: imagem + formulário).
+   Cresce com a LARGURA, mas nunca passa do que a ALTURA comporta,
+   assim o card sempre cabe na tela e acompanha o tamanho da imagem.
+   ~16,5px em 1600x764 (tamanho do protótipo), ~19px em 1920x1080,
+   ~25px em 2560x1440, ~36px em 4K. */
+html {
+    font-size: clamp(14px, min(0.85vw + 3px, 1.9vh + 2px), 56px);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+:root {
+    --vinho: #8c1030;
+    --rosa: #d63a6a;
+
+    /* largura ÷ altura da imagem fundo-login.png.
+       Se trocar a imagem, ajuste este valor (veja nas propriedades do arquivo).
+       Um valor um pouco maior que o real é seguro (sobra só área transparente);
+       menor que o real corta a curva da direita. */
+    --ar-fundo: 1.15;
+}
+
+body {
     background-color: #FBF3F6;
     display: flex;
     flex-direction: row;
     min-height: 100vh;
+    min-height: 100dvh;
     margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
+
+/* =========================================================
+   PAINEL DA IMAGEM (ondas)
+
+   Por que as ondas ficavam "poligonais/pontudas":
+   a imagem é desenhada com a ALTURA da tela (auto 100%), então a
+   largura dela é altura × proporção. Com o painel em % da LARGURA da
+   tela (51%), qualquer tela com proporção diferente fazia o painel ficar
+   mais estreito que a imagem e a curva da direita era cortada.
+
+   Solução: o painel tem SEMPRE a proporção da imagem (largura = altura ×
+   --ar-fundo). A imagem nunca é cortada nem esticada, em qualquer tela.
+   Quando a tela é "quadrada/estreita" demais para isso, o layout vira
+   banner + formulário (media query mais abaixo).
+   ========================================================= */
+
 .direita {
-    flex: 0 0 51%;
-    width: 51%;
-    height: 100vh;
-    min-width: 0;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    position: sticky;
+    top: 0;
     box-sizing: border-box;
+    min-width: 0;
+
+    height: 100vh;
+    height: 100dvh;
+    width: calc(100vh * var(--ar-fundo));
+    width: calc(100dvh * var(--ar-fundo));
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     background-image: url('/images/fundo-login.png');
-
     background-size: auto 100%;
-
     background-position: left center;
-
     background-repeat: no-repeat;
-
-    overflow: hidden;
 }
 
 
-/* formulario: */
+/* =========================================================
+   ÁREA DO FORMULÁRIO
+   ========================================================= */
 
-.esquerda{
+.esquerda {
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 0;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 0 1.25rem;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50%;
 }
 
-.esquerda form{
+/* arcos decorativos do fundo (canto superior e inferior direito) */
+.esquerda::before,
+.esquerda::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.esquerda::before {
+    top: -10rem;
+    right: -8rem;
+    width: 17rem;
+    height: 17rem;
+    border: 1px solid rgba(214, 58, 106, 0.3);
+}
+
+.esquerda::after {
+    bottom: -8rem;
+    right: -7rem;
+    width: 14rem;
+    height: 14rem;
+    border: 1px solid rgba(214, 58, 106, 0.4);
+    background-color: rgba(214, 58, 106, 0.06);
+}
+
+.esquerda form {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 36.5rem;
+    margin: 2rem auto;
+    padding: 2.75rem 2.875rem;
+
     background-color: white;
-    margin: 50px auto;
-    padding: 30px; 
-    max-width: 500px; 
+    border-radius: 1.5rem;
+    box-shadow: 0 0.6rem 2.2rem rgba(140, 16, 48, 0.08);
 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
-
-    border-radius: 35px;
+    gap: 1.375rem;
 }
 
-.colocar-ladoAlado{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+
+/* ---------- TÍTULO ---------- */
+
+/* tracinho rosa acima do título */
+.titulo-subtitulo::before {
+    content: "";
+    display: block;
+    width: 3.1rem;
+    height: 0.19rem;
+    margin-bottom: 0.9rem;
+    border-radius: 0.2rem;
+    background-color: var(--rosa);
 }
 
-.colocar-ladoAlado2{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+h1 {
+    color: var(--vinho);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.1rem;
+    line-height: 1.1;
+    margin: 0 0 0.6rem;
 }
 
-a{
-    color: rgb(170, 27, 49);
+p {
+    color: #6b7280;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.titulo-subtitulo p {
+    width: 72%;
+}
+
+a {
+    color: var(--rosa);
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-h1{
-    color: rgb(170, 27, 49);
+
+/* ---------- CAMPOS ---------- */
+
+label {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.95rem;
+    color: #111111;
 }
 
-p{
-    opacity: 0.5;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.titulo-subtitulo p{
-    width: 70%;
-}
-
-label{
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.input-label{
+.input-label {
     display: flex;
     flex-direction: column;
+    gap: 0.45rem;
 }
 
-input{
-    border: 1px solid #ccc;  
-    border-radius: 10px;
-    height: 20px;
-    padding: 10px;
+input {
+    box-sizing: border-box;
+    border: 1px solid #d9d9de;
+    border-radius: 0.75rem;
+    height: 3rem;
+    padding: 0 0.875rem;
+    font-size: 0.9rem;
+}
+
+input::placeholder {
+    color: #8a8f99;
 }
 
 .input-com-icone {
@@ -108,107 +212,137 @@ input{
     align-items: center;
 }
 
+.input-com-icone input {
+    width: 100%;
+    padding: 0 2.75rem;
+    border: 1px solid #d9d9de;
+    border-radius: 0.75rem;
+}
+
 .icone-input {
     position: absolute;
-    left: 12px;
-    width: 16px;
-    height: 16px;
+    left: 1rem;
+    width: 1.1rem;
+    height: 1.1rem;
     opacity: 0.6;
 }
 
 .icone-input-direita {
     position: absolute;
-    right: 12px;
-    width: 18px;
-    height: 18px;
+    right: 1rem;
+    width: 1.15rem;
+    height: 1.15rem;
     opacity: 0.6;
     cursor: pointer;
 }
 
-.input-com-icone input {
-    width: 100%;
-    padding: 10px 36px 10px 36px;
-    border: 1px solid rgb(200, 200, 200);
-    border-radius: 8px;
+
+/* ---------- LEMBRAR / ESQUECI ---------- */
+
+.colocar-ladoAlado {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
 }
 
-.lembrar-container{
+.lembrar-container {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
 }
 
-button{
-    background-color: rgb(158, 24, 43);
-    color: white;
-    height: 40px;
-    border-radius: 10px;
-    border: none;
+.lembrar-container label {
+    font-size: 0.875rem;
+}
+
+input[type="checkbox"] {
+    width: 1.05rem;
+    height: 1.05rem;
+    padding: 0;
+    margin: 0;
+    border-radius: 0.3rem;
+    accent-color: var(--vinho);
+}
+
+.colocar-ladoAlado a {
+    font-size: 0.875rem;
+    font-weight: 500;
 }
 
 
-/* =========================================================
-   CORREÇÃO DAS ONDAS CORTADAS (imagem de fundo)
+/* ---------- BOTÃO ---------- */
 
-   Problema: o painel da imagem tinha largura de 51% da TELA, mas a
-   imagem é desenhada com altura de 100% da tela (auto 100%), ou seja,
-   a largura dela depende da ALTURA da tela. Quando a proporção da tela
-   mudava (monitor maior/mais alto), a imagem ficava mais larga que o
-   painel e o overflow: hidden cortava a curva da direita, deixando-a
-   "pontuda". Agora a largura do painel acompanha a altura, mantendo
-   sempre a proporção da imagem, e a curva nunca é cortada.
-
-   --ar-fundo = largura ÷ altura da imagem fundo-login.png.
-   Se mudar a imagem, ajuste este valor (veja nas propriedades do arquivo).
-   Valor um pouco maior que o real é seguro (sobra só área transparente).
-   ========================================================= */
-
-:root {
-    --z: 1;
-    --h: 100vh;
-    --w: 100vw;
-    --ar-fundo: 1.15;
-}
-
-.direita {
-    flex: 0 0 auto;
-    height: var(--h);
-    /* largura pela proporção da imagem, sem passar de (tela - 460px)
-       para o formulário sempre ter espaço */
-    width: min(calc(var(--h) * var(--ar-fundo)), calc(var(--w) - 460px));
-}
-
-.esquerda {
-    flex: 1 1 0;
-    width: auto;
-    min-width: 0;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-/* Mesmo tamanho de antes (500px de conteúdo + 30px de padding de cada
-   lado = 560px), só que agora o formulário também encolhe se faltar espaço */
-.esquerda form {
+.esquerda form button {
+    position: relative;
     width: 100%;
-    max-width: 560px;
-    box-sizing: border-box;
+    height: 3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--vinho);
+    color: white;
+    border: none;
+    border-radius: 0.875rem;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.esquerda form button img {
+    position: absolute;
+    right: 1.25rem;
+    width: 1.2rem;
+    height: auto;
+}
+
+
+/* ---------- RODAPÉ DO CARD ---------- */
+
+.colocar-ladoAlado2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+
+    margin: -0.25rem 1rem 0;
+    padding-top: 1.1rem;
+    border-top: 1px solid #efe4e8;
+}
+
+.colocar-ladoAlado2 p,
+.colocar-ladoAlado2 a {
+    font-size: 0.875rem;
+}
+
+.colocar-ladoAlado2 a {
+    font-weight: 600;
 }
 
 
 /* =========================================================
    RESPONSIVIDADE
-   (o layout de desktop acima permanece exatamente igual)
    ========================================================= */
 
 /* Telas "quadradas" ou estreitas (tablet, celular, janela estreita):
-   a imagem vira um banner no topo e o formulário fica embaixo */
+   não sobra espaço ao lado da imagem, então ela vira um banner no topo
+   e o formulário fica embaixo. */
 @media (max-width: 900px), (max-aspect-ratio: 17/10) {
     body {
         flex-direction: column;
     }
 
     .direita {
+        position: static;
+        align-self: stretch;
         width: 100%;
-        height: 220px;
+        height: clamp(9rem, 26vh, 16rem);
         background-size: cover;
         background-position: center 60%;
     }
@@ -216,33 +350,34 @@ button{
     .esquerda {
         flex: 1 1 auto;
         width: 100%;
-        padding: 20px 15px;
+        padding: 1rem 0.9rem;
+    }
+
+    .esquerda::before,
+    .esquerda::after {
+        display: none;
     }
 
     .esquerda form {
-        margin: 30px auto;
+        margin: 1.5rem auto;
     }
 }
 
 /* Celulares */
 @media (max-width: 600px) {
-    .direita {
-        height: 180px;
-    }
-
     .esquerda {
-        padding: 10px 12px;
+        padding: 0.625rem 0.75rem;
     }
 
     .esquerda form {
-        padding: 22px 18px;
-        margin: 20px auto;
-        gap: 16px;
-        border-radius: 25px;
+        padding: 1.5rem 1.15rem;
+        margin: 1.25rem auto;
+        gap: 1.1rem;
+        border-radius: 1.4rem;
     }
 
-    .esquerda form h1 {
-        font-size: 26px;
+    h1 {
+        font-size: 1.7rem;
     }
 
     .titulo-subtitulo p {
@@ -251,52 +386,17 @@ button{
 
     .colocar-ladoAlado {
         flex-wrap: wrap;
-        gap: 10px 15px;
+        gap: 0.625rem 1rem;
+    }
+
+    .colocar-ladoAlado2 {
+        flex-wrap: wrap;
+        margin-inline: 0;
     }
 }
 
 @media (max-width: 380px) {
-    .direita {
-        height: 150px;
-    }
-
     .esquerda form {
-        padding: 18px 14px;
-    }
-}
-
-
-/* =========================================================
-   TELAS GRANDES (monitores externos, 2K, 4K)
-   Amplia a página inteira proporcionalmente, sem mudar o layout.
-   --h e --w compensam o zoom para a altura/largura da tela, assim a
-   imagem de fundo continua preenchendo a tela sem ser cortada.
-   Mesmo padrão dos outros arquivos.
-   ========================================================= */
-
-@media (min-width: 1700px) {
-    :root {
-        --z: 1.15;
-        --h: calc(100vh / var(--z));
-        --w: calc(100vw / var(--z));
-    }
-}
-
-@media (min-width: 2000px) {
-    :root { --z: 1.3; }
-}
-
-@media (min-width: 2500px) {
-    :root { --z: 1.6; }
-}
-
-@media (min-width: 3200px) {
-    :root { --z: 2; }
-}
-
-@media (min-width: 1700px) {
-    body {
-        zoom: var(--z);
-        min-height: var(--h);
+        padding: 1.15rem 0.9rem;
     }
 }

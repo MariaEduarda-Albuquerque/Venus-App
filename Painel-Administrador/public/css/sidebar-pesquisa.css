@@ -1,3 +1,7 @@
+/* =========================================================
+   BASE
+   ========================================================= */
+
 *,
 *::before,
 *::after {
@@ -6,70 +10,271 @@
     box-sizing: border-box;
 }
 
-body{
-    background-color: rgb(242, 242, 242);
+body {
     display: flex;
     flex-direction: row;
     min-height: 100vh;
-    margin: 0;
+
+    background-color: #f2f2f2;
     font-family: Arial, Helvetica, sans-serif;
 
     overflow-x: hidden;
 }
 
-a{
-    color: white;
-   display: flex;
-   align-items: center;
-   gap: 15px;
+a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #ffffff;
+    text-decoration: none;
 }
 
-.submenu a{
-   color: white;
-   display: flex;
-   align-items: center;
-   gap: 15px;
-   width: 100%;
-   justify-content: flex-start;
-   margin-left: 40%;
+li {
+    color: #ffffff;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
 }
 
-/* hamburguer menu */
 
-.sidebar{
-    width: 350px;
+/* =========================================================
+   SIDEBAR (aberta)
+   ========================================================= */
 
-    overflow-x: hidden;
-    overflow-y: hidden;
+.sidebar {
+    flex-shrink: 0;
+    align-self: flex-start;
 
-    background-color: rgb(153, 24, 42);
-    padding: 30px 20px;
-    border-right: 1px solid #e5e5e5;
     position: sticky;
     top: 0;
-    min-height: 100vh;
-    height: fit-content;
 
-    transition: 0.3s;
+    width: 250px;
+    height: 100vh;
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 56px;
+
+    padding: 20px 14px;
+
+    background-color: #99182a;
+
+    /* rolagem interna escondida: se o menu for maior que a tela, não corta */
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    transition: width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
 }
 
-.topoItem div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    gap: 15px;
+.sidebar::-webkit-scrollbar {
+    display: none;
 }
 
-.sidebar h1{
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+.sidebar h1 {
+    margin-bottom: 16px;
+    color: #ffffff;
+    font-size: 22px;
     text-align: center;
 }
+
+.sidebar h3 {
+    margin-bottom: 14px;
+    color: #ffffff;
+}
+
+/* os dois grupos da sidebar: itens de cima e rodapé (Configurações / Suporte) */
+.sidebar > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* o rodapé é empurrado para baixo; o gap da sidebar garante a distância mínima */
+.sidebar > div:last-child {
+    margin-top: auto;
+}
+
+.itemsSidebar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.topoItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.topoItem div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.topoItem-sup-msg {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+
+    width: 100%;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+    padding: 0;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+/* a "caixa" do item (e do destaque) é só a linha principal, sem o submenu */
+.sidebar .topoItem,
+.sidebar li.topoItem-sup-msg {
+    padding: 12px 18px 12px 24px;
+
+    border-radius: 10px;
+
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .topoItem:hover,
+.sidebar li.topoItem-sup-msg:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* item selecionado / aberto (ex.: "Painel", "Usuários") */
+.sidebar .topoItem.ativo,
+.sidebar li.ativo > .topoItem,
+.sidebar .itemsSidebar:has(> .submenu.ativo) > .topoItem,
+.sidebar li.topoItem-sup-msg.ativo {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+.sidebar .ativo {
+    color: #ffffff;
+}
+
+/* mesma distância ícone-texto em todos os itens (com ou sem link) */
+.sidebar a {
+    gap: 16px;
+}
+
+/* ícones com tamanho padronizado */
+.sidebar li img:not(.imgMaisOpcoes) {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+/* seta do submenu */
+.imgMaisOpcoes {
+    width: 16px;
+    height: auto;
+    transition: transform 0.5s ease;
+}
+
+.virada {
+    transform: rotate(180deg);
+}
+
+/* contador (ex.: "5" ao lado de Painel) */
+.sidebar .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 20px;
+    height: 18px;
+    padding: 0 6px;
+    margin-right: 6px;
+
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #99182a;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* títulos: "Vênus" (aberta) e "V." (compacta) */
+.sidebar .tituloFechado {
+    display: none;
+}
+
+.sidebar .tres-pontos-sidebar,
+.sidebar .iconeOpcoes {
+    display: none;
+}
+
+
+/* ---------- Submenu ---------- */
+
+.submenu {
+    max-height: 0;
+    margin-top: 4px;
+    opacity: 0;
+    overflow: hidden;
+
+    transition: max-height 0.3s ease, opacity 0.25s ease;
+}
+
+.submenu.ativo {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.submenu li {
+    margin-bottom: 0;
+    padding: 8px 0;
+    list-style: disc;
+
+    font-size: 12px;
+}
+
+.submenu li:hover,
+.sidebar .submenu li.ativo {
+    background-color: transparent;
+}
+
+/* bolinha vazada no subitem da página atual */
+.submenu li.ativo,
+.submenu a.ativo li {
+    list-style: circle;
+}
+
+.sidebar .submenu a {
+    width: auto;
+    justify-content: flex-start;
+    gap: 10px;
+
+    margin-left: 0;
+    padding-left: 84px;
+
+    color: #ffffff;
+    font-size: 12px;
+}
+
+/* bolinhas do submenu */
+.sidebar li .submenu a img {
+    width: 8px;
+    height: 8px;
+}
+
+
+/* =========================================================
+   SIDEBAR (fechada e compacta)
+   ========================================================= */
 
 .sidebar.fechado {
     width: 0;
@@ -79,540 +284,378 @@ a{
     pointer-events: none;
 }
 
-li{
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    text-decoration: none;
-    font-size: 20px;
+.sidebar.compacta {
+    width: 124px;
+    padding: 20px 8px;
+    gap: 56px;
 }
 
-.sidebar h3{
-    font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 20px;
-    color: #fff;
-}
-
-.sidebar > ul{
+.sidebar.compacta div {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    list-style: none;
-    padding: 0px;
+    gap: 28px;
+
     width: 100%;
 }
 
-.itemsSidebar {
-  display: flex;
-  flex-direction: column; 
-  width: 100%;
-}
-
-.topoItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; 
-  width: 100%;
-}
-
-.topoItem-sup-msg {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; 
-  flex-direction:row;
-  gap: 20px;
-  width: 100%;
-}
-
-.sidebar li{
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
-    transition: 0.3s;
-}
-
-.sidebar .tres-pontos-sidebar{
+.sidebar.compacta ul li,
+.sidebar.compacta ul.itemsSidebar,
+.sidebar.compacta .imgMaisOpcoes,
+.sidebar.compacta .tituloAberto {
     display: none;
 }
 
-.sidebar .ativo{
-    color: white;
-}
-
-.sidebar .tituloFechado{
-    display: none;
-}
-
-.imgMaisOpcoes{
-    transition: transform 0.5s ease;
-}
-
-.virada {
-  transform: rotate(180deg);
-}
-
-.sidebar.compacta {
-    width: 200px;
-    
-    display: flex;
-    flex-direction: column;
-    gap: 120px;
-}
-
-.sidebar.compacta .tres-pontos-sidebar{
+.sidebar.compacta .tituloFechado {
     display: block;
+}
+
+.sidebar.compacta .iconeOpcoes {
+    display: block;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+/* três pontinhos (início do grupo do rodapé) */
+.sidebar.compacta .tres-pontos-sidebar {
     display: flex;
     flex-direction: row;
-    gap: 5px;  
-    width: 100%;
     justify-content: center;
+    gap: 4px;
+
+    width: 100%;
+    margin-bottom: 6px;
 }
 
-.sidebar.compacta .tres-pontos-sidebar span{
-    width: 12px;
-    height: 12px; 
-    background-color: #fff;
+.sidebar.compacta .tres-pontos-sidebar span {
+    width: 8px;
+    height: 8px;
+
     border-radius: 50%;
+    background-color: #ffffff;
 }
 
-.sidebar.compacta div{
+
+/* =========================================================
+   ÁREA À DIREITA (ocupa toda a largura restante)
+   ========================================================= */
+
+.direita {
+    flex: 1;
+    min-width: 0;
+
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    align-items: stretch;
+    justify-content: flex-start;
+
     width: 100%;
+    padding: 14px 20px 40px;
+}
+
+
+/* ---------- Barra de pesquisa (menu + busca + ícones) ---------- */
+
+.direita .form {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    width: 100%;
+    height: 52px;
+}
+
+/* botão do menu (hambúrguer); a borda faz o espaço até a busca */
+.sidebar-btn {
+    display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 0 16px;
+
+    background-color: #ffffff;
+    border-right: 8px solid #f2f2f2;
+    border-radius: 6px;
+
+    color: #99182a;
+    font-size: 22px;
+
+    cursor: pointer;
+    user-select: none;
 }
 
-.sidebar.compacta ul li {
-    display: none;
+.direita .form input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+
+    padding: 0 10px;
+
+    border: none;
+    outline: none;
+    border-radius: 0;
+
+    background-color: #ffffff;
+    color: #99182a;
+
+    font-size: 14px;
+    font-weight: 700;
 }
 
-.sidebar.compacta .imgMaisOpcoes{
-    display: none;
+input::placeholder {
+    color: #99182a;
 }
 
-.sidebar.compacta .tituloAberto{
-    display: none;
+.btn-lupa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    padding: 0 8px 0 16px;
+
+    border: none;
+    border-radius: 6px 0 0 6px;
+    background-color: #ffffff;
+
+    cursor: pointer;
 }
 
-.sidebar.compacta .tituloFechado{
-    display: block;
-}
-
-.sidebar .iconeOpcoes{
-    display: none;
-}
-
-.sidebar.compacta .iconeOpcoes{
-    display: block;
-    width: 40px;
+.btn-lupa img {
+    width: 22px;
     height: auto;
 }
 
-.submenu {
-  padding-left: 0px;
-  margin-top: 5px;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.25s ease;
-}
-
-.submenu.ativo {
-    max-height: 500px;
-    opacity: 1;
-}
-
-
-
-a{
-    text-decoration: none;
-}
-
-
-/* Resto (lado direito) */
-
-.direita {
+.btn-sino-perfil {
     display: flex;
-    flex-direction: column;
-    align-items: center;    
-    justify-content: flex-start;
-    width: 100%;  
-    border-top: 50px; 
+    justify-content: center;
+    align-items: center;
 
+    width: 44px;
+    height: 100%;
+    padding: 0;
 
-    flex: 1;
-    min-width: 0;
-    
-    padding-top: 30px;
-    padding-bottom: 50px;
-    box-sizing: border-box;
+    border: none;
+    background-color: #ffffff;
 }
 
-/* Barra de pesquisa / demais icones */
+.btn-sino-perfil img {
+    width: 28px;
+    height: auto;
+}
 
-.direita .form{
+/* Se a lupa, o campo e os ícones estiverem dentro de um <form>/<div> próprio
+   (dentro de .form), esse grupo ocupa TODO o espaço restante da linha e o campo
+   preenche o grupo. Sem isso o campo ficava com a largura padrão e a barra,
+   encolhida no centro. */
+.direita .form > :has(input) {
+    flex: 1 1 0;
+    min-width: 0;
+
+    display: flex;
+    align-items: stretch;
+
+    background-color: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.direita .form > :has(input) input {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+}
+
+/* o último item da barra fecha o canto direito arredondado */
+.direita .form > :last-child,
+.direita .form > :last-child .btn-sino-perfil {
+    border-radius: 0 6px 6px 0;
+}
+
+.direita .form > :last-child {
+    padding-right: 6px;
+    background-color: #ffffff;
+}
+
+
+/* ---------- Mini header (título da tela + ícones) ---------- */
+
+.direita .mini-header {
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: center;
 
-    width: 90%;
-    max-width: 1400px;
+    width: 100%;
+    height: 52px;
 }
 
-.direita .form input {
+.mini-header-container,
+.mini-header-titulo {
     flex: 1;
-    min-width: 820px;
-    max-width: none;
-
-    height: 60px;
-    padding: 10px;
-    box-sizing: border-box;
-
-    border: 1px solid #fff;
-    color: rgb(170, 27, 49);
-}
-
-input::placeholder{
-    color: rgb(170, 27, 49);
-}
-
-.btn-lupa{
-    background-color: white;
-    border: 0px solid white;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 10px 0px;
-    height: 60px;
-}
-
-.btn-lupa img{
-    width: 35px;
-    height: auto;
-}
-
-.btn-sino-perfil{
-    border-right: 0px solid #fff;  
-    border-top: 0.5px solid #fff;  
-    border-bottom: 0.5px solid #fff;  
-    background-color: white;
-    height: 60px;
-    padding: 10px;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn-sino-perfil img{
-    width: 40px;
-    height: auto;
-}
-
-.sidebar-btn{
-    font-size: 25px;
-    cursor: pointer;
-    padding: 10px 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-    color: rgb(170, 27, 49);
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: white;
-    border-right: 10px solid rgb(242, 242, 242);
-}
-
-.form a{
-    text-decoration: none;
-}
-
-.titulo-tela{
-    font-size: 20px;
-    color: rgb(170, 27, 49);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.mini-header-titulo{
-
-    background-color: white;
-    height: 80px;
-    width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-
-}
-
-.direita .mini-header{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-    width: 100%;
-}
-
-.btn-miniHeader{
-    border-right: 0px solid #fff;  
-    border-top: 0.5px solid #fff;  
-    border-bottom: 0.5px solid #fff;  
-    background-color: white;
-    height: 60px;
-    padding: 10px;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn-miniHeader img{
-    width: 30px;
-    height: auto;
-}
-
-.mini-header-container{
-    background-color: white;
-    width: 80%;
-    max-width: 820px;
-    display: flex;
-    align-items: center;
-    padding: 0px 10px;
-}
-.mini-header-container h1{
-    color: rgb(170, 27, 49);
-    font-size: 30px;
-}
-
-
-/* =========================================================
-   CORREÇÕES DO MENU (SIDEBAR)
-   Não alteram a aparência em telas normais; evitam os bugs
-   de espaçamento/corte em telas diferentes.
-   ========================================================= */
-
-/* O menu nunca é "espremido" pelo conteúdo da direita (isso desalinhava
-   os ícones e textos). Também passa a ter altura máxima da tela, com rolagem
-   interna escondida caso o conteúdo seja maior que a tela, em vez de cortar. */
-.sidebar {
-    flex-shrink: 0;
-    max-height: 100vh;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.sidebar::-webkit-scrollbar {
-    display: none;
-}
-
-/* Os itens do submenu tinham width: 100% + margin-left: 40%, ou seja,
-   140% da largura (estourava e era cortado). Com width: auto o texto fica
-   exatamente na mesma posição, só que dentro dos limites do menu. */
-.submenu a {
+    min-width: 0;
     width: auto;
+    max-width: none;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0 16px;
+
+    background-color: #ffffff;
+    border-radius: 6px 0 0 6px;
 }
 
-/* Ícones com tamanho padronizado (antes cada um usava o tamanho natural da
-   imagem, então alturas diferentes deixavam o espaçamento irregular e o texto
-   desalinhado, como em "Configurações"). 40px é o mesmo tamanho do modo compacto. */
-.sidebar li img:not(.imgMaisOpcoes) {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    flex-shrink: 0;
+.mini-header-container h1 {
+    color: #99182a;
+    font-size: 20px;
 }
 
-.sidebar.compacta .iconeOpcoes {
-    height: 40px;
-    object-fit: contain;
+.titulo-tela {
+    color: #99182a;
+    font-size: 20px;
 }
 
-/* No modo compacto, as listas de Configurações e Suporte (dentro de
-   ul.itemsSidebar) ficam vazias, pois o li é escondido, mas continuam
-   ocupando um espaço de 20px cada no layout. Isso deixava o espaçamento
-   desses dois ícones maior que o dos demais. */
-.sidebar.compacta ul.itemsSidebar {
-    display: none;
+.btn-miniHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 44px;
+    height: 100%;
+    padding: 0;
+
+    border: none;
+    background-color: #ffffff;
+}
+
+.btn-miniHeader:last-child {
+    padding-right: 6px;
+    width: 50px;
+    border-radius: 0 6px 6px 0;
+}
+
+.btn-miniHeader img {
+    width: 28px;
+    height: auto;
 }
 
 
 /* =========================================================
    RESPONSIVIDADE
-   (o layout de desktop acima permanece exatamente igual)
    ========================================================= */
-
-/* Notebooks pequenos: o campo de busca tinha min-width: 820px, o que
-   estourava a tela. Aqui ele passa a poder encolher. */
-@media (max-width: 1400px) {
-    .direita .form input {
-        min-width: 0;
-    }
-}
 
 /* Tablets */
 @media (max-width: 1100px) {
     .sidebar {
-        width: 300px;
+        width: 220px;
     }
 
     .sidebar.compacta {
-        width: 160px;
-        gap: 80px;
+        width: 76px;
     }
 }
 
 /* Celulares grandes */
 @media (max-width: 768px) {
     .sidebar {
-        width: 240px;
-        padding: 20px 12px;
-        gap: 15px;
+        width: 200px;
+        padding: 16px 10px;
     }
 
     .sidebar.compacta {
-        width: 80px;
-        padding: 20px 8px;
-        gap: 60px;
+        width: 64px;
+        padding: 16px 6px;
     }
 
-    .sidebar li {
-        font-size: 17px;
-        padding: 10px;
+    .sidebar h1 {
+        font-size: 19px;
     }
 
-    .sidebar a,
-    .topoItem div {
-        gap: 10px;
+    .sidebar .topoItem,
+    .sidebar li.topoItem-sup-msg {
+        padding: 10px 14px 10px 16px;
     }
 
-    .submenu a {
-        margin-left: 25%;
+    .sidebar .submenu a {
+        padding-left: 64px;
     }
 
     .sidebar.compacta .iconeOpcoes {
-        width: 32px;
-        height: 32px;
-    }
-
-    .sidebar li img:not(.imgMaisOpcoes) {
-        width: 32px;
-        height: 32px;
-    }
-
-    .sidebar.compacta .tres-pontos-sidebar span {
-        width: 9px;
-        height: 9px;
-    }
-
-    /* Cabeçalho */
-    .direita .form {
-        width: 94%;
-    }
-
-    .direita .form input {
-        height: 50px;
-    }
-
-    .btn-lupa,
-    .btn-sino-perfil,
-    .btn-miniHeader {
-        height: 50px;
-    }
-
-    .btn-lupa img {
         width: 28px;
+        height: 28px;
     }
 
-    .btn-sino-perfil img {
-        width: 32px;
+    .direita {
+        padding: 10px 12px 30px;
+    }
+
+    .direita .form,
+    .direita .mini-header {
+        height: 46px;
     }
 
     .sidebar-btn {
-        font-size: 20px;
-        padding: 8px 14px;
-    }
-
-    .titulo-tela {
-        font-size: 17px;
-    }
-
-    .mini-header-container {
-        width: auto;
-        flex: 1;
-        min-width: 0;
-    }
-
-    .mini-header-container h1 {
-        font-size: 22px;
-    }
-}
-
-/* Celulares */
-@media (max-width: 480px) {
-    .sidebar {
-        width: 210px;
-    }
-
-    .sidebar.compacta {
-        width: 70px;
-        padding: 20px 6px;
-    }
-
-    .mini-header-container h1 {
-        font-size: 18px;
+        padding: 0 12px;
+        font-size: 19px;
     }
 
     .direita .form input {
-        font-size: 14px;
+        font-size: 13px;
+    }
+
+    .btn-lupa {
+        padding: 0 6px 0 12px;
+    }
+
+    .btn-lupa img {
+        width: 20px;
+    }
+
+    .btn-sino-perfil,
+    .btn-miniHeader {
+        width: 38px;
+    }
+
+    .btn-sino-perfil img,
+    .btn-miniHeader img {
+        width: 24px;
+    }
+
+    .mini-header-container h1,
+    .titulo-tela {
+        font-size: 17px;
     }
 }
 
-/* =========================================================
-   TELAS GRANDES (monitores externos, 2K, 4K)
-   Amplia a página inteira proporcionalmente, sem mudar o layout.
-   Mesmo padrão dos outros arquivos: se mais de um estiver na mesma
-   página, os valores são idênticos e não se acumulam.
-   O sidebar também é compensado: sem isso, o min-height: 100vh dele
-   ficaria maior que a tela quando o zoom é aplicado.
-   ========================================================= */
+/* Celulares: a sidebar aberta passa por cima do conteúdo em vez de espremê-lo */
+@media (max-width: 600px) {
+    .sidebar:not(.compacta):not(.fechado) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
 
-:root {
-    --z: 1;
-}
-
-@media (min-width: 1700px) {
-    :root { --z: 1.15; }
-}
-
-@media (min-width: 2000px) {
-    :root { --z: 1.3; }
-}
-
-@media (min-width: 2500px) {
-    :root { --z: 1.6; }
-}
-
-@media (min-width: 3200px) {
-    :root { --z: 2; }
-}
-
-@media (min-width: 1700px) {
-    body {
-        zoom: var(--z);
-        min-height: calc(100vh / var(--z));
+        width: 230px;
+        box-shadow: 4px 0 16px rgba(0, 0, 0, 0.3);
     }
 
-    .sidebar {
-        min-height: calc(100vh / var(--z));
-        max-height: calc(100vh / var(--z));
+    .direita {
+        padding: 8px 8px 24px;
+    }
+
+    .mini-header-container,
+    .mini-header-titulo {
+        padding: 0 12px;
+    }
+
+    .mini-header-container h1,
+    .titulo-tela {
+        font-size: 15px;
     }
 }

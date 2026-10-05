@@ -1,277 +1,380 @@
-body{ 
-    background-color: rgb(242, 242, 242); 
-    display: flex; 
-    flex-direction: row; 
-    min-height: 100vh; 
-    margin: 0; 
-    font-family: Arial, Helvetica, sans-serif; 
-} 
+/* =========================================================
+   PERFIL  /  EDITAR PERFIL  /  CONFIGURAÇÕES
+   Responsivo, centralizado e estável com o zoom do navegador.
+   Sem "zoom" no body: tudo escala via rem + clamp().
+   ========================================================= */
 
-.direita { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;     
-    justify-content: flex-start; 
-    width: 100%;   
-    border-top: 50px;  
-    flex: 1; 
-    min-width: 0; 
-    padding-top: 30px; 
-    padding-bottom: 50px; 
-    box-sizing: border-box; 
-} 
+/* Mesma base fluida dos outros arquivos (valores idênticos, não acumulam) */
+html {
+    font-size: clamp(14px, 0.85vw + 3px, 56px);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
 
-.perfil-container{ 
-    width: 90%; 
-    min-width: 100px;
-    max-width: 1050px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    flex-direction: column; 
-    gap: 35px;
-    background-color: white; 
-    border-radius: 15px; 
-    margin-top: 50px; 
-    padding: 50px 20px; 
-} 
+:root {
+    --gutter: clamp(0.75rem, 2vw, 1.75rem);
+    --content-max: 66rem;
+}
 
-.dividir-partes{ 
-    width: 100%; 
-    border: 1px solid rgb(170, 27, 49); 
-} 
-
-.parte1{ 
-    width: 100%; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 35px; 
-} 
-
-.topo{ 
-    width: 100%; 
-    display: flex; 
-    flex-direction: row; 
-    gap: 15px; 
-    justify-content: space-between;
-} 
-
-.isolar-btn-editar{ 
-    width: 100%; 
-    height: 100%; 
-    display: flex; 
-    justify-content: flex-end; 
-    align-items: center; 
-    margin-right: 30px; 
-} 
-
-.btn-editar{ 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    background-color: rgb(170, 27, 49); 
-    padding: 10px 15px; 
-    gap: 5px; 
-    border-radius: 10px; 
-} 
-
-.btn-editar h2{ 
-    font-family: Arial, Helvetica, sans-serif; 
-    color: white; 
-    font-size: 20px; 
-} 
-
-.dados-destaque-topo{ 
-    display: flex; 
-    flex-direction: column; 
-    gap: 10px; 
-} 
-
-.sub-dados-destaque-topo{ 
-    display: flex; 
-    flex-direction: row; 
-    gap: 15px; 
-    white-space: nowrap; 
-    align-items: center; 
-} 
-
-.sub-dados-destaque-topo p{ 
-    font-family: Arial, Helvetica, sans-serif; 
-    font-size: 17px; 
-    color: gray; 
-} 
-
-.dados-destaque-topo h1{ 
-    color: rgb(170, 27, 49); 
-} 
-
-.sub-dados-destaque-topo hr{ 
-    border: 1px solid gray; 
-    height: 20px; 
-} 
-
-.abaixo{ 
-    display: flex; 
-    flex-direction: row; 
-    justify-content: space-between; 
-    gap: 30px;
-} 
-
-.sub-abaixo{ 
-    display: flex; 
-    flex-direction: column; 
-    gap: 5px; 
-} 
-
-.sub-abaixo h2{ 
-    color: rgb(170, 27, 49); 
-    font-size: 20px; 
-} 
-
-.sub-abaixo p{ 
-    color: gray; 
-} 
-
-.parte2{ 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: flex-start; 
-    width: 90%; 
-    gap: 25px; 
-} 
-
-.parte2 h1{ 
-    color: rgb(170, 27, 49); 
-} 
-
-.container-abaixo{ 
-    width: 80%; 
-} 
-
-.btn-2fa {
-    background-color: rgb(170, 27, 49);
-    height: 24px;
-    width: 50px;
-    border-radius: 30px;
-    padding: 2px;
+body {
+    background-color: rgb(242, 242, 242);
     display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    color: rgb(170, 27, 49);
+}
+
+.direita {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    padding-top: 1.125rem;
+    padding-bottom: 2rem;
     box-sizing: border-box;
 }
 
-.circulo-2fa {
+
+/* ---------- CARD PRINCIPAL ---------- */
+
+.perfil-container {
+    --pad: clamp(1rem, 2.5vw, 1.625rem);
+
+    box-sizing: border-box;
+    width: min(calc(100% - var(--gutter) * 2), var(--content-max));
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.25rem;
+
     background-color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-    flex-shrink: 0;
+    border-radius: 0.875rem;
+    /* margin auto + align-self: centraliza mesmo que o pai não seja flex */
+    margin: 1rem auto 0;
+    align-self: center;
+    padding: 1.5rem var(--pad) 1.25rem;
 }
 
-.parte3{ 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: flex-start; 
-    width: 90%; 
-    gap: 25px;
-} 
+.perfil-container :is(h1, h2, p) {
+    margin: 0;
+}
 
-.parte3 h1{ 
-    color: rgb(170, 27, 49); 
-} 
+/* títulos de seção sem classe própria (ex.: Configurações) */
+.perfil-container h1 {
+    font-size: 1.25rem;
+}
 
-.btn-editar-senha{ 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    background-color: rgb(170, 27, 49); 
-    padding: 6px 15px; 
-    gap: 5px; 
-    border-radius: 10px; 
-    text-decoration: none; 
-} 
-
-.btn-editar-senha h2{ 
-    font-family: Arial, Helvetica, sans-serif; 
-    color: white; 
-    font-size: 15px; 
-} 
-
-.sub-abaixo-senha{ 
-    display: flex; 
-    align-items: center; 
-    gap: 20px;
-} 
-
-.sub-abaixo-2fa{ 
-    display: flex; 
-    align-items: center; 
-    justify-content: flex-start; 
-    gap: 20px;
+/* divisor ocupa a largura toda do card */
+.dividir-partes {
+    width: calc(100% + var(--pad) * 2);
+    margin: 0 calc(var(--pad) * -1);
+    border: none;
+    border-top: 1px solid #c98a97;
 }
 
 
-/* Editar Perfil: */
+/* =========================================================
+   PERFIL
+   ========================================================= */
 
-.circulo-voltar{
+.parte1 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.topo {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.875rem;
+}
+
+.topo h1 {
+    font-size: 1.25rem;
+}
+
+.topo p {
+    color: gray;
+    font-size: 0.75rem;
+}
+
+.isolar-btn-editar {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+}
+
+.btn-editar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3125rem;
     background-color: rgb(170, 27, 49);
-    padding: 5px;
-    border-radius: 100%;
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+}
+
+.btn-editar img {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.btn-editar h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-size: 0.8125rem;
+}
+
+.dados-destaque-topo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.dados-destaque-topo h1 {
+    color: rgb(170, 27, 49);
+    font-size: 1.25rem;
+}
+
+.sub-dados-destaque-topo {
+    display: flex;
+    flex-direction: row;
+    gap: 0.625rem;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.sub-dados-destaque-topo p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.875rem;
+    color: gray;
+}
+
+.sub-dados-destaque-topo hr {
+    border: none;
+    border-left: 1px solid gray;
+    height: 1rem;
+    margin: 0;
+}
+
+
+/* ---------- CAMPOS (grade de dados) ---------- */
+
+.abaixo {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1.4fr;
+    gap: 1.25rem 1.5rem;
+    width: 100%;
+}
+
+/* em "Endereço", o 2º campo cai na 3ª coluna, como no protótipo */
+.parte2 .abaixo > :nth-child(2) {
+    grid-column: 3;
+}
+
+.sub-abaixo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.sub-abaixo h2 {
+    color: rgb(170, 27, 49);
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.sub-abaixo p {
+    color: gray;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------- ENDEREÇO / SEGURANÇA ---------- */
+
+.parte2,
+.parte3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 0.875rem;
+}
+
+.parte2 h1,
+.parte3 h1 {
+    color: rgb(170, 27, 49);
+    font-size: 1.0625rem;
+}
+
+.container-abaixo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.sub-abaixo-senha,
+.sub-abaixo-2fa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.sub-abaixo-senha h2,
+.sub-abaixo-2fa h2 {
+    color: rgb(170, 27, 49);
+    font-size: 0.8125rem;
+    font-weight: 700;
+}
+
+.sub-abaixo-senha p,
+.sub-abaixo-2fa p {
+    color: gray;
+    font-size: 0.6875rem;
+    font-weight: 400;
+    opacity: 0.85;
+}
+
+.btn-editar-senha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0.3125rem;
+    background-color: rgb(170, 27, 49);
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.3125rem;
+    text-decoration: none;
+}
+
+.btn-editar-senha img {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.btn-editar-senha h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* interruptor 2FA */
+.btn-2fa {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 1.125rem;
+    padding: 0.125rem;
+    border-radius: 1.875rem;
+    background-color: rgb(122, 16, 34);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+.circulo-2fa {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: white;
+}
+
+
+/* =========================================================
+   EDITAR PERFIL
+   ========================================================= */
+
+.circulo-voltar {
+    flex-shrink: 0;
+    width: 3.25rem;
+    height: 3.25rem;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-color: rgb(170, 27, 49);
+    border-radius: 50%;
 
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.circulo-voltar img{
-    width: 50px;
-    height: 50px;
+.circulo-voltar img {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
-.topo p{
-    color: gray;
-}
-
-.editar-perfil{
+.editar-perfil {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     width: 100%;
-    gap: 30px;
+    gap: 1.25rem;
 }
 
-.editar-foto{
+.editar-foto {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 0.625rem;
     width: 100%;
     justify-content: flex-start;
     align-items: flex-start;
 }
 
-.editar-foto-abaixo{
+.editar-foto-abaixo {
     display: flex;
     flex-direction: row;
-    gap: 30px;
+    gap: 1.25rem;
     align-items: center;
 }
 
-.editar-foto h2{
+.editar-foto h2 {
     color: rgb(170, 27, 49);
+    font-size: 0.9375rem;
 }
 
-.editar-foto p{
+.editar-foto p {
     color: gray;
-    width: 40%;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    width: auto;
+    max-width: 16rem;
 }
-
-
 
 .editar-foto-perfil {
     position: relative;
     display: inline-block;
-    width: 100px;
-    height: 100px;
+    flex-shrink: 0;
+    width: 4.5rem;
+    height: 4.5rem;
 }
 
 .editar-foto-perfil > img {
@@ -283,11 +386,11 @@ body{
 
 .fundo-camera {
     position: absolute;
-    right: 5px;
-    bottom: 5px;
+    right: 0;
+    bottom: 0.125rem;
 
-    width: 28px;
-    height: 28px;
+    width: 1.5rem;
+    height: 1.5rem;
 
     display: flex;
     justify-content: center;
@@ -299,8 +402,8 @@ body{
 }
 
 .fundo-camera img {
-    width: 16px;
-    height: 16px;
+    width: 0.875rem;
+    height: 0.875rem;
     object-fit: contain;
 }
 
@@ -308,44 +411,46 @@ body{
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 0.875rem;
 }
 
 .editar-informacoes h2 {
     color: rgb(170, 27, 49);
-    font-size: 16px;
+    font-size: 0.9375rem;
     margin: 0;
 }
 
 .campo-editar {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 17%;
+    row-gap: 1.125rem;
     width: 100%;
 }
 
 .sub-campo-editar {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.4375rem;
+    min-width: 0;
 }
 
 .sub-campo-editar label {
-    font-size: 14px;
+    font-size: 0.75rem;
     color: black;
 }
 
 .sub-campo-editar input {
-    width: 100%;
-    height: 35px;
-    padding: 10px 8px;
-    border: 1px solid rgb(170, 27, 49);
-    border-radius: 5px;
-    font-size: 14px;
     box-sizing: border-box;
+    width: 100%;
+    height: 2.125rem;
+    padding: 0 0.625rem;
+    border: 1px solid rgb(170, 27, 49);
+    border-radius: 0.3125rem;
+    font-size: 0.75rem;
 }
 
-.sub-campo-editar input::placeholder{
+.sub-campo-editar input::placeholder {
     color: gray;
 }
 
@@ -353,80 +458,123 @@ body{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 15px;
+    gap: 0.75rem;
     width: 100%;
 }
 
 .fechar-salvar a {
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 35px;
-    padding: 0 10px;
+    height: 2rem;
+    padding: 0 0.875rem;
     border: 1px solid rgb(170, 27, 49);
-    border-radius: 5px;
+    border-radius: 0.3125rem;
     text-decoration: none;
 }
 
 .fechar-salvar a h2 {
     color: rgb(170, 27, 49);
-    font-size: 13px;
-    font-weight: normal;
+    font-size: 0.75rem;
+    font-weight: 600;
     margin: 0;
 }
 
 .fechar-salvar button {
-    height: 35px;
-    padding: 0 15px;
+    height: 2rem;
+    padding: 0 1rem;
     background-color: rgb(170, 27, 49);
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 13px;
+    border-radius: 0.3125rem;
+    font-size: 0.75rem;
+    font-weight: 600;
     cursor: pointer;
 }
 
 
-/*  */
-/* Tela de Configurações  */
-/*  */
+/* =========================================================
+   CONFIGURAÇÕES
+   ========================================================= */
 
-.exemplo-icones{
+.config-parte2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.config-parte2 h1 {
+    font-size: 1.25rem;
+}
+
+.sub-abaixo-config {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin-left: 1rem;
+}
+
+.sub-abaixo-config h2 {
+    color: rgb(170, 27, 49);
+    font-size: 0.8125rem;
+    font-weight: 700;
+}
+
+.sub-abaixo-config p {
+    color: gray;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.exemplo-icones {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 0.375rem;
     align-items: center;
 }
 
-.exemplo-icones hr{
-    border: 1px solid gray;
-    height: 25px;
+.exemplo-icones img {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+}
+
+.exemplo-icones hr {
+    border: none;
+    border-left: 1px solid gray;
+    height: 1.125rem;
+    margin: 0;
 }
 
 .tema-site {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 .tema-site h2 {
     color: rgb(170, 27, 49);
-    font-size: 16px;
+    font-size: 0.8125rem;
+    font-weight: 700;
     margin: 0;
 }
 
 .opcoes-tema {
     display: flex;
     align-items: center;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.875rem;
 }
 
 .opcoes-tema label {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.4375rem;
     color: rgb(170, 27, 49);
-    font-size: 14px;
+    font-size: 0.75rem;
     cursor: pointer;
 }
 
@@ -435,8 +583,9 @@ body{
 }
 
 .radio-personalizado {
-    width: 19px;
-    height: 19px;
+    box-sizing: border-box;
+    width: 1.125rem;
+    height: 1.125rem;
     border: 1.5px solid rgb(170, 27, 49);
     border-radius: 50%;
     display: flex;
@@ -446,148 +595,87 @@ body{
 
 .opcoes-tema input:checked + .radio-personalizado::after {
     content: "";
-    width: 13px;
-    height: 13px;
+    width: 0.75rem;
+    height: 0.75rem;
     background-color: rgb(170, 27, 49);
     border-radius: 50%;
 }
 
-.config-parte2{
-    width: 100%; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 35px; 
+/* Na tela de Configurações os rótulos são em negrito e recuados
+   (no Perfil eles são finos). Só vale para a página que tem .tema-site */
+.perfil-container:has(.tema-site) .sub-abaixo:not(.sub-abaixo-config) {
+    margin-left: 1rem;
+    gap: 0.375rem;
 }
 
-.sub-abaixo-config{ 
-    display: flex; 
-    flex-direction: column; 
-    gap: 5px; 
-    margin-left: 50px;
-} 
-
-.sub-abaixo-config h2{ 
-    color: rgb(170, 27, 49); 
-    font-size: 20px; 
-} 
-
-.sub-abaixo-config p{ 
-    color: gray; 
-} 
-
- h1{
-    color: rgb(170, 27, 49);
+.perfil-container:has(.tema-site) .sub-abaixo h2 {
+    font-size: 0.8125rem;
+    font-weight: 700;
 }
 
 
 /* =========================================================
    RESPONSIVIDADE
-   (o layout de desktop acima permanece exatamente igual)
+   (os valores fluidos acima cuidam da maior parte;
+    aqui ficam só as mudanças de estrutura)
    ========================================================= */
 
 /* Tablets */
 @media (max-width: 900px) {
-    .campo-editar {
-        gap: 40px;
-    }
-
     .abaixo {
-        flex-wrap: wrap;
-        gap: 20px 30px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .container-abaixo {
-        width: 100%;
+    .parte2 .abaixo > :nth-child(2) {
+        grid-column: auto;
     }
 
-    .editar-foto p {
-        width: 70%;
+    .campo-editar {
+        column-gap: 2rem;
     }
 }
 
 /* Celulares grandes */
 @media (max-width: 768px) {
     .perfil-container {
-        width: 94%;
-        margin-top: 25px;
-        padding: 30px 15px;
-        gap: 25px;
-        box-sizing: border-box;
+        margin-top: 0.75rem;
+        gap: 1rem;
     }
 
-    /* Topo do perfil */
     .topo {
         flex-wrap: wrap;
     }
 
     .isolar-btn-editar {
-        margin-right: 0;
-        justify-content: flex-start;
-    }
-
-    .btn-editar h2 {
-        font-size: 16px;
+        flex: 0 0 auto;
     }
 
     .sub-dados-destaque-topo {
         flex-wrap: wrap;
         white-space: normal;
-        gap: 8px 12px;
-    }
-
-    .sub-dados-destaque-topo p {
-        font-size: 15px;
+        gap: 0.5rem 0.75rem;
     }
 
     .sub-dados-destaque-topo hr {
         display: none;
     }
 
-    /* Dados do perfil */
-    .abaixo {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .parte2,
-    .parte3 {
-        width: 100%;
-    }
-
     .sub-abaixo-senha,
     .sub-abaixo-2fa {
         flex-wrap: wrap;
-        gap: 10px 20px;
-    }
-
-    /* Editar perfil */
-    .circulo-voltar img {
-        width: 40px;
-        height: 40px;
-    }
-
-    .editar-foto-abaixo {
-        flex-wrap: wrap;
-        gap: 15px 20px;
-    }
-
-    .editar-foto p {
-        width: 100%;
     }
 
     .campo-editar {
         grid-template-columns: 1fr;
-        gap: 20px;
     }
 
-    /* Configurações */
-    .exemplo-icones {
+    .editar-foto-abaixo {
         flex-wrap: wrap;
+        gap: 0.875rem 1.25rem;
     }
 
-    .opcoes-tema {
-        flex-wrap: wrap;
-        gap: 10px 20px;
+    .editar-foto p {
+        max-width: 100%;
     }
 
     .sub-abaixo-config {
@@ -597,14 +685,8 @@ body{
 
 /* Celulares */
 @media (max-width: 480px) {
-    .perfil-container {
-        width: 96%;
-        padding: 25px 12px;
-    }
-
-    .sub-abaixo h2,
-    .sub-abaixo-config h2 {
-        font-size: 18px;
+    .abaixo {
+        grid-template-columns: 1fr;
     }
 
     .fechar-salvar {
@@ -613,44 +695,10 @@ body{
 
     .fechar-salvar a,
     .fechar-salvar button {
-        flex: 1 1 120px;
+        flex: 1 1 7rem;
     }
 
     .btn-editar-senha {
         width: 100%;
-    }
-}
-
-/* =========================================================
-   TELAS GRANDES (monitores externos, 2K, 4K)
-   Amplia a página inteira proporcionalmente, sem mudar o layout.
-   Mesmo padrão dos outros arquivos: se mais de um estiver na mesma
-   página, os valores são idênticos e não se acumulam.
-   ========================================================= */
-
-:root {
-    --z: 1;
-}
-
-@media (min-width: 1700px) {
-    :root { --z: 1.15; }
-}
-
-@media (min-width: 2000px) {
-    :root { --z: 1.3; }
-}
-
-@media (min-width: 2500px) {
-    :root { --z: 1.6; }
-}
-
-@media (min-width: 3200px) {
-    :root { --z: 2; }
-}
-
-@media (min-width: 1700px) {
-    body {
-        zoom: var(--z);
-        min-height: calc(100vh / var(--z));
     }
 }

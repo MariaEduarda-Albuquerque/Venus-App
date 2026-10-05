@@ -1,576 +1,832 @@
-body{
-    background-color: rgb(242, 242, 242);
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
     display: flex;
     flex-direction: row;
     min-height: 100vh;
-    margin: 0;
+
+    background-color: #f2f2f2;
     font-family: Arial, Helvetica, sans-serif;
+
+    overflow-x: hidden;
 }
+
+img {
+    display: block;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   VARIÁVEIS
+
+   Largura do painel = a MENOR entre:
+     - --largura-maxima (o teto, para não ficar enorme em monitor grande)
+     - a largura da tela menos o espaço que a sidebar ABERTA ocupa
+
+   Como o cálculo usa a sidebar aberta, a largura do painel é a mesma
+   com a sidebar aberta ou compacta: ao compactar, o painel NÃO estica.
+   Em telas menores o painel encolhe junto com a janela (fluido).
+
+   --espaco-sidebar = largura da sidebar aberta + paddings laterais
+                      + barra de rolagem (~15px)
+   ========================================================= */
+
+:root {
+    --largura-maxima: 1280px;
+    --espaco-sidebar: 312px;
+    --largura-dashboard: min(var(--largura-maxima), calc(100vw - var(--espaco-sidebar)));
+
+    --vermelho: #aa1b31;
+    --vermelho-escuro: #8f1428;
+    --rosa-claro: #ecccd1;
+
+    --borda: #e3e3e3;
+}
+
+/* monitores grandes: o teto cresce, mas continua fixo (sem zoom) */
+@media (min-width: 1900px) {
+    :root { --largura-maxima: 1500px; }
+}
+
+@media (min-width: 2400px) {
+    :root { --largura-maxima: 1800px; }
+}
+
+@media (min-width: 3000px) {
+    :root { --largura-maxima: 2400px; }
+}
+
+/* espaço ocupado pela sidebar aberta em cada faixa de tela
+   (igual aos tamanhos do arquivo da sidebar e aos paddings daqui) */
+@media (max-width: 1200px) {
+    :root { --espaco-sidebar: 300px; }   /* 250 + 32 + 15 + folga */
+}
+
+@media (max-width: 1100px) {
+    :root { --espaco-sidebar: 270px; }   /* 220 + 32 + 15 + folga */
+}
+
+@media (max-width: 768px) {
+    :root { --espaco-sidebar: 242px; }   /* 200 + 24 + 15 + folga */
+}
+
+/* celulares: a sidebar aberta passa por cima; reserva só a compacta (64px) */
+@media (max-width: 600px) {
+    :root { --espaco-sidebar: 106px; }
+}
+
+@media (max-width: 480px) {
+    :root { --espaco-sidebar: 102px; }
+}
+
+
+/* =========================================================
+   ÁREA DIREITA
+   (não depende da largura da sidebar: ela pode abrir, fechar
+   ou ficar compacta que o conteúdo se ajusta sozinho)
+   ========================================================= */
 
 .direita {
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-    justify-content: flex-start;
-    width: 100%;  
-    border-top: 50px; 
-
-
-    flex: 1;
+    flex: 1 1 0;
     min-width: 0;
-    
-    padding-top: 30px;
-    padding-bottom: 50px;
-    box-sizing: border-box;
-}
+    min-height: 100vh;
 
-.conteudo{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
-
-.conteudo h1{
-    color: rgb(170, 27, 49);
-    font-family: Arial, Helvetica, sans-serif;
-    white-space: nowrap;
-}
-
-.dataHoje{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 5px;
-}
-
-/* Dashboard */
-
-.alerta-denuncia-container{
-    width: 100%;
-    height: 70px;
-    padding: 15px;
-
-    background-color: rgb(234, 204, 208);
-    border: 3px solid rgb(170, 27, 49);
-    border-radius: 10px;
-
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.btn-alerta-denuncias-container{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-}
-
-.btn-alerta-denuncias{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(170, 27, 49);
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.alerta-denuncia-container h1{
-    color: rgb(170, 27, 49);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
-}
-
-.alerta-denuncia-container p{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    white-space: nowrap;
-}
-
-.alerta-denuncia-container img{
-    width: 50px;
-    height: auto;
-}
-
-.Container-Global{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 30px;
+    justify-content: flex-start;
 
-    margin-top: 20px;
+    padding: 16px 22px 40px;
+
+    background-color: #f2f2f2;
+}
+
+.direita a {
+    text-decoration: none;
+}
+
+/* tudo que fica direto dentro de .direita (barra de pesquisa, título, alerta,
+   cards...) usa a mesma largura máxima, então tudo fica alinhado,
+   com ou sem <section> envolvendo o conteúdo */
+.direita > *:not(.modal-overlay):not(.modal-overlay-2) {
     width: 100%;
+    max-width: var(--largura-dashboard);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* o visual da barra de pesquisa / mini header fica no arquivo da sidebar */
+.direita > .form,
+.direita > .mini-header {
+    margin-bottom: 20px;
+}
+
+/* lupa sempre à esquerda da pesquisa, independente da ordem no HTML */
+.direita .form .sidebar-btn { order: 0; }
+.direita .form .btn-lupa    { order: 1; }
+.direita .form input        { order: 2; }
+.direita .form > *:not(.sidebar-btn):not(.btn-lupa):not(input) { order: 3; }
+
+.direita > section {
+    width: 100%;
+    max-width: var(--largura-dashboard);
+    min-width: 0;
+
+    margin: 0 auto;
+}
+
+.Container-Global {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* espaçamentos entre título, alerta e cards (funciona dentro ou fora do Container-Global) */
+.conteudo + .alerta-denuncia-container {
+    margin-top: 12px;
+}
+
+* + .Container-Global {
+    margin-top: 16px;
 }
 
 
-.container-1{
+/* =========================================================
+   TÍTULO + DATA
+   ========================================================= */
+
+.conteudo {
+    width: 100%;
+    min-width: 0;
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 30px;
-    width: 100%;
-    max-width: 1800px;
+    gap: 12px;
 }
 
-.container-1 .bloco {
+.conteudo h1 {
+    color: var(--vermelho);
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.dataHoje {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+
+    flex-shrink: 0;
+}
+
+.dataHoje img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.dataHoje p {
+    color: #222222;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ALERTA
+   ========================================================= */
+
+.alerta-denuncia-container {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 14px;
+
+    background-color: #f2d8db;
+    border: 1px solid #e0b0b8;
+    border-radius: 8px;
+}
+
+.alerta-denuncia-container img {
+    flex: 0 0 26px;
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+.alerta-denuncia-container h1 {
+    flex-shrink: 0;
+
+    color: var(--vermelho);
+    font-size: 13px;
+}
+
+.alerta-denuncia-container p {
+    flex: 1;
+    min-width: 0;
+
+    color: #333333;
+    font-size: 13px;
+}
+
+.btn-alerta-denuncias-container {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.btn-alerta-denuncias {
+    padding: 8px 18px;
+
+    background-color: var(--vermelho-escuro);
+    border: none;
+    border-radius: 6px;
+
+    color: #ffffff;
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition: background-color 0.2s ease;
+}
+
+.btn-alerta-denuncias:hover {
+    background-color: #740f20;
+}
+
+.btn-alerta-denuncias h2 {
+    margin: 0;
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   LINHAS DE CARDS (a de cima e a de baixo)
+   ========================================================= */
+
+.container-1,
+.container-3 {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.container-1 .bloco,
+.container-3 .bloco {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 100px;
+
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
+    gap: 14px;
 
-    gap: 20px;
+    padding: 16px 18px;
 
-    width: 100%;
-    box-sizing: border-box;
-
-    min-height: 160px;
-    height: auto;
-
-    padding: 20px;
-    box-sizing: border-box;
-
-    border: 1px solid #e5e5e5;
-    border-radius: 20px;
-    background-color: white;
-
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    background-color: #ffffff;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
 }
 
-.container-1 .img-fundo{
+.container-1 .img-fundo,
+.container-3 .img-fundo {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width: 70px;
-    height: 70px;
-    min-width: 70px;
-    min-height: 70px;
-
-    flex: 0 0 70px;
-    aspect-ratio: 1 / 1;
-
-    box-sizing: border-box;
-
-    border-radius: 20px;
-    background-color: rgb(234, 204, 208);
+    background-color: var(--rosa-claro);
+    border-radius: 12px;
 }
 
-.container-1 .img-fundo img{
-    width: 50px;
-    height: 50px;
+.container-1 .img-fundo img,
+.container-3 .img-fundo img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
 }
 
-.container-1 .bloco h1{
-    /* color: rgb(170, 27, 49); */
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 30px;
-}
+.container-1 .desc-bloco,
+.container-3 .desc-bloco {
+    min-width: 0;
 
-.container-1 .bloco p{
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    opacity: 0.5;
-    font-size: 13px;
-}
-
-.container-1 .desc-bloco{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 3px;
+}
+
+.container-1 .bloco h1,
+.container-3 .bloco h1 {
+    color: #111111;
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.container-1 .bloco p,
+.container-3 .bloco p {
+    color: #777777;
+
+    font-size: 11px;
+    line-height: 1.3;
 }
 
 
-
+/* =========================================================
+   ÁREA DO MEIO (fila prioritária + gráfico + revisão)
+   ========================================================= */
 
 .container-2 {
+    width: 100%;
+    min-width: 0;
+
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-
-    gap: 30px;
-    width: 90%;
-    max-width: 1200px;
+    align-items: stretch;
+    gap: 16px;
 }
 
-.container-2 .container2-direita{
+/* ---------- Coluna da fila (cresce junto com a tela) ---------- */
+
+.container-2 .container2-direita {
+    flex: 0 0 clamp(250px, 31%, 440px);
+    min-width: 0;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-
-    gap: 35px;
-    padding: 30px;
-
-    width: 100%;
-    max-width: 340px;
-    box-sizing: border-box;
-
-    border: 1px solid #e0e0e0;
-    border-radius: 20px;
-    background-color: white;
-}
-
-.container-2 .container2-direita h1{
-    color: rgb(170, 27, 49);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-}
-
-.container-2 .container2-direita .titulo-direita{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
-    gap: 5px;
-}
-
-.container-2 .container2-direita h2{
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    opacity: 0.75;
-}
-
-.container-2 .container2-direita p{
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    opacity: 0.75;
-    white-space: nowrap;
-}
-
-.container-2 .container2-direita .h1-com-fundo{
-    background-color: rgb(234, 204, 208);
-    border-radius: 5px;
-    height: 25px;
-    width: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.container-2 .direita-denuncias{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     gap: 10px;
+
+    padding: 16px 18px;
+
+    background-color: #ffffff;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
 }
 
-.h1-com-fundo .denuncia-aprovacao-tipo{
-    font-size: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: rgb(170, 27, 49);
+.container-2 .container2-direita h1 {
+    color: var(--vermelho);
+
+    font-size: 15px;
+    line-height: 1.2;
 }
 
-.container-2 .container2-direita .denuncia-aprovacao{
+.container-2 .container2-direita h2 {
+    color: #555555;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.container-2 .container2-direita p {
+    color: #666666;
+
+    font-size: 11px;
+}
+
+.container-2 .container2-direita .titulo-direita {
+    width: 100%;
+
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    gap: 30px;
-}
-
-.container-2 .esquerda{
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    gap: 30px;
+    align-items: flex-start;
+    gap: 3px;
 }
 
-.btn-dashboard{
-    background-color: white;
-    border: 1px solid rgb(170, 27, 49);
-    color: rgb(170, 27, 49);
-    padding: 10px 30px;
-    font-family: Arial, Helvetica, sans-serif;
-    border-radius: 10px;
-    font-size: 13px;
+.container-2 .container2-direita .denuncia-aprovacao {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.container-2 .container2-direita .denuncia-aprovacao > p:first-child {
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.container-2 .direita-denuncias {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* etiqueta (Fórum, Chat, Perfil) */
+.h1-com-fundo,
+.container-2 .container2-direita .h1-com-fundo {
+    min-width: 52px;
+    height: 22px;
+
     display: flex;
     justify-content: center;
+    align-items: center;
+
+    padding: 0 8px;
+
+    background-color: var(--rosa-claro);
+    border-radius: 5px;
 }
 
-/* Grafico: */
+.h1-com-fundo > h2,
+.h1-com-fundo .denuncia-aprovacao-tipo {
+    color: var(--vermelho);
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.container2-direita hr {
+    width: 100%;
+    height: 1px;
+
+    margin: 2px 0;
+
+    border: 0;
+    background-color: #dddddd;
+}
+
+/* botão do rodapé da coluna */
+.container-2 .container2-direita .btn-dashboard {
+    margin-top: auto;
+}
+
+.btn-dashboard {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 7px 12px;
+
+    background-color: #ffffff;
+    border: 1px solid var(--vermelho);
+    border-radius: 6px;
+
+    color: var(--vermelho);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.btn-dashboard:hover {
+    background-color: #fdf1f2;
+}
+
+/* os botões e etiquetas são <h1>: sem isso, a regra
+   ".container2-direita h1" (15px, mais específica) vence o tamanho deles */
+.container-2 .container2-direita h1.btn-dashboard,
+.revisao-conteudo h1.btn-dashboard {
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.container-2 .container2-direita .h1-com-fundo .denuncia-aprovacao-tipo {
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+}
 
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ---------- Coluna do gráfico ---------- */
+
+.container-2 .esquerda {
+    flex: 1 1 0;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 14px;
 }
 
 .grafico-container {
     width: 100%;
-    max-width: 750px;
-    padding: 20px;
-    box-sizing: border-box;
+    min-width: 0;
 
-    background-color: white;
-    border-radius: 20px;
-}
+    padding: 16px 18px;
 
-#meuGrafico {
-    display: block;
-    width: 100%;
-    height: 250px;
+    background-color: #ffffff;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
 }
 
 .grafico-container h2 {
-    margin: 0 0 20px;
-    color: rgb(170, 27, 49);
-    font-size: 20px;
-}
+    margin-bottom: 2px;
 
-.grafico-container canvas {
-    display: block;
-    width: 100%;
-    height: auto;
-}
+    color: #111111;
 
-.grafico-container p{
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-    opacity: 0.5;
-    white-space: nowrap;
+    font-weight: 700;
 }
 
-.grafico-container .titulo-subtitulo-grafico{
+.grafico-container p {
+    color: #888888;
+
+    font-size: 11px;
+}
+
+.grafico-container .titulo-subtitulo-grafico {
     display: flex;
     flex-direction: column;
+    gap: 3px;
+
+    margin-bottom: 8px;
 }
 
-/* Abaixo do grafico */
+/* Caixa do gráfico (ECharts): precisa de largura e ALTURA definidas aqui */
+#meuGrafico {
+    width: 100%;
+    height: 230px;
+}
 
-.revisao-conteudo{
+
+/* ---------- Revisão de conteúdo ---------- */
+
+.revisao-conteudo {
+    width: 100%;
+    min-width: 0;
+    min-height: 96px;
+
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    flex-direction: row;
-    gap: 30px;
+    gap: 14px;
 
+    padding: 14px 18px;
+
+    background-color: #ffffff;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+}
+
+.revisao-conteudo > div:first-child {
+    flex: 0 0 auto;
+}
+
+.revisao-conteudo img {
+    width: 48px;
+    height: 48px;
+
+    padding: 12px;
+
+    background-color: var(--rosa-claro);
+    border-radius: 12px;
+}
+
+.revisao-conteudo > div:nth-child(2) {
+    flex: 1;
+    min-width: 0;
+}
+
+.revisao-conteudo .titulo-conteudo-revisao {
+    color: #111111;
+
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.destaque-h1-revisao {
+    color: #111111;
+
+    font-size: 24px;
+    line-height: 1.1;
+}
+
+.sub-div-revisao {
     width: 100%;
-    max-width: 700px;
-    box-sizing: border-box;
-    padding: 25px;
 
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;
-}
-
-.revisao-conteudo .titulo-conteudo-revisao{
-    font-size: 15px;
-    font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
-}
-
-.destaque-h1-revisao{
-    font-size: 30px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.revisao-conteudo img{
-    height: 70px;
-    width: 70px;
-    background-color: rgb(234, 204, 208);
-    padding: 20px;
-    border-radius: 20px;
-}
-
-.sub-div-revisao{
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 10px;
-    width: 100%;
-    align-items: center;
+
+    margin-top: 4px;
 }
 
-.revisao-conteudo p{
-    color: black;
-    opacity: 0.5;
-    font-size: 12px;
-    white-space: nowrap;
-    font-family: Arial, Helvetica, sans-serif;
+.revisao-conteudo p {
+    color: #777777;
+
+    font-size: 10px;
 }
 
-.sub-div-revisao .divisor{
-    border-right: 1px solid black;
-    padding: 25px;
+.sub-div-revisao .divisor {
+    padding: 4px 10px 4px 0;
+
+    border-right: 1px solid #cccccc;
 }
 
-.sub-div-revisao hr{
-  border: none;        
-  height: 1px;          
-  background-color: gray; 
-  width: 70px;         
-  margin: 20px auto; 
-  rotate: 180;
-  transform: rotate(270deg);
+/* divisor vertical (antes era um <hr> girado com transform) */
+.sub-div-revisao hr {
+    width: 1px;
+    height: 32px;
+
+    margin: 0;
+
+    border: 0;
+    background-color: #cccccc;
+    transform: none;
 }
 
- .isolar{
+.revisao-conteudo .isolar {
     display: flex;
-    width: 100%;
-    height: 100%;
     justify-content: flex-end;
-    align-items: flex-end;
+    align-items: center;
+
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.revisao-conteudo .isolar .btn-dashboard {
+    width: auto;
+    min-width: 120px;
+}
+
+.isolar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 
 /* =========================================================
    RESPONSIVIDADE
-   (o layout de desktop acima permanece exatamente igual)
    ========================================================= */
 
-/* Notebooks / telas médias */
+/* Notebooks pequenos */
 @media (max-width: 1200px) {
-    .container-2 {
-        width: 95%;
-    }
-
-    .grafico-container {
-        max-width: 100%;
-    }
-}
-
-/* Tablets */
-@media (max-width: 900px) {
-    .container-1 {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .container-1 .bloco {
-        width: 100%;
-        max-width: 400px;
-    }
-
-    .container-2 {
-        flex-direction: column;
-        align-items: center;
-        width: 95%;
-    }
-
-    .container-2 .esquerda {
-        width: 100%;
+    .direita {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
     .container-2 .container2-direita {
-        width: 100%;
-        max-width: 650px;
-    }
-
-    .grafico-container {
-        max-width: 650px;
-    }
-
-    .revisao-conteudo {
-        max-width: 650px;
-    }
-
-    .container-3 {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .container-3 .bloco {
-        width: 100%;
-        max-width: 400px;
+        flex-basis: 270px;
     }
 }
 
-/* Celulares grandes / tablets pequenos */
-@media (max-width: 768px) {
-    body {
+/* Tablets (a sidebar aberta ocupa espaço, então empilha antes) */
+@media (max-width: 1000px) {
+    .container-1,
+    .container-3 {
+        flex-wrap: wrap;
+    }
+
+    .container-1 .bloco,
+    .container-3 .bloco {
+        flex: 1 1 calc(50% - 8px);
+    }
+
+    .container-2 {
         flex-direction: column;
     }
 
+    .container-2 .container2-direita {
+        flex: none;
+        width: 100%;
+    }
+
+    .container-2 .container2-direita .btn-dashboard {
+        margin-top: 6px;
+    }
+
+    .container-2 .esquerda {
+        flex: none;
+        width: 100%;
+    }
+}
+
+/* Celulares */
+@media (max-width: 768px) {
     .direita {
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 20px;
-        padding-bottom: 30px;
+        padding: 12px 12px 28px;
+    }
+
+    .direita > .form,
+    .direita > .mini-header {
+        margin-bottom: 16px;
     }
 
     .conteudo {
         flex-wrap: wrap;
-        gap: 5px;
     }
 
     .conteudo h1 {
-        white-space: normal;
-        font-size: 24px;
+        font-size: 21px;
     }
 
-    .dataHoje {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-    }
-
-    /* Alerta de denúncias */
     .alerta-denuncia-container {
-        height: auto;
         flex-wrap: wrap;
-    }
+        align-items: flex-start;
 
-    .alerta-denuncia-container h1 {
-        font-size: 20px;
+        padding: 12px;
     }
 
     .alerta-denuncia-container p {
-        white-space: normal;
+        flex-basis: 60%;
     }
 
     .btn-alerta-denuncias-container {
+        width: 100%;
         justify-content: flex-start;
+        margin-left: 0;
     }
 
-    /* Blocos do topo */
-    .container-1 {
-        gap: 15px;
-    }
-
-    .container-1 .bloco {
-        max-width: 100%;
-    }
-
-    .Container-Global {
-        gap: 20px;
-    }
-
-    /* Gráfico */
-    .grafico-container {
-        max-width: 100%;
-    }
-
-    .grafico-container p {
-        white-space: normal;
-    }
-
-    /* Revisão */
-    .revisao-conteudo {
-        max-width: 100%;
+    .container-1,
+    .container-3 {
         flex-direction: column;
-        gap: 20px;
+        gap: 12px;
+    }
+
+    .container-1 .bloco,
+    .container-3 .bloco {
+        flex: none;
+        width: 100%;
+        min-height: 88px;
+    }
+
+    #meuGrafico {
+        height: 210px;
+    }
+
+    .revisao-conteudo {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .revisao-conteudo > div:nth-child(2) {
+        width: 100%;
     }
 
     .sub-div-revisao {
         flex-wrap: wrap;
-        justify-content: center;
     }
 
     .sub-div-revisao hr {
@@ -578,115 +834,52 @@ body{
     }
 
     .sub-div-revisao .divisor {
-        border-right: none;
-        padding: 10px;
+        padding: 4px 0;
+        border-right: 0;
     }
 
-    .revisao-conteudo p {
-        white-space: normal;
-    }
-
-    .container-2 .container2-direita {
-        max-width: 100%;
+    .revisao-conteudo .isolar {
+        width: 100%;
+        justify-content: flex-start;
+        margin-left: 0;
     }
 }
 
-/* Celulares */
+/* Celulares pequenos */
 @media (max-width: 480px) {
+    .direita {
+        padding: 10px 10px 24px;
+    }
+
     .conteudo h1 {
-        font-size: 20px;
+        font-size: 19px;
     }
 
-    .container-1 .bloco {
-        padding: 15px;
-        gap: 12px;
+    .alerta-denuncia-container p {
+        flex-basis: 100%;
     }
 
-    .container-1 .bloco h1 {
-        font-size: 24px;
+    .container-1 .bloco,
+    .container-3 .bloco {
+        padding: 14px;
     }
 
-    .container-2 {
-        width: 100%;
-        gap: 20px;
+    .container-1 .bloco h1,
+    .container-3 .bloco h1 {
+        font-size: 22px;
     }
 
-    .container-2 .esquerda {
-        gap: 20px;
-    }
-
-    .container-2 .container2-direita {
-        padding: 20px;
-        gap: 25px;
-    }
-
-    .container-2 .container2-direita p {
-        white-space: normal;
-    }
-
-    .container-2 .container2-direita .denuncia-aprovacao {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    .container-2 .direita-denuncias {
-        flex-wrap: wrap;
-    }
-
-    .grafico-container {
-        padding: 15px;
-    }
-
-    .grafico-container h2 {
-        font-size: 17px;
+    .container-2 .container2-direita,
+    .grafico-container,
+    .revisao-conteudo {
+        padding: 14px;
     }
 
     #meuGrafico {
-        height: 200px;
+        height: 190px;
     }
 
-    .revisao-conteudo {
-        padding: 18px;
-    }
-
-    .destaque-h1-revisao {
-        font-size: 24px;
-    }
-
-    .btn-dashboard {
-        padding: 10px 20px;
-        white-space: normal;
-        text-align: center;
-    }
-}
-
-/* Telas grandes (monitores externos, 2K, 4K)
-   Amplia a página inteira proporcionalmente, sem mudar o layout.
-   O min-height compensa o zoom para a página continuar ocupando 100% da altura. */
-@media (min-width: 1700px) {
-    body {
-        zoom: 1.15;
-        min-height: calc(100vh / 1.15);
-    }
-}
-
-@media (min-width: 2000px) {
-    body {
-        zoom: 1.3;
-        min-height: calc(100vh / 1.3);
-    }
-}
-
-@media (min-width: 2500px) {
-    body {
-        zoom: 1.6;
-        min-height: calc(100vh / 1.6);
-    }
-}
-
-@media (min-width: 3200px) {
-    body {
-        zoom: 2;
-        min-height: calc(100vh / 2);
+    .revisao-conteudo .isolar .btn-dashboard {
+        width: 100%;
     }
 }
