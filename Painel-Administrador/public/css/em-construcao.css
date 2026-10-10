@@ -1,0 +1,107 @@
+/* =========================================================
+   TELA "EM CONSTRUÇÃO" - Painel Vênus
+   Usada em Relatório, GRC e Logística.
+   - Tudo usa o prefixo "ec-".
+   - Tamanhos em "em" a partir de um tamanho base que acompanha a
+     largura da tela (sem rem, para não depender do html do site).
+   - Zoom do navegador funciona normalmente.
+   ========================================================= */
+
+.ec-page {
+    --wine: #9B1B2A;
+    --wine-d: #7D1422;
+    --rose: #F8E9EC;
+    --mute: #7E7075;
+
+    /* 14px em telas pequenas, 17px em ~1900px, até 20px em monitores grandes */
+    font-size: clamp(14px, .45vw + 8.4px, 20px);
+
+    width: 100%;
+    padding: 4.7em 1.2em 2.5em;
+    text-align: center;
+
+    font-family: 'Nunito', system-ui, sans-serif;
+    line-height: 1.4;
+    color: var(--mute);
+}
+
+.ec-page *,
+.ec-page *::before,
+.ec-page *::after {
+    box-sizing: border-box;
+}
+
+/* :where() deixa o reset com peso mínimo: as classes abaixo sempre vencem */
+.ec-page :where(h1, p) {
+    margin: 0;
+}
+
+.ec-page :focus-visible {
+    outline: 2px solid var(--wine);
+    outline-offset: 2px;
+}
+
+/* Ícone em caixa rosé */
+.ec-icone {
+    display: grid;
+    place-items: center;
+    width: 2.6em;
+    height: 2.6em;
+    margin: 0 auto .7em;
+    border-radius: .7em;
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.ec-icone svg.lucide {
+    width: 1.3em;
+    height: 1.3em;
+    stroke-width: 1.75;
+}
+
+.ec-page h1 {
+    color: #2B1F22;
+    font-size: 1.18em;
+    font-weight: 800;
+    letter-spacing: -.02em;
+}
+
+.ec-page p {
+    margin-top: .25em;
+}
+
+/* Botão */
+.ec-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.2em;
+    padding: .7em 1.4em;
+    border-radius: .65em;
+    background: var(--wine);
+    color: #fff;
+    font-size: .91em;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .15s;
+}
+
+.ec-btn:hover {
+    background: var(--wine-d);
+}
+
+@media (max-width: 480px) {
+    .ec-page {
+        padding-top: 3em;
+    }
+
+    .ec-btn {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ec-page * {
+        transition: none !important;
+    }
+}
