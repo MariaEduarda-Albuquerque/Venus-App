@@ -109,6 +109,19 @@
     </div>
 
     
+    <div class="confirma-modal" id="us-confirma-modal">
+        <div class="confirma-caixa">
+            <span class="confirma-icone"><i data-lucide="user-x"></i></span>
+            <h3 id="us-confirma-titulo"></h3>
+            <p id="us-confirma-texto"></p>
+            <div class="confirma-acoes">
+                <button type="button" class="confirma-btn confirma-btn--neutro" id="us-confirma-cancelar">Cancelar</button>
+                <button type="button" class="confirma-btn confirma-btn--ok" id="us-confirma-ok">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    
     <div class="lst-modal" id="us-modal">
         <div class="lst-modal-caixa lst-card">
             <div class="lst-modal-cabeca">
@@ -132,5 +145,4 @@
 </div>
 
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laravel\Venus-App\Painel-Administrador\resources\views/usuario/lista-usuarios.blade.php ENDPATH**/ ?>

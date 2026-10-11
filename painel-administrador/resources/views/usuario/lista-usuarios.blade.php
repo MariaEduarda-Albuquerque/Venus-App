@@ -108,7 +108,20 @@
         </div>
     </div>
 
-    {{-- Modal: confirmar exclusão --}}
+    {{-- Modal: confirmar suspender / reativar --}}
+    <div class="confirma-modal" id="us-confirma-modal">
+        <div class="confirma-caixa">
+            <span class="confirma-icone"><i data-lucide="user-x"></i></span>
+            <h3 id="us-confirma-titulo"></h3>
+            <p id="us-confirma-texto"></p>
+            <div class="confirma-acoes">
+                <button type="button" class="confirma-btn confirma-btn--neutro" id="us-confirma-cancelar">Cancelar</button>
+                <button type="button" class="confirma-btn confirma-btn--ok" id="us-confirma-ok">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal: confirmar exclusão (digitar EXCLUIR) --}}
     <div class="lst-modal" id="us-modal">
         <div class="lst-modal-caixa lst-card">
             <div class="lst-modal-cabeca">

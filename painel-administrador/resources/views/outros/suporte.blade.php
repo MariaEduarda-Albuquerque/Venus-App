@@ -124,6 +124,19 @@
 
 <input type="file" id="sup-arquivo" multiple hidden>
 
+{{-- Modal: confirmar resolver / reabrir --}}
+<div class="confirma-modal" id="sup-confirma-modal">
+    <div class="confirma-caixa">
+        <span class="confirma-icone"><i data-lucide="check-circle-2"></i></span>
+        <h3 id="sup-confirma-titulo"></h3>
+        <p>Você pode mudar isso depois.</p>
+        <div class="confirma-acoes">
+            <button type="button" class="confirma-btn confirma-btn--neutro" id="sup-confirma-cancelar">Cancelar</button>
+            <button type="button" class="confirma-btn confirma-btn--ok" id="sup-confirma-ok">Confirmar</button>
+        </div>
+    </div>
+</div>
+
 <div class="toast" id="sup-toast"><i data-lucide="check-circle-2"></i><span></span></div>
 
 @endsection

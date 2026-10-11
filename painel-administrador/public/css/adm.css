@@ -392,3 +392,22 @@
         animation: none !important;
     }
 }
+
+/* Tamanho fixo do container Fila prioritária */
+.card.fila-prioritaria {
+    width: 629px;
+    height: 400px;
+    max-width: 100%; /* em telas bem estreitas não passa da largura da tela */
+    flex-shrink: 0;
+}
+
+/* Fila prioritária: o botão "Ver todas as pendências" fica sempre colado embaixo,
+   mesmo com poucos itens na lista */
+.card.fila-prioritaria {
+    display: flex;
+    flex-direction: column;
+}
+
+.card.fila-prioritaria .fila-botao {
+    margin-top: auto;
+}

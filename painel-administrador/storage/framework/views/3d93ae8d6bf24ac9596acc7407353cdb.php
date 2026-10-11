@@ -341,14 +341,21 @@
     </div>
 
     
+    <div class="dst-modal" id="modal-pergunta" role="dialog" aria-modal="true" aria-labelledby="pergunta-texto">
+        <div class="dst-card dst-modal-caixa">
+            <h3 id="pergunta-texto"></h3>
+            <div class="dst-modal-acoes">
+                <button type="button" class="dst-btn dst-btn--neutro" id="pergunta-nao">Não</button>
+                <button type="button" class="dst-btn dst-btn--primario" id="pergunta-sim">Sim</button>
+            </div>
+        </div>
+    </div>
+
+    
     <div class="dst-toast" id="dst-toast" role="status" aria-live="polite">
         <i data-lucide="check-circle-2"></i><span></span>
     </div>
 
 </div>
 <?php $__env->stopSection(); ?>
-
-<?php $__env->startPush('scripts'); ?>
-    <script src="<?php echo e(asset('js/criar-destaque.js')); ?>"></script>
-<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laravel\Venus-App\Painel-Administrador\resources\views/conteudos/criar-destaque.blade.php ENDPATH**/ ?>

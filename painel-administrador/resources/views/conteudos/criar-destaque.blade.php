@@ -340,6 +340,17 @@
         </div>
     </div>
 
+    {{-- Modal Sim ou Não (remover peça principal / material) --}}
+    <div class="dst-modal" id="modal-pergunta" role="dialog" aria-modal="true" aria-labelledby="pergunta-texto">
+        <div class="dst-card dst-modal-caixa">
+            <h3 id="pergunta-texto"></h3>
+            <div class="dst-modal-acoes">
+                <button type="button" class="dst-btn dst-btn--neutro" id="pergunta-nao">Não</button>
+                <button type="button" class="dst-btn dst-btn--primario" id="pergunta-sim">Sim</button>
+            </div>
+        </div>
+    </div>
+
     {{-- Aviso rápido --}}
     <div class="dst-toast" id="dst-toast" role="status" aria-live="polite">
         <i data-lucide="check-circle-2"></i><span></span>
@@ -347,7 +358,3 @@
 
 </div>
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('js/criar-destaque.js') }}"></script>
-@endpush

@@ -37,20 +37,26 @@
 
 <div class="grid g2 mt">
     <div class="stack">
-        <div class="card">
+        {{-- "fila-prioritaria" é a classe que dá o tamanho fixo ao card (veja o CSS) --}}
+        <div class="card fila-prioritaria">
             <h3>Fila prioritária</h3>
             <p class="sm">Denúncias de alta gravidade</p>
 
-            @foreach ($denunciasAltaGravidade as $denuncia)
+            @forelse ($denunciasAltaGravidade as $denuncia)
             <div class="row"><span class="t">{{ Str::limit($denuncia->motivoDenuncia, 35, '...')}}</span><span class="chip">{{$denuncia->tipoAlvo}}</span><span class="sm">{{$denuncia->dataDenuncia->locale('pt_BR')->diffForHumans(short: true, parts: 1, options: \Carbon\Carbon::JUST_NOW)}}</span></div>
-            @endforeach
+            @empty
+            <p class="sm" style="padding:9px 0">Nenhuma denúncia de alta gravidade.</p>
+            @endforelse
 
             <h3 style="margin-top:14px">Aprovações de profissionais</h3>
-            @foreach ($profissionaisAguardandoAprovacao as $profissional)
-            <div class="row"><span class="t">$profissional->nomeProfissionalSaude <span class="sm">CRP 06/123456</span></span><span class="sm">{{$profissional->dataCadastro->locale('pt_BR')->diffForHumans(short: true, parts: 1, options: \Carbon\Carbon::JUST_NOW)}}</span></div>
-            @endforeach
+            @forelse ($profissionaisAguardandoAprovacao as $profissional)
+            <div class="row"><span class="t">{{$profissional->nomeProfissionalSaude}} <span class="sm">CRP 06/123456</span></span><span class="sm">{{$profissional->dataCadastro->locale('pt_BR')->diffForHumans(short: true, parts: 1, options: \Carbon\Carbon::JUST_NOW)}}</span></div>
+            @empty
+            <p class="sm" style="padding:9px 0">Nenhum cadastro aguardando aprovação.</p>
+            @endforelse
 
-            <button class="btn g s mt" style="width:100%;justify-content:center">Ver todas as pendências</button>
+            {{-- "fila-botao" mantém o botão sempre colado embaixo do card --}}
+            <button class="btn g s mt fila-botao" style="width:100%;justify-content:center">Ver todas as pendências</button>
         </div>
     </div>
 

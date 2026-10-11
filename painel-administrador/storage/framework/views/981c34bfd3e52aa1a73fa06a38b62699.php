@@ -162,6 +162,98 @@
             <button type="button" class="lst-btn lst-btn--suave lst-btn--pequeno" id="ct-ver">
                 <i data-lucide="eye"></i>Ver conteúdo
             </button>
+
+            
+<!-- Checklist editorial -->
+<div class="lst-card" id="ct-checklist" style="margin-top: 1rem;">
+
+    <div class="lst-checklist-topo">
+        <div class="lst-anel" id="ct-anel">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+                <circle
+                    class="lst-anel-trilha"
+                    cx="50" cy="50" r="42"
+                    fill="none"
+                    stroke-width="8"
+                />
+                <circle
+                    class="lst-anel-progresso"
+                    id="ct-anel-progresso"
+                    cx="50" cy="50" r="42"
+                    fill="none"
+                    stroke-width="8"
+                    stroke-linecap="round"
+                    stroke-dasharray="0 264"
+                />
+            </svg>
+            <b id="ct-progresso">0%</b>
+        </div>
+
+        <div>
+            <h3 class="lst-card-titulo">Checklist editorial</h3>
+            <p class="lst-mute" id="ct-checklist-resumo">
+                Verifique os critérios antes de aprovar.
+            </p>
+        </div>
+    </div>
+
+    <label class="lst-item-check">
+        <input type="checkbox" data-criterio="clareza">
+        <span class="lst-item-check-caixa">
+            <i data-lucide="check"></i>
+        </span>
+        <span>
+            <b>Clareza do conteúdo</b>
+            <small>O texto é compreensível e bem organizado.</small>
+        </span>
+    </label>
+
+    <label class="lst-item-check">
+        <input type="checkbox" data-criterio="ortografia">
+        <span class="lst-item-check-caixa">
+            <i data-lucide="check"></i>
+        </span>
+        <span>
+            <b>Ortografia e gramática</b>
+            <small>Não foram encontrados erros relevantes de escrita.</small>
+        </span>
+    </label>
+
+    <label class="lst-item-check">
+        <input type="checkbox" data-criterio="fontes">
+        <span class="lst-item-check-caixa">
+            <i data-lucide="check"></i>
+        </span>
+        <span>
+            <b>Fontes confiáveis</b>
+            <small>As informações estão apoiadas em fontes verificáveis.</small>
+        </span>
+    </label>
+
+    <label class="lst-item-check">
+        <input type="checkbox" data-criterio="adequacao">
+        <span class="lst-item-check-caixa">
+            <i data-lucide="check"></i>
+        </span>
+        <span>
+            <b>Adequação do conteúdo</b>
+            <small>O conteúdo é pertinente à proposta da plataforma.</small>
+        </span>
+    </label>
+
+    <label class="lst-item-check">
+        <input type="checkbox" data-criterio="seguranca">
+        <span class="lst-item-check-caixa">
+            <i data-lucide="check"></i>
+        </span>
+        <span>
+            <b>Segurança das orientações</b>
+            <small>As orientações não apresentam informações potencialmente prejudiciais.</small>
+        </span>
+    </label>
+
+</div>
+
  
             <div class="lst-decisao">
                 <button type="button" class="lst-btn lst-btn--neutro" id="ct-aprovar" data-decisao="publicado">
@@ -233,6 +325,17 @@
     </div>
  
     
+    <div class="lst-modal lst-modal--2" id="ct-pergunta-modal" role="dialog" aria-modal="true" aria-labelledby="ct-pergunta-texto">
+        <div class="lst-card lst-modal-caixa lst-modal-caixa--pergunta">
+            <h3 id="ct-pergunta-texto"></h3>
+            <div class="lst-acoes lst-acoes--centro">
+                <button type="button" class="lst-btn lst-btn--neutro" id="ct-pergunta-nao">Não</button>
+                <button type="button" class="lst-btn lst-btn--primario" id="ct-pergunta-sim">Sim</button>
+            </div>
+        </div>
+    </div>
+
+    
     <div class="lst-toast" id="ct-toast" role="status" aria-live="polite">
         <i data-lucide="check-circle-2"></i><span></span>
     </div>
@@ -244,6 +347,5 @@
     
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
-    <script src="<?php echo e(asset('js/conteudos.js')); ?>"></script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laravel\Venus-App\Painel-Administrador\resources\views/conteudos/lista-conteudo-aprender.blade.php ENDPATH**/ ?>

@@ -1874,3 +1874,33 @@
         margin-left: 0;
     }
 }
+
+/* Modal Sim ou Não: caixa mais estreita e botões centralizados */
+.lst-modal-caixa--pergunta {
+    width: min(24rem, 100%);
+    text-align: center;
+}
+
+.lst-acoes--centro {
+    justify-content: center;
+}
+
+.lst-modal-caixa--pergunta .lst-btn {
+    flex: 1;
+}
+
+/* Modal Sim ou Não: caixa mais estreita e botões centralizados */
+.lst-modal-caixa--pergunta {
+    width: min(24rem, 100%);
+    text-align: center;
+}
+
+.lst-acoes--centro {
+    justify-content: center;
+}
+
+.lst-modal-caixa--pergunta .lst-btn {
+    flex: 1;
+}
+
+/* //para salvar no git */

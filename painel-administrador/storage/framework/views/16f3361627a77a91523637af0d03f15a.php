@@ -35,20 +35,26 @@
 
 <div class="grid g2 mt">
     <div class="stack">
-        <div class="card">
+        
+        <div class="card fila-prioritaria">
             <h3>Fila prioritária</h3>
             <p class="sm">Denúncias de alta gravidade</p>
 
-            <?php $__currentLoopData = $denunciasAltaGravidade; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $denuncia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php $__empty_1 = true; $__currentLoopData = $denunciasAltaGravidade; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $denuncia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="row"><span class="t"><?php echo e(Str::limit($denuncia->motivoDenuncia, 35, '...')); ?></span><span class="chip"><?php echo e($denuncia->tipoAlvo); ?></span><span class="sm"><?php echo e($denuncia->dataDenuncia->locale('pt_BR')->diffForHumans(short: true, parts: 1, options: \Carbon\Carbon::JUST_NOW)); ?></span></div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+            <p class="sm" style="padding:9px 0">Nenhuma denúncia de alta gravidade.</p>
+            <?php endif; ?>
 
             <h3 style="margin-top:14px">Aprovações de profissionais</h3>
-            <?php $__currentLoopData = $profissionaisAguardandoAprovacao; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $profissional): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="row"><span class="t">$profissional->nomeProfissionalSaude <span class="sm">CRP 06/123456</span></span><span class="sm"><?php echo e($profissional->dataCadastro->locale('pt_BR')->diffForHumans(short: true, parts: 1, options: \Carbon\Carbon::JUST_NOW)); ?></span></div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php $__empty_1 = true; $__currentLoopData = $profissionaisAguardandoAprovacao; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $profissional): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+            <div class="row"><span class="t"><?php echo e($profissional->nomeProfissionalSaude); ?> <span class="sm">CRP 06/123456</span></span><span class="sm"><?php echo e($profissional->dataCadastro->locale('pt_BR')->diffForHumans(short: true, parts: 1, options: \Carbon\Carbon::JUST_NOW)); ?></span></div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+            <p class="sm" style="padding:9px 0">Nenhum cadastro aguardando aprovação.</p>
+            <?php endif; ?>
 
-            <button class="btn g s mt" style="width:100%;justify-content:center">Ver todas as pendências</button>
+            
+            <button class="btn g s mt fila-botao" style="width:100%;justify-content:center">Ver todas as pendências</button>
         </div>
     </div>
 

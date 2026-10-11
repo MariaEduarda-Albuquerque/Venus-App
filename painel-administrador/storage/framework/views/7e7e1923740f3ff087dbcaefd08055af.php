@@ -15,10 +15,10 @@
 
         
         <nav class="lst-abas" aria-label="Tipo de denúncia">
-            <a href="#" class="lst-aba is-active" aria-current="page">
+            <a href="/denuncias" class="lst-aba is-active" aria-current="page">
                 <i data-lucide="list-checks"></i>Denúncias
             </a>
-            <a href="#" class="lst-aba">
+            <a href="/denuncias-mensagens" class="lst-aba">
                 <i data-lucide="message-square-warning"></i>Mensagens denunciadas
                 <span class="lst-aba-badge">3</span>
             </a>
@@ -166,18 +166,47 @@
         </div>
     </div>
 
-    
-    <div class="lst-toast" id="dn-toast" role="status" aria-live="polite">
-        <i data-lucide="check-circle-2"></i><span></span>
-    </div>
+        
 
+
+<div class="lst-modal lst-modal--2" id="dn-pergunta-modal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="dn-pergunta-texto">
+
+    <div class="lst-card lst-modal-caixa lst-modal-caixa--pergunta">
+        <h3 id="dn-pergunta-texto"></h3>
+
+        <label class="lst-justificativa-label" for="dn-justificativa">
+            Justificativa da decisão <span>*</span>
+        </label>
+
+        <div class="lst-escrever" id="dn-justificativa-caixa">
+            <textarea
+                id="dn-justificativa"
+                placeholder="Explique o motivo da sua decisão..."
+                rows="4"
+                maxlength="1000"
+                required></textarea>
+        </div>
+
+        <p class="lst-erro-msg" id="dn-justificativa-erro">
+            Informe a justificativa antes de confirmar.
+        </p>
+
+        <div class="lst-acoes lst-acoes--centro">
+            <button type="button" class="lst-btn lst-btn--neutro"
+                    id="dn-pergunta-nao">Cancelar</button>
+            <button type="button" class="lst-btn lst-btn--primario"
+                    id="dn-pergunta-sim">Confirmar</button>
+        </div>
+    </div>
 </div>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startPush('scripts'); ?>
     
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
-    <script src="<?php echo e(asset('js/denuncias.js')); ?>"></script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laravel\Venus-App\Painel-Administrador\resources\views/usuario/lista-denuncias.blade.php ENDPATH**/ ?>
