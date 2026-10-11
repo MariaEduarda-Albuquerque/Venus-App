@@ -1,0 +1,512 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Nunito', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    display: flex;
+    min-height: 100vh;
+    background-color: #FAF8F8;
+    overflow-x: hidden;
+}
+
+:root {
+    --wine: #9B1B2A;
+    --wine-d: #7d1422;
+    --rose: #F8E9EC;
+    --rose2: #F0CDD4;
+    --ink: #2B1F22;
+    --mute: #7E7075;
+    --line: #EFE7E8;
+    --sh: 0 1px 2px rgba(60,20,30,.04), 0 4px 16px rgba(60,20,30,.04);
+}
+
+/* ===== Sidebar ===== */
+
+#side {
+    width: 296px;
+    flex: none;
+    background: #fff;
+    border-right: 1px solid var(--line);
+    color: var(--ink);
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: auto;
+    transition: width .2s;
+    scrollbar-width: none;
+}
+
+#side::-webkit-scrollbar {
+    display: none;
+}
+
+.logo {
+    color: var(--wine);
+    font-size: 26px;
+    font-weight: 800;
+    padding: 4px 10px 18px;
+    letter-spacing: -.5px;
+    white-space: nowrap;
+}
+
+.logo small {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--mute);
+    letter-spacing: 0;
+}
+
+.vm {
+    display: none;
+}
+
+.nl {
+    font-size: 11px;
+    font-weight: 800;
+    color: #B3A5A9;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+    padding: 16px 10px 4px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: 10px;
+    color: var(--mute);
+    font-weight: 600;
+    font-size: 13px;
+    text-align: left;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+    position: relative;
+}
+
+.nav:hover {
+    background: var(--rose);
+}
+
+/* rosa de destaque: só quando o submenu que o item abre está aberto,
+   ou quando o link (sem submenu) é a página atual */
+.nav.open,
+.nav.on {
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.nav .chev {
+    margin-left: auto;
+    width: 15px;
+    height: 15px;
+    transition: transform .2s;
+    flex-shrink: 0;
+}
+
+.nav.open .chev {
+    transform: rotate(180deg);
+}
+
+.nav .bd {
+    background: var(--wine);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 99px;
+    padding: 1px 7px;
+    min-width: 28px;
+    text-align: center;
+    margin-left: auto;
+}
+
+.nav .bd + .chev {
+    margin-left: 6px;
+}
+
+.nav i[data-lucide],
+.nav svg.lucide {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.75;
+    flex: none;
+}
+
+.sub {
+    display: none;
+    margin: 2px 0 6px 20px;
+    border-left: 1px solid var(--line);
+    padding-left: 8px;
+}
+
+.sub.open {
+    display: block;
+}
+
+.sub .nav {
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.out {
+    border-top: 1px solid var(--line);
+    margin-top: 8px;
+    padding-top: 8px;
+}
+
+.out form {
+    width: 100%;
+}
+
+/* ===== compacta ===== */
+
+#side.mini {
+    width: 76px;
+    padding: 20px 12px;
+}
+
+.mini .lb,
+.mini .bd,
+.mini .chev,
+.mini .sub {
+    display: none !important;
+}
+
+/* Títulos das seções (GESTÃO, ATENDIMENTO...) somem na compacta, como no design */
+.mini .nl {
+    display: none;
+}
+
+.mini .vm {
+    display: inline;
+}
+
+.mini .logo {
+    text-align: center;
+    padding: 4px 0 18px;
+}
+
+.mini .nav {
+    justify-content: center;
+    padding: 11px 0;
+}
+
+/* Na compacta o submenu fica escondido, então um grupo "aberto" não ganha
+   o rosa de destaque (só a página atual). Passar o mouse continua rosa. */
+.mini .nav.open:not(.on) {
+    background: none;
+    color: var(--mute);
+}
+
+.mini .nav.open:not(.on):hover {
+    background: var(--rose);
+}
+
+/* ===== Barra de pesquisa / topo ===== */
+
+.top {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.ib {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: var(--sh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wine);
+    position: relative;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.ib .dot {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--wine);
+    border: 2px solid #fff;
+}
+
+.search {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    box-shadow: var(--sh);
+    border-radius: 12px;
+    padding: 0 14px;
+    height: 40px;
+    color: var(--mute);
+}
+
+.search i[data-lucide] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.search input {
+    border: 0;
+    outline: 0;
+    flex: 1;
+    min-width: 0;
+    font: inherit;
+    background: none;
+    color: var(--ink);
+}
+
+.av {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--wine);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+/* ===== Área de conteúdo ===== */
+
+.direita {
+    flex: 1;
+    min-width: 0;
+    padding: 18px 28px 40px;
+}
+
+/* ===== Responsividade ===== */
+
+@media (max-width: 1000px) {
+    #side {
+        position: fixed;
+        z-index: 30;
+        margin-left: -296px;
+        box-shadow: var(--sh);
+    }
+
+    #side.mob {
+        margin-left: 0;
+    }
+
+    .direita {
+        padding: 14px;
+    }
+}
+
+/* ===== Pop-up de confirmação do logout ===== */
+
+.logout-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(43, 31, 34, .4);
+}
+
+.logout-modal.is-open {
+    display: flex;
+}
+
+.logout-caixa {
+    width: min(26rem, 100%);
+    padding: 26px;
+    border-radius: 18px;
+    background: #fff;
+    text-align: center;
+    animation: logout-entrada .25s;
+}
+
+@keyframes logout-entrada {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+}
+
+.logout-icone {
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.logout-caixa h3 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.logout-caixa p {
+    margin: 8px 0 20px;
+    color: var(--mute);
+}
+
+.logout-acoes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logout-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.logout-btn--neutro {
+    background: #fff;
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+.logout-btn--neutro:hover {
+    border-color: var(--rose2);
+}
+
+.logout-btn--perigo {
+    background: var(--wine);
+    color: #fff;
+}
+
+.logout-btn--perigo:hover {
+    background: var(--wine-d);
+}
+
+@media (max-width: 480px) {
+    .logout-acoes {
+        flex-direction: column-reverse;
+    }
+}
+
+/* ===== Pop-up de confirmação (igual ao do logout) ===== */
+
+.confirma-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(43, 31, 34, .4);
+}
+
+.confirma-modal.is-open {
+    display: flex;
+}
+
+.confirma-caixa {
+    width: min(26rem, 100%);
+    padding: 26px;
+    border-radius: 18px;
+    background: #fff;
+    text-align: center;
+}
+
+.confirma-icone {
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.confirma-caixa h3 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.confirma-caixa p {
+    margin: 8px 0 20px;
+    color: var(--mute);
+}
+
+.confirma-acoes {
+    display: flex;
+    gap: 10px;
+}
+
+.confirma-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.confirma-btn--neutro {
+    background: #fff;
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+.confirma-btn--ok {
+    background: var(--wine);
+    color: #fff;
+}
+
+@media (max-width: 480px) {
+    .confirma-acoes {
+        flex-direction: column-reverse;
+    }
+}

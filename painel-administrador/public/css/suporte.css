@@ -1,0 +1,596 @@
+/* =========================================================
+   BASE FLUIDA (zoom e monitores grandes)
+   ========================================================= */
+
+html {
+    font-size: clamp(14px, 0.85vw + 3px, 20px);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+:root {
+    --wine: #9B1B2A;
+    --wine-d: #7d1422;
+    --rose: #F8E9EC;
+    --rose2: #F0CDD4;
+    --ink: #2B1F22;
+    --mute: #7E7075;
+    --line: #EFE7E8;
+    --sh: 0 1px 2px rgba(60,20,30,.04), 0 4px 16px rgba(60,20,30,.04);
+    --content-max: 72rem;
+}
+
+@media (min-width: 1900px) {
+    :root {
+        --content-max: 84rem;
+    }
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    max-width: var(--content-max);
+}
+
+.head h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--ink);
+}
+
+.sm {
+    color: var(--mute);
+    font-size: 0.75rem;
+}
+
+h3 {
+    font-size: 0.9375rem;
+    font-weight: 800;
+}
+
+.card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: var(--sh);
+    padding: 1.125rem;
+    min-width: 0;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5625rem 1rem;
+    border-radius: 0.625rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+    transition: .15s;
+}
+
+.btn.p {
+    background: var(--wine);
+    color: #fff;
+}
+
+.btn.p:hover {
+    background: var(--wine-d);
+}
+
+.btn.g {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+}
+
+.btn.g:hover {
+    border-color: var(--rose2);
+}
+
+.btn.s {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+
+/* ===== Layout: lista + conversa ===== */
+
+.sup {
+    display: grid;
+    grid-template-columns: minmax(0, 20.625rem) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+    max-width: var(--content-max);
+}
+
+.tabs {
+    display: flex;
+    gap: 0.25rem;
+    background: #F7F3F3;
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.tab {
+    flex: 1;
+    padding: 0.4375rem 0.875rem;
+    border-radius: 0.5625rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: var(--mute);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.tab.on {
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.sbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #F7F3F3;
+    border-radius: 0.625rem;
+    padding: 0 0.75rem;
+    height: 2.375rem;
+    color: var(--mute);
+    margin-bottom: 0.5rem;
+}
+
+.sbox i[data-lucide] {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+}
+
+.sbox input {
+    border: 0;
+    outline: 0;
+    background: none;
+    font: inherit;
+    width: 100%;
+    color: var(--ink);
+}
+
+.tl {
+    max-height: 35rem;
+    overflow: auto;
+    margin: 0.5rem -0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.ti {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    border: 0.09375rem solid transparent;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: .15s;
+}
+
+.ti:hover {
+    background: #FDF6F7;
+}
+
+.ti.on {
+    background: var(--rose);
+    border-color: var(--rose2);
+}
+
+.ti b {
+    display: flex;
+    gap: 0.375rem;
+    align-items: center;
+    font-size: 0.8125rem;
+    color: var(--ink);
+}
+
+.ti .sub2 {
+    color: var(--mute);
+    font-size: 0.75rem;
+    margin-top: 0.125rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ud {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--wine);
+    flex-shrink: 0;
+}
+
+
+/* ===== Conversa ===== */
+
+.th {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding-bottom: 0.875rem;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+}
+
+.th h3 {
+    font-size: 1.0625rem;
+    line-height: 1.3;
+}
+
+.th h3 span {
+    color: var(--wine);
+}
+
+.nv {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nvb {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.625rem;
+    border: 0.09375rem solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wine);
+    background: #fff;
+    cursor: pointer;
+}
+
+.nvb:hover {
+    background: var(--rose);
+}
+
+.thr {
+    max-height: 26.875rem;
+    overflow: auto;
+    padding: 1rem 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+}
+
+.bub {
+    display: grid;
+    grid-template-columns: 2.625rem 1fr;
+    gap: 0.75rem;
+}
+
+.mav {
+    width: 2.625rem;
+    height: 2.625rem;
+    border-radius: 50%;
+    background: var(--rose);
+    color: var(--wine);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.bub.s .mav {
+    background: var(--wine);
+    color: #fff;
+}
+
+.nm {
+    font-weight: 800;
+    color: var(--wine);
+}
+
+.em {
+    color: var(--mute);
+    font-size: 0.75rem;
+}
+
+.bd2 {
+    border-radius: 0.875rem;
+    padding: 0.75rem 0.875rem;
+    background: #F9F6F6;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    margin-top: 0.375rem;
+    font-size: 0.875rem;
+    overflow-wrap: anywhere;
+}
+
+.bub.s .bd2 {
+    background: var(--rose);
+}
+
+
+/* ===== Resposta ===== */
+
+.resposta-area {
+    border-top: 1px solid var(--line);
+    padding-top: 0.875rem;
+}
+
+.qr {
+    display: flex;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.625rem;
+}
+
+.qr button {
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    padding: 0.25rem 0.6875rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--mute);
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.qr button:hover {
+    border-color: var(--wine);
+    color: var(--wine);
+}
+
+.cmp {
+    border: 0.09375rem solid var(--rose2);
+    border-radius: 0.875rem;
+    padding: 0.75rem;
+    background: #FDFAFA;
+    transition: .15s;
+}
+
+.cmp:focus-within {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 0.1875rem var(--rose);
+    background: #fff;
+}
+
+.cmp textarea {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    resize: none;
+    font: inherit;
+    background: none;
+    min-height: 4rem;
+    color: var(--ink);
+}
+
+.cmp .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+    .sup {
+        grid-template-columns: 1fr;
+    }
+
+    .tl {
+        max-height: 18.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .th {
+        flex-direction: column;
+    }
+
+    .nv {
+        width: 100%;
+    }
+
+    .bub {
+        grid-template-columns: 2.25rem 1fr;
+    }
+
+    .mav {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}
+
+/* ===== Adições: suporte funcionando ===== */
+
+.ico {
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: 0 auto 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.vazio {
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.empty {
+    padding: 5rem 1.25rem;
+    text-align: center;
+    color: var(--mute);
+}
+
+.nvb:disabled {
+    opacity: .35;
+    cursor: default;
+}
+
+.btn:disabled {
+    opacity: .45;
+    cursor: default;
+}
+
+/* Anexos (aparecem na conversa e abaixo da caixa de resposta) */
+.fc {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin: 0.5rem 0.375rem 0 0;
+    padding: 0.1875rem 0.375rem 0.1875rem 0.625rem;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    background: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.fc button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+}
+
+.fc svg {
+    width: 0.8125rem;
+    height: 0.8125rem;
+}
+
+/* Aviso (toast) */
+.toast {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.125rem;
+    border-radius: 0.75rem;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(5.5rem);
+    pointer-events: none;
+    transition: .3s;
+}
+
+.toast.is-show {
+    opacity: 1;
+    transform: none;
+}
+
+@media (max-width: 600px) {
+    .toast {
+        right: 1rem;
+        left: 1rem;
+        bottom: 1rem;
+    }
+}
+
+/* ===== Adições: suporte funcionando ===== */
+
+.vazio,
+.empty {
+    padding: 1.25rem;
+    text-align: center;
+    color: var(--mute);
+}
+
+.empty {
+    padding: 4rem 1.25rem;
+}
+
+.nvb:disabled,
+.btn:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+/* Anexos */
+.fc {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin: 0.5rem 0.375rem 0 0;
+    padding: 0.1875rem 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    background: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.fc button {
+    display: flex;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+}
+
+.fc svg {
+    width: 0.8125rem;
+    height: 0.8125rem;
+}
+
+/* Aviso */
+.toast {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.125rem;
+    border-radius: 0.75rem;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(5.5rem);
+    pointer-events: none;
+    transition: .3s;
+}
+
+.toast.is-show {
+    opacity: 1;
+    transform: none;
+}

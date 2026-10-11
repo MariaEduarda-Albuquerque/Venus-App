@@ -1,0 +1,988 @@
+/* =========================================================
+   DESTAQUES - Painel Vênus
+   - Tudo fica dentro de .dst-page e usa o prefixo "dst-",
+     então não interfere em outras telas.
+   - O tamanho base (--base) acompanha a largura da tela, e todo o
+     resto usa "em" em cima dele: a tela cresce e diminui por inteiro.
+   - Não usa "rem": o html do site tem fonte fluida, e isso mudaria
+     os tamanhos desta tela.
+   - Zoom do navegador funciona normalmente (px e em escalam juntos).
+   - Este arquivo serve a lista de destaques e o "Criar destaque".
+   ========================================================= */
+
+/* ---------- Base e variáveis ---------- */
+.dst-page {
+    --wine: #9B1B2A;
+    --wine-d: #7D1422;
+    --rose: #F8E9EC;
+    --rose2: #F0CDD4;
+    --line: #EFE7E8;
+    --danger: #C0233A;
+    --ink: #2B1F22;
+    --mute: #7E7075;
+    --ok: #2E8B63;
+    --sombra: 0 1px 2px rgba(60, 20, 30, .04), 0 4px 16px rgba(60, 20, 30, .04);
+
+    /* 14px em telas pequenas, 17px em ~1900px, até 20px em monitores grandes */
+    font-size: clamp(14px, .45vw + 8.4px, 20px);
+
+    width: 100%;
+    padding: 0 0 2.5em; /* o espaçamento lateral já vem do layout */
+
+    font-family: 'Nunito', system-ui, sans-serif;
+    line-height: 1.4;
+    color: var(--ink);
+}
+
+.dst-page *,
+.dst-page *::before,
+.dst-page *::after {
+    box-sizing: border-box;
+}
+
+/* :where() deixa os resets com peso mínimo: as classes abaixo sempre vencem */
+.dst-page :where(h1, h2, h3, p, dl, dd) {
+    margin: 0;
+}
+
+.dst-page :where(button) {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.dst-page :where(ol, ul) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dst-page [hidden] {
+    display: none !important;
+}
+
+.dst-page :focus-visible {
+    outline: 2px solid var(--wine);
+    outline-offset: 2px;
+}
+
+.dst-page svg.lucide {
+    width: 1.25em;
+    height: 1.25em;
+    stroke-width: 1.75;
+    flex: none;
+}
+
+/* ---------- Textos de apoio ---------- */
+.dst-mute {
+    color: var(--mute);
+}
+
+/* ---------- Topo da página ---------- */
+.dst-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75em;
+    margin-bottom: 1.2em;
+}
+
+.dst-topo h1 {
+    font-size: 1.83em;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+}
+
+/* ---------- Botão ---------- */
+.dst-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+    padding: .7em 1.4em;
+    border: 1.5px solid transparent;
+    border-radius: .65em;
+    font-size: .91em;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: .15s;
+}
+
+.dst-btn--primario {
+    background: var(--wine);
+    color: #fff;
+}
+
+.dst-btn--primario:hover {
+    background: var(--wine-d);
+}
+
+.dst-btn--neutro {
+    background: #fff;
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+.dst-btn--neutro:hover {
+    border-color: var(--rose2);
+}
+
+.dst-btn--pequeno {
+    padding: .5em .95em;
+    font-size: .8em;
+}
+
+/* ---------- Selo (chip) ---------- */
+.dst-chip {
+    display: inline-block;
+    padding: .2em 1em;
+    border-radius: 99px;
+    background: var(--rose);
+    color: var(--wine);
+    font-size: .83em;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.dst-chip--ok {
+    background: #E3F4EB;
+    color: var(--ok);
+}
+
+/* ---------- Lista de destaques ---------- */
+.dst-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.dst-card {
+    background: #fff;
+    border-radius: .95em;
+    box-shadow: var(--sombra);
+    padding: 1.3em;
+}
+
+/* Cada destaque: informações à esquerda, quadro à direita */
+.dst-destaque {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, clamp(220px, 18.3vw, 480px));
+    gap: 1.4em;
+}
+
+.dst-destaque-info {
+    min-width: 0;
+}
+
+.dst-destaque-titulo {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .7em;
+}
+
+.dst-destaque-titulo h2 {
+    font-size: 1.35em;
+    font-weight: 800;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.dst-categoria {
+    margin: .42em 0 1.25em;
+    font-size: .85em;
+}
+
+/* Lista "Objetivo / Público / Período..." */
+.dst-resumo {
+    display: grid;
+    grid-template-columns: 10.35em minmax(0, 1fr);
+    gap: .75em 1em;
+    align-items: center;
+}
+
+.dst-resumo dt {
+    color: #4A3E41;
+    font-weight: 700;
+}
+
+.dst-resumo dd {
+    overflow-wrap: anywhere;
+}
+
+.dst-resumo .dst-chip {
+    margin: .1em .35em .1em 0;
+}
+
+/* Quadro do destaque: degradê com a mensagem principal */
+.dst-imagem {
+    display: flex;
+    align-items: flex-end;
+    min-height: 8em;
+    padding: 1em;
+    overflow: hidden;
+    border-radius: .65em;
+    background: linear-gradient(135deg, var(--wine), #C9475A 60%, #E8A1AC);
+    color: #fff;
+    font-size: 1.28em;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+/* =========================================================
+   CRIAR DESTAQUE (4 etapas numa página só)
+   ========================================================= */
+
+/* ---------- Barra de etapas ---------- */
+.dst-passos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+    margin: .35em 0 1.2em;
+}
+
+.dst-passo {
+    display: flex;
+    align-items: center;
+    gap: .65em;
+    flex: 1;
+    min-width: 10em;
+    color: var(--mute);
+    font-size: .93em;
+    font-weight: 700;
+}
+
+/* Traço entre uma etapa e a próxima */
+.dst-passo::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    margin-left: .3em;
+    border-radius: 2px;
+    background: var(--line);
+}
+
+.dst-passo:last-child::after {
+    display: none;
+}
+
+.dst-passo-num {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1.77em;
+    height: 1.77em;
+    border: 1.5px solid var(--line);
+    border-radius: 50%;
+    background: #fff;
+}
+
+.dst-numero {
+    font-size: .76em;
+}
+
+.dst-page .dst-passo-num svg.lucide {
+    display: none;
+    width: .95em;
+    height: .95em;
+    stroke-width: 2.25;
+}
+
+/* Etapa atual */
+.dst-passo.is-on {
+    color: var(--wine);
+}
+
+.dst-passo.is-on .dst-passo-num {
+    border-color: var(--wine);
+    background: var(--wine);
+    color: #fff;
+    box-shadow: 0 0 0 .25em var(--rose);
+}
+
+/* Etapa concluída */
+.dst-passo.is-done {
+    color: var(--ink);
+}
+
+.dst-passo.is-done .dst-passo-num {
+    border-color: var(--rose);
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.dst-passo.is-done::after {
+    background: var(--wine);
+}
+
+.dst-passo.is-done .dst-numero {
+    display: none;
+}
+
+.dst-page .dst-passo.is-done .dst-passo-num svg.lucide {
+    display: block;
+}
+
+/* ---------- Formulário + coluna da direita ---------- */
+.dst-trabalho {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(16em, 1fr);
+    gap: 1.05em;
+    align-items: start;
+}
+
+.dst-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+/* ---------- Etapas ---------- */
+.dst-etapa {
+    display: none;
+}
+
+.dst-etapa.is-on {
+    display: block;
+}
+
+.dst-etapa-titulo {
+    margin-bottom: .85em;
+    font-size: 1.18em;
+    font-weight: 800;
+}
+
+.dst-etapa-titulo:focus {
+    outline: none;
+}
+
+.dst-etapa-sub {
+    margin: -.7em 0 1.1em;
+    font-size: .857em;
+}
+
+/* ---------- Campos ---------- */
+.dst-campo {
+    position: relative;
+    margin-bottom: .95em;
+}
+
+.dst-campo label,
+.dst-rotulo {
+    display: block;
+    margin-bottom: .45em;
+    font-size: .93em;
+    font-weight: 700;
+}
+
+.dst-campo label em {
+    color: var(--wine);
+    font-style: normal;
+}
+
+.dst-campo input,
+.dst-campo textarea,
+.dst-campo select {
+    width: 100%;
+    padding: .6em .7em;
+    border: 1.5px solid var(--line);
+    border-radius: .6em;
+    background: #FDFCFC;
+    color: var(--ink);
+    font: inherit;
+    outline: 0;
+    transition: .15s;
+}
+
+.dst-campo textarea {
+    min-height: 5em;
+    resize: vertical;
+}
+
+.dst-campo input:focus,
+.dst-campo textarea:focus,
+.dst-campo select:focus {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 3px var(--rose);
+    background: #fff;
+}
+
+/* Contador de caracteres dentro do campo */
+.dst-entrada {
+    position: relative;
+}
+
+.dst-entrada input {
+    padding-right: 3.8em;
+}
+
+.dst-contador {
+    position: absolute;
+    top: 50%;
+    right: .8em;
+    transform: translateY(-50%);
+    padding: 0 .3em;
+    background: #fff;
+    color: var(--mute);
+    font-size: .7em;
+}
+
+.dst-entrada textarea + .dst-contador {
+    top: auto;
+    bottom: .6em;
+    transform: none;
+}
+
+/* Erro */
+.dst-erro {
+    display: none;
+    margin-top: .3em;
+    color: var(--danger);
+    font-size: .857em;
+    font-weight: 700;
+}
+
+.dst-campo.is-erro .dst-erro {
+    display: block;
+}
+
+.dst-campo.is-erro input,
+.dst-campo.is-erro textarea,
+.dst-campo.is-erro select,
+.dst-campo.is-erro .dst-tags,
+.dst-campo.is-erro .dst-soltar {
+    border-color: #D6334A;
+    background: #FFF6F7;
+}
+
+/* Campos lado a lado */
+.dst-duas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14em, 1fr));
+    gap: 0 .85em;
+}
+
+/* ---------- Tags ---------- */
+.dst-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35em;
+    padding: .4em;
+    border: 1.5px solid var(--line);
+    border-radius: .6em;
+    background: #FDFCFC;
+}
+
+.dst-tags:focus-within {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 3px var(--rose);
+}
+
+.dst-campo .dst-tags input {
+    flex: 1;
+    width: auto;
+    min-width: 7em;
+    padding: .25em .35em;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+}
+
+.dst-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .25em;
+    padding: .2em .35em .2em .9em;
+    border-radius: 99px;
+    background: var(--rose);
+    color: var(--wine);
+    font-size: .857em;
+    font-weight: 700;
+}
+
+.dst-tag button {
+    display: grid;
+    place-items: center;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+}
+
+.dst-tag button:hover {
+    background: var(--rose2);
+}
+
+.dst-page .dst-tag svg.lucide {
+    width: 1em;
+    height: 1em;
+}
+
+.dst-dica {
+    margin-top: .35em;
+    color: var(--mute);
+    font-size: .857em;
+}
+
+.dst-dica.is-erro {
+    color: var(--danger);
+}
+
+/* ---------- Botões de baixo (Voltar / Continuar) ---------- */
+.dst-acoes {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .6em;
+    margin-top: .35em;
+}
+
+.dst-acoes > div {
+    display: flex;
+    gap: .6em;
+}
+
+/* ---------- Arquivos (etapa 3) ---------- */
+.dst-soltar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .2em;
+    width: 100%;
+    padding: 1.5em;
+    border: 2px dashed var(--rose2);
+    border-radius: .85em;
+    background: #FDFAFA;
+    color: var(--mute);
+    text-align: center;
+}
+
+.dst-soltar:hover {
+    border-color: var(--wine);
+}
+
+.dst-soltar b {
+    color: var(--ink);
+}
+
+.dst-page .dst-soltar svg.lucide {
+    width: 1.65em;
+    height: 1.65em;
+    margin-bottom: .2em;
+    color: var(--wine);
+}
+
+.dst-arquivos {
+    display: flex;
+    flex-direction: column;
+    gap: .6em;
+    margin-bottom: .6em;
+}
+
+.dst-arquivos:empty {
+    margin: 0;
+}
+
+.dst-arquivo {
+    display: flex;
+    align-items: center;
+    gap: .7em;
+    min-width: 0;
+    padding: .6em .7em;
+    border: 1.5px solid var(--line);
+    border-radius: .7em;
+}
+
+.dst-arquivo--grande {
+    border-color: var(--rose2);
+    background: var(--rose);
+}
+
+.dst-arquivo-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.dst-arquivo-info b {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dst-arquivo-info .dst-mute {
+    font-size: .857em;
+}
+
+.dst-miniatura {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 4.2em;
+    height: 3.3em;
+    border-radius: .5em;
+    background: var(--rose2) center / cover no-repeat;
+    color: var(--wine);
+}
+
+.dst-ok {
+    margin-top: .2em;
+    color: var(--ok);
+    font-size: .857em;
+    font-weight: 700;
+}
+
+.dst-icone {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.6em;
+    height: 2.6em;
+    border-radius: .7em;
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.dst-arquivo .dst-icone {
+    width: 2.1em;
+    height: 2.1em;
+}
+
+.dst-icone--grande {
+    width: 3.2em;
+    height: 3.2em;
+}
+
+.dst-icone-btn {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1.9em;
+    height: 1.9em;
+    border-radius: .5em;
+    color: var(--wine);
+}
+
+.dst-icone-btn:hover {
+    background: var(--rose);
+}
+
+.dst-adicionar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+    width: 100%;
+    margin-bottom: 1.1em;
+    padding: .65em;
+    border: 1.5px dashed var(--rose2);
+    border-radius: .7em;
+    color: var(--wine);
+    font-weight: 700;
+}
+
+.dst-adicionar:hover {
+    background: var(--rose);
+}
+
+/* ---------- Resumo (etapa 4) ---------- */
+.dst-secao {
+    padding: 1em 0;
+    border-top: 1px solid var(--line);
+}
+
+.dst-secao:first-of-type {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.dst-secao h3 {
+    margin-bottom: .75em;
+    font-size: 1.07em;
+    font-weight: 800;
+}
+
+/* ---------- Prévia ---------- */
+.dst-previa {
+    padding: 0;
+    overflow: hidden;
+}
+
+.dst-previa-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6em;
+    padding: .85em 1em;
+}
+
+.dst-previa-topo h3 {
+    font-size: 1em;
+    font-weight: 800;
+}
+
+.dst-previa-imagem {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 7.6em;
+    background: linear-gradient(135deg, var(--wine), #C9475A 60%, #E8A1AC) center / cover no-repeat;
+    color: #fff;
+}
+
+.dst-page .dst-previa-imagem svg.lucide {
+    width: 2.6em;
+    height: 2.6em;
+    opacity: .5;
+    stroke-width: 1.25;
+}
+
+.dst-previa-imagem.tem-imagem svg.lucide {
+    display: none;
+}
+
+.dst-previa-imagem .dst-chip {
+    position: absolute;
+    left: .85em;
+    bottom: .7em;
+    background: #fff;
+}
+
+.dst-previa-corpo {
+    padding: 1em;
+}
+
+.dst-previa-titulo {
+    margin-bottom: .35em;
+    font-size: 1.06em;
+    font-weight: 800;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.dst-previa-corpo p {
+    margin: .35em 0;
+    color: var(--mute);
+    overflow-wrap: anywhere;
+}
+
+.dst-previa-corpo .dst-previa-mensagem {
+    font-weight: 700;
+}
+
+/* Texto de exemplo (enquanto o campo está vazio) */
+.dst-previa-corpo .dst-vazio {
+    color: #C7BBBE;
+    font-style: italic;
+}
+
+.dst-previa-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8em;
+    margin: .65em 0;
+    color: var(--mute);
+    font-size: .857em;
+    font-weight: 600;
+}
+
+.dst-previa-meta span {
+    display: flex;
+    align-items: center;
+    gap: .35em;
+}
+
+.dst-page .dst-previa-meta svg.lucide {
+    width: 1.15em;
+    height: 1.15em;
+}
+
+.dst-previa-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35em;
+}
+
+.dst-cta {
+    display: inline-block;
+    margin-top: .4em;
+    padding: .55em .9em;
+    border-radius: .65em;
+    background: var(--wine);
+    color: #fff;
+    font-weight: 700;
+}
+
+.dst-previa-fontes {
+    margin-top: .75em;
+    font-size: .857em;
+}
+
+/* ---------- Dicas ---------- */
+.dst-dicas h3 {
+    font-size: 1em;
+    font-weight: 800;
+}
+
+.dst-dicas p {
+    margin-top: .3em;
+    font-size: .857em;
+}
+
+.dst-dicas ul {
+    margin-top: .6em;
+}
+
+.dst-dicas li {
+    display: flex;
+    gap: .65em;
+    margin: .65em 0;
+    color: #5A3A40;
+    font-size: .93em;
+}
+
+.dst-dicas li::before {
+    content: "";
+    flex: none;
+    width: .45em;
+    height: .45em;
+    margin-top: .5em;
+    border-radius: 50%;
+    background: var(--wine);
+}
+
+/* ---------- Modal de confirmação ---------- */
+.dst-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    place-items: center;
+    padding: 1em;
+    background: rgba(43, 31, 34, .4);
+}
+
+.dst-modal.is-open {
+    display: grid;
+}
+
+.dst-modal-caixa {
+    width: min(26em, 100%);
+    padding: 1.5em;
+    text-align: center;
+}
+
+.dst-modal-caixa .dst-icone {
+    margin: 0 auto .7em;
+}
+
+.dst-modal-caixa h3 {
+    font-size: 1.06em;
+    font-weight: 800;
+}
+
+.dst-modal-caixa p {
+    margin: .5em 0 1.2em;
+    color: var(--mute);
+}
+
+.dst-modal-acoes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .6em;
+}
+
+/* ---------- Aviso rápido (toast) ---------- */
+.dst-toast {
+    position: fixed;
+    right: 1.4em;
+    bottom: 1.4em;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    gap: .6em;
+    max-width: calc(100vw - 2em);
+    padding: .75em 1.1em;
+    border-radius: .75em;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(5em);
+    pointer-events: none;
+    transition: .3s;
+}
+
+.dst-toast.is-show {
+    opacity: 1;
+    transform: none;
+}
+
+/* ---------- Tablet e celular ---------- */
+@media (max-width: 700px) {
+    .dst-destaque {
+        grid-template-columns: 1fr;
+    }
+
+    /* O quadro sobe para o topo do card */
+    .dst-imagem {
+        order: -1;
+        min-height: 9em;
+    }
+}
+
+@media (max-width: 1000px) {
+    .dst-trabalho {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .dst-arquivo--grande {
+        flex-wrap: wrap;
+    }
+
+    .dst-modal-acoes .dst-btn {
+        flex: 1 1 100%;
+    }
+
+    .dst-toast {
+        right: 1em;
+        left: 1em;
+        bottom: 1em;
+    }
+
+    .dst-topo .dst-btn {
+        width: 100%;
+    }
+
+    .dst-card {
+        padding: 1em;
+    }
+
+    .dst-resumo {
+        grid-template-columns: 1fr;
+        gap: .15em;
+        align-items: start;
+    }
+
+    .dst-resumo dd {
+        margin-bottom: .6em;
+    }
+}
+
+/* ---------- Respeita quem prefere menos animação ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .dst-page *,
+    .dst-page *::before,
+    .dst-page *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

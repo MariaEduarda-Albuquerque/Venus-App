@@ -1,0 +1,394 @@
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.head h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.4px;
+}
+
+.date {
+    color: var(--mute);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-weight: 600;
+    font-size: 13px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 10px;
+    transition: .15s;
+    font-family: inherit;
+}
+
+.date:hover {
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--rose);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    color: var(--wine-d);
+    font-size: 13px;
+    flex-wrap: wrap;
+}
+
+.alert b {
+    font-weight: 800;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 13px;
+    transition: .15s;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.btn.p {
+    background: var(--wine);
+    color: #fff;
+    margin-left: auto;
+}
+
+.btn.p:hover {
+    background: var(--wine-d);
+}
+
+.btn.g {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+}
+
+.btn.g:hover {
+    border-color: var(--rose2);
+}
+
+.btn.s {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.grid {
+    display: grid;
+    gap: 16px;
+}
+
+.g3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.g2 {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
+}
+
+.card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: var(--sh);
+    padding: 18px;
+    min-width: 0;
+}
+
+.kpi {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.ico {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--rose);
+    color: var(--wine);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.kpi b {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    display: block;
+    line-height: 1.1;
+}
+
+.kpi span {
+    color: var(--mute);
+    font-size: 12px;
+}
+
+.up {
+    color: var(--ok, #2E8B63);
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.dn {
+    color: var(--wine);
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.card h3 {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.sm {
+    color: var(--mute);
+    font-size: 11px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+}
+
+.row:last-child {
+    border: 0;
+}
+
+.row .t {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chip {
+    background: var(--rose);
+    color: var(--wine);
+    border-radius: 99px;
+    padding: 2px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.mt {
+    margin-top: 16px;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.chart {
+    height: 260px;
+    width: 100%;
+}
+
+/* ===== NOVO: modal do calendário ===== */
+
+.cm {
+    position: fixed;
+    inset: 0;
+    background: rgba(43, 31, 34, .4);
+    display: none;
+    place-items: center;
+    z-index: 48;
+    padding: 16px;
+    overflow: auto;
+}
+
+.cm.show {
+    display: grid;
+}
+
+.cmb {
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px;
+    width: min(480px, 100%);
+    animation: pop .25s;
+}
+
+.cal {
+    width: min(440px, 100%);
+    padding: 26px;
+}
+
+.cal-h {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.cal-h h3 {
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
+.nv {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.nvb {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    display: grid;
+    place-items: center;
+    color: var(--wine);
+    cursor: pointer;
+}
+
+.nvb:hover {
+    background: var(--rose);
+}
+
+.cal-g {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    text-align: center;
+}
+
+.cal-w {
+    color: var(--mute);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 6px 0;
+}
+
+.cal-d {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    display: grid;
+    place-items: center;
+    transition: .15s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--ink);
+}
+
+.cal-d:hover {
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.cal-d.o {
+    color: #C7BBBE;
+}
+
+.cal-d.t {
+    box-shadow: inset 0 0 0 2px var(--rose2);
+    color: var(--wine);
+}
+
+.cal-d.on {
+    background: var(--wine);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(155, 27, 42, .3);
+}
+
+.acts {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.acts div {
+    display: flex;
+    gap: 10px;
+}
+
+/* o botão "Fechar/Hoje" do calendário não deve ir para a direita sozinho */
+.acts .btn.p {
+    margin-left: 0;
+}
+
+@keyframes pop {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+}
+
+/* ===== NOVO: aviso (toast) ===== */
+
+.toast {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px 18px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transform: translateY(90px);
+    opacity: 0;
+    transition: .3s;
+    z-index: 50;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.toast.show {
+    transform: none;
+    opacity: 1;
+}
+
+/* ===== Responsividade ===== */
+
+@media (max-width: 1000px) {
+    .g3 {
+        grid-template-columns: 1fr;
+    }
+    .g2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}

@@ -1,0 +1,1876 @@
+/* =========================================================
+   LISTAS - Painel Vênus
+   CSS único para todas as telas de lista (feedbacks, denúncias,
+   usuários, conteúdos...). Cada tela só muda o HTML.
+
+   - Tudo fica dentro de .lst-page e usa o prefixo "lst-".
+   - Tamanhos em rem/em: acompanham o zoom e a fonte do navegador.
+   - Pontos de quebra em rem: também reagem ao zoom.
+   ========================================================= */
+
+/* ---------- Base e variáveis ---------- */
+.lst-page {
+    --wine: #9B1B2A;
+    --wine-d: #7D1422;
+    --rose: #F8E9EC;
+    --rose2: #F0CDD4;
+    --ink: #2B1F22;
+    --mute: #7E7075;
+    --line: #EFE7E8;
+    --ok: #2E8B63;
+    --warn: #C77D1A;
+    --danger: #C0233A;
+    --sombra: 0 1px 2px rgba(60, 20, 30, .04), 0 4px 16px rgba(60, 20, 30, .04);
+
+    width: 100%;
+    max-width: 92rem;
+    margin-inline: auto;
+    padding: clamp(.875rem, 2vw, 1.75rem);
+    padding-bottom: 2.5rem;
+
+    font-family: 'Nunito', system-ui, sans-serif;
+    font-size: .875rem;
+    line-height: 1.4;
+    color: var(--ink);
+}
+
+.lst-page *,
+.lst-page *::before,
+.lst-page *::after {
+    box-sizing: border-box;
+}
+
+/* :where() deixa essa regra com peso mínimo, para as margens das classes valerem */
+.lst-page :where(h1, h2, h3, p, blockquote) {
+    margin: 0;
+}
+
+/* :where() mantém o reset com peso mínimo: as classes dos botões (.lst-btn...) sempre vencem */
+.lst-page :where(button) {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.lst-page [hidden] {
+    display: none !important;
+}
+
+.lst-page :focus-visible {
+    outline: 2px solid var(--wine);
+    outline-offset: 2px;
+}
+
+.lst-page svg.lucide {
+    width: 1.125rem;
+    height: 1.125rem;
+    stroke-width: 1.75;
+    flex: none;
+}
+
+/* Monitores grandes: mais espaço e texto um pouco maior */
+@media (min-width: 100rem) {
+    .lst-page {
+        font-size: .9375rem;
+        max-width: 100rem;
+    }
+}
+
+@media (min-width: 140rem) {
+    .lst-page {
+        font-size: 1rem;
+        max-width: 112rem;
+    }
+}
+
+/* ---------- Textos de apoio ---------- */
+.lst-mute {
+    color: var(--mute);
+    font-size: .857em;
+}
+
+.lst-mono {
+    color: var(--mute);
+    font-weight: 700;
+}
+
+.lst-dica {
+    margin-top: .75rem;
+}
+
+/* ---------- Topo da página ---------- */
+.lst-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: 1rem;
+}
+
+.lst-topo h1 {
+    font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: -.4px;
+}
+
+/* ---------- Card ---------- */
+.lst-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: var(--sombra);
+    padding: 1.125rem;
+}
+
+.lst-espaco {
+    margin-top: 1rem;
+}
+
+/* ---------- Botões ---------- */
+.lst-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .5625rem 1rem;
+    border: 1.5px solid transparent;
+    border-radius: .625rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: .15s;
+}
+
+.lst-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.lst-btn--primario {
+    background: var(--wine);
+    color: #fff;
+}
+
+.lst-btn--primario:not(:disabled):hover {
+    background: var(--wine-d);
+}
+
+.lst-btn--neutro {
+    background: #fff;
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+.lst-btn--neutro:hover {
+    border-color: var(--rose2);
+}
+
+.lst-btn--perigo {
+    background: #fff;
+    border-color: #F0C7CD;
+    color: var(--danger);
+}
+
+.lst-btn--perigo:hover {
+    background: #FFF1F3;
+}
+
+.lst-btn--pequeno {
+    padding: .375rem .75rem;
+    font-size: .9286em;
+}
+
+.lst-icone-btn {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: .5rem;
+    color: var(--wine);
+}
+
+.lst-icone-btn:hover {
+    background: var(--rose);
+}
+
+/* ---------- Cards de resumo (clicáveis, funcionam como filtro) ---------- */
+.lst-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+}
+
+.lst-kpi {
+    display: flex;
+    align-items: center;
+    gap: .875rem;
+    width: 100%;
+    text-align: left;
+    transition: box-shadow .15s, transform .15s;
+}
+
+.lst-kpi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(60, 20, 30, .1);
+}
+
+.lst-kpi.is-active {
+    box-shadow: 0 0 0 2px var(--wine), var(--sombra);
+}
+
+.lst-kpi-texto {
+    display: block;
+    min-width: 0;
+}
+
+.lst-kpi-texto b {
+    display: block;
+    font-size: 1.857em;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    line-height: 1.1;
+}
+
+.lst-kpi-rotulo {
+    color: var(--mute);
+}
+
+/* ---------- Ícone em caixa ---------- */
+.lst-icone {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: .75rem;
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.lst-icone--amarelo {
+    background: #FBEFD9;
+    color: var(--warn);
+}
+
+.lst-icone--verde {
+    background: #E3F4EB;
+    color: var(--ok);
+}
+
+/* ---------- Barra de ferramentas (título + abas + busca) ---------- */
+.lst-barra {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .625rem;
+    margin-bottom: .875rem;
+}
+
+.lst-barra h3 {
+    margin-right: auto;
+    font-size: 1.286em;
+    font-weight: 800;
+}
+
+.lst-abas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+    padding: .25rem;
+    border-radius: .75rem;
+    background: #fff;
+    box-shadow: var(--sombra);
+}
+
+.lst-aba {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .4375rem .875rem;
+    text-decoration: none;
+    border-radius: .5625rem;
+    color: var(--mute);
+    font-weight: 700;
+}
+
+.lst-aba:hover {
+    background: #FDF6F7;
+}
+
+.lst-aba.is-active {
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.lst-busca {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    height: 2.375rem;
+    padding: 0 .75rem;
+    border-radius: .625rem;
+    background: #F7F3F3;
+    color: var(--mute);
+}
+
+.lst-busca input {
+    width: 12.5rem;
+    max-width: 100%;
+    border: 0;
+    outline: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+}
+
+.lst-busca:focus-within {
+    box-shadow: 0 0 0 2px var(--rose2);
+}
+
+/* ---------- Tabela ---------- */
+.lst-tabela-wrap {
+    overflow-x: auto;
+}
+
+.lst-tabela {
+    width: 100%;
+    min-width: 44rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.lst-tabela th {
+    padding: .625rem .875rem;
+    background: var(--rose);
+    color: var(--wine);
+    font-weight: 800;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.lst-tabela th:first-child {
+    border-radius: .625rem 0 0 .625rem;
+}
+
+.lst-tabela th:last-child {
+    border-radius: 0 .625rem .625rem 0;
+}
+
+.lst-ordenar {
+    font-weight: 800;
+    color: inherit;
+}
+
+.lst-tabela th[aria-sort="ascending"] .lst-ordenar::after {
+    content: " ↑";
+}
+
+.lst-tabela th[aria-sort="descending"] .lst-ordenar::after {
+    content: " ↓";
+}
+
+.lst-tabela td {
+    padding: .875rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+}
+
+.lst-tabela tbody tr[data-id] {
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.lst-tabela tbody tr[data-id]:hover,
+.lst-tabela tbody tr[data-id]:focus-visible {
+    background: #FDF6F7;
+}
+
+.lst-tabela tbody tr[data-id]:focus-visible {
+    outline-offset: -2px;
+}
+
+.lst-vazio {
+    padding: 2.125rem !important;
+    color: var(--mute);
+    text-align: center;
+}
+
+/* ---------- Status ---------- */
+.lst-status {
+    display: inline-block;
+    padding: .1875rem .6875rem;
+    border-radius: 99px;
+    background: #F3F0F0;
+    color: var(--mute);
+    font-size: .857em;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.lst-status--pendente {
+    background: #FBEFD9;
+    color: var(--warn);
+}
+
+.lst-status--ok {
+    background: #E3F4EB;
+    color: var(--ok);
+}
+
+/* ---------- Modal ---------- */
+.lst-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    place-items: center;
+    padding: 1rem;
+    overflow: auto;
+    background: rgba(43, 31, 34, .4);
+}
+
+.lst-modal.is-open {
+    display: grid;
+}
+
+.lst-modal-caixa {
+    width: min(30rem, 100%);
+    max-height: 100%;
+    overflow: auto;
+    padding: 1.5rem;
+    border-radius: 1.125rem;
+    animation: lst-entrada .25s;
+}
+
+@keyframes lst-entrada {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+}
+
+.lst-modal-topo {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .875rem;
+}
+
+.lst-modal-topo > div:nth-child(2) {
+    flex: 1;
+    min-width: 0;
+}
+
+.lst-modal-topo b {
+    display: block;
+    font-size: 1.143em;
+    overflow-wrap: anywhere;
+}
+
+.lst-avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--rose);
+    color: var(--wine);
+    font-weight: 800;
+}
+
+.lst-modal-corpo {
+    padding: .75rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.lst-modal-corpo b {
+    overflow-wrap: anywhere;
+}
+
+.lst-citacao {
+    margin-top: .625rem;
+    padding-left: .75rem;
+    border-left: 3px solid var(--rose2);
+    overflow-wrap: anywhere;
+}
+
+/* Resposta já enviada */
+.lst-balao {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: .75rem;
+    margin-bottom: .375rem;
+}
+
+.lst-balao .lst-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--wine);
+    color: #fff;
+}
+
+.lst-balao b {
+    color: var(--wine);
+}
+
+.lst-balao p {
+    margin-top: .375rem;
+    padding: .75rem .875rem;
+    border-radius: .875rem;
+    background: var(--rose);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* Aviso */
+.lst-aviso {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .875rem;
+    padding: .75rem 1rem;
+    border-radius: .875rem;
+    background: var(--rose);
+    color: var(--wine-d);
+}
+
+/* Respostas rápidas + caixa de texto */
+.lst-rapidas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .375rem;
+    margin-bottom: .625rem;
+}
+
+.lst-rapidas button {
+    padding: .25rem .6875rem;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    background: #fff;
+    color: var(--mute);
+    font-size: .857em;
+    font-weight: 700;
+}
+
+.lst-rapidas button:hover {
+    border-color: var(--wine);
+    color: var(--wine);
+}
+
+.lst-escrever {
+    padding: .75rem;
+    border: 1.5px solid var(--rose2);
+    border-radius: .875rem;
+    background: #FDFAFA;
+    transition: .15s;
+}
+
+.lst-escrever:focus-within {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 3px var(--rose);
+    background: #fff;
+}
+
+.lst-escrever textarea {
+    display: block;
+    width: 100%;
+    min-height: 4rem;
+    border: 0;
+    outline: 0;
+    resize: vertical;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+}
+
+.lst-acoes {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: .625rem;
+    margin-top: .875rem;
+}
+
+/* ---------- Status "recusado" ---------- */
+.lst-status--recusado {
+    background: var(--rose2);
+    color: var(--wine-d);
+}
+
+/* ---------- Menu de filtro (dropdown) ---------- */
+.lst-filtro {
+    position: relative;
+}
+
+.lst-menu {
+    position: absolute;
+    top: calc(100% + .375rem);
+    right: 0;
+    z-index: 20;
+    display: none;
+    min-width: 11rem;
+    padding: .375rem;
+    border-radius: .75rem;
+    background: #fff;
+    box-shadow: 0 8px 30px rgba(60, 20, 30, .15);
+}
+
+.lst-menu.is-open {
+    display: block;
+}
+
+.lst-menu button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    width: 100%;
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+    color: var(--mute);
+    font-weight: 600;
+    text-align: left;
+}
+
+.lst-menu button:hover {
+    background: var(--rose);
+}
+
+.lst-menu button[aria-pressed="true"] {
+    color: var(--wine);
+}
+
+.lst-menu svg.lucide {
+    width: .9375rem;
+    height: .9375rem;
+    visibility: hidden;
+}
+
+.lst-menu button[aria-pressed="true"] svg.lucide {
+    visibility: visible;
+}
+
+/* ---------- Botão suave (fundo rosé) ---------- */
+.lst-btn--suave {
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.lst-btn--suave:hover {
+    background: var(--rose2);
+}
+
+/* ---------- Aprovar / Recusar lado a lado ---------- */
+.lst-decisao {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .625rem;
+    margin-top: 1.25rem;
+}
+
+.lst-modal-topo .lst-status {
+    margin-top: .25rem;
+}
+
+.lst-modal-corpo .lst-status {
+    margin-top: .625rem;
+}
+
+/* ---------- Segundo modal (conteúdo completo) ---------- */
+.lst-modal--2 {
+    z-index: 1010;
+}
+
+.lst-modal-caixa--larga {
+    width: min(48.75rem, 100%);
+    padding: 1.75rem;
+    background: #FFF5F7;
+}
+
+.lst-doc-topo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.lst-doc-topo > div:first-child {
+    flex: 1 1 18rem;
+    min-width: 0;
+}
+
+.lst-doc-titulo {
+    color: var(--wine);
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.lst-doc-resumo {
+    max-width: 36rem;
+    margin-top: .5rem;
+    line-height: 1.5;
+}
+
+.lst-doc-autor {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.lst-info {
+    padding: .75rem .875rem;
+    border-radius: .75rem;
+    background: #fff;
+    box-shadow: var(--sombra);
+    font-size: .9286em;
+}
+
+.lst-info b {
+    display: block;
+    margin-bottom: .125rem;
+    color: var(--wine);
+}
+
+.lst-secao-titulo {
+    margin: 1.25rem 0 .625rem;
+    color: var(--wine);
+    font-size: 1.0714em;
+    font-weight: 800;
+}
+
+.lst-doc-meio {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 15rem);
+    gap: 1.25rem;
+    align-items: center;
+}
+
+.lst-doc-meio img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.lst-doc-grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+    gap: .625rem;
+}
+
+.lst-fontes {
+    margin-top: 1.125rem;
+}
+
+.lst-fontes ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: .25rem 1.25rem;
+    margin: .375rem 0 0;
+    padding-left: 1rem;
+    color: var(--mute);
+}
+
+/* ---------- Selo de contagem nas abas ---------- */
+.lst-aba-badge {
+    padding: 0 .4375rem;
+    border-radius: 99px;
+    background: var(--wine);
+    color: #fff;
+    font-size: .786em;
+    font-weight: 800;
+}
+
+/* ---------- Painel lateral (abre pela direita) ---------- */
+.lst-painel {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+}
+
+.lst-painel.is-open {
+    display: block;
+}
+
+.lst-painel-fundo {
+    position: absolute;
+    inset: 0;
+    background: rgba(43, 31, 34, .35);
+}
+
+.lst-painel-caixa {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(25rem, 100%);
+    padding: 1.625rem;
+    overflow: auto;
+    background: #fff;
+    animation: lst-lateral .25s;
+}
+
+@keyframes lst-lateral {
+    from {
+        opacity: 0;
+        transform: translateX(1.875rem);
+    }
+}
+
+.lst-painel-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    margin-bottom: 1.125rem;
+}
+
+.lst-painel-topo h3 {
+    font-size: 1.286em;
+    font-weight: 800;
+}
+
+.lst-painel-titulo {
+    margin: 1rem 0 .25rem;
+    font-size: 1.2143em;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.lst-painel .lst-citacao {
+    margin: 1.125rem 0;
+}
+
+.lst-painel .lst-acoes {
+    margin-top: 1.375rem;
+}
+
+/* ---------- Aviso rápido (toast) ---------- */
+.lst-toast {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+    max-width: calc(100vw - 3rem);
+    padding: .75rem 1.125rem;
+    border-radius: .75rem;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(5.5rem);
+    pointer-events: none;
+    transition: .3s;
+}
+
+.lst-toast.is-show {
+    opacity: 1;
+    transform: none;
+}
+
+/* ---------- Tablet e celular ---------- */
+@media (max-width: 62.5rem) {
+    .lst-barra h3 {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 50rem) {
+    .lst-doc-meio {
+        grid-template-columns: 1fr;
+    }
+
+    .lst-doc-meio img {
+        max-width: 15rem;
+        margin-inline: auto;
+    }
+}
+
+@media (max-width: 37.5rem) {
+    .lst-topo .lst-btn,
+    .lst-modal .lst-acoes .lst-btn {
+        flex: 1 1 100%;
+    }
+
+    .lst-abas,
+    .lst-busca,
+    .lst-filtro {
+        flex: 1 1 100%;
+    }
+
+    .lst-filtro .lst-btn {
+        width: 100%;
+    }
+
+    .lst-menu {
+        left: 0;
+        right: 0;
+    }
+
+    .lst-decisao {
+        grid-template-columns: 1fr;
+    }
+
+    .lst-aba {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    .lst-busca input {
+        width: 100%;
+    }
+
+    .lst-modal-caixa {
+        padding: 1.125rem;
+    }
+
+    .lst-toast {
+        right: 1rem;
+        left: 1rem;
+        bottom: 1rem;
+    }
+}
+
+/* ---------- Respeita quem prefere menos animação ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .lst-page *,
+    .lst-page *::before,
+    .lst-page *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+
+/* =========================================================
+   ADIÇÕES - APROVAÇÃO DE CADASTROS
+   (só acrescenta; nada acima foi alterado)
+   ========================================================= */
+
+/* ---------- Card de resumo que só informa (não filtra) ---------- */
+.lst-kpi--info {
+    cursor: default;
+}
+
+.lst-kpi--info:hover {
+    transform: none;
+    box-shadow: var(--sombra);
+}
+
+/* ---------- Abas à direita da barra (ex.: filtro por conselho) ---------- */
+.lst-abas--fim {
+    margin-left: auto;
+}
+
+/* ---------- Status "reenvio solicitado" ---------- */
+.lst-status--reenvio {
+    background: var(--rose2);
+    color: var(--wine-d);
+}
+
+/* ---------- Tabela com mais colunas ---------- */
+.lst-tabela--larga {
+    min-width: 56rem;
+}
+
+.lst-col-chk {
+    width: 2.25rem;
+}
+
+/* ---------- Caixa de seleção ---------- */
+.lst-chk {
+    width: 1.125rem;
+    height: 1.125rem;
+    accent-color: var(--wine);
+    cursor: pointer;
+}
+
+.lst-chk:disabled {
+    cursor: not-allowed;
+}
+
+/* ---------- Pessoa (avatar + nome + e-mail) ---------- */
+.lst-pessoa {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.lst-pessoa .lst-avatar {
+    border-radius: .75rem;
+}
+
+.lst-pessoa b {
+    display: block;
+}
+
+/* ---------- Etiqueta do conselho (CRM, CRP...) ---------- */
+.lst-conselho {
+    display: inline-flex;
+    align-items: center;
+    padding: .1875rem .625rem;
+    border-radius: .5rem;
+    background: #F3F0F0;
+    color: var(--ink);
+    font-size: .857em;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ---------- Tempo de espera em atraso ---------- */
+.lst-atraso {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    color: var(--warn);
+    font-weight: 800;
+}
+
+.lst-page .lst-atraso svg.lucide {
+    width: .875rem;
+    height: .875rem;
+}
+
+/* ---------- Barra de ações em lote (aparece ao selecionar) ---------- */
+.lst-lote {
+    display: none;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: .875rem;
+    padding: .625rem .875rem;
+    border-radius: .875rem;
+    background: var(--wine);
+    color: #fff;
+    animation: lst-entrada .25s;
+}
+
+.lst-lote.is-show {
+    display: flex;
+}
+
+.lst-lote-texto {
+    flex: 1;
+}
+
+.lst-lote .lst-btn {
+    background: #fff;
+    color: var(--wine);
+}
+
+.lst-lote .lst-btn--contorno {
+    background: transparent;
+    border-color: rgba(255, 255, 255, .5);
+    color: #fff;
+}
+
+/* ---------- Botão de confirmação verde ---------- */
+.lst-btn--ok {
+    background: var(--ok);
+    color: #fff;
+}
+
+.lst-btn--ok:hover {
+    filter: brightness(.92);
+}
+
+/* ---------- Modal de decisão (título centralizado + motivo) ---------- */
+.lst-modal-cabeca {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.lst-modal-cabeca .lst-icone {
+    width: 3.375rem;
+    height: 3.375rem;
+    margin: 0 auto .75rem;
+}
+
+.lst-modal-cabeca h3 {
+    font-size: 1.286em;
+    font-weight: 800;
+}
+
+.lst-modal-cabeca p {
+    margin-top: .5rem;
+    color: var(--mute);
+}
+
+/* Erro na caixa de motivo */
+.lst-escrever.is-erro {
+    border-color: #D6334A;
+    background: #FFF6F7;
+}
+
+.lst-erro-msg {
+    display: none;
+    margin-top: .25rem;
+    color: var(--danger);
+    font-size: .857em;
+    font-weight: 700;
+}
+
+.lst-escrever.is-erro + .lst-erro-msg {
+    display: block;
+}
+
+@media (max-width: 37.5rem) {
+    .lst-lote .lst-btn {
+        flex: 1 1 100%;
+    }
+
+    .lst-abas--fim {
+        margin-left: 0;
+    }
+}
+
+
+/* =========================================================
+   ADIÇÕES - DETALHE DO CADASTRO (botão "Analisar")
+   (só acrescenta; nada acima foi alterado)
+   ========================================================= */
+
+/* ---------- Topo: voltar + navegação da fila ---------- */
+.lst-cabeca {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: 1rem;
+}
+
+.lst-fila {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.lst-nav-btn {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1.5px solid var(--line);
+    border-radius: .625rem;
+    color: var(--wine);
+    text-decoration: none;
+}
+
+.lst-nav-btn:hover {
+    background: var(--rose);
+}
+
+.lst-nav-btn[aria-disabled="true"] {
+    opacity: .35;
+    pointer-events: none;
+}
+
+/* ---------- Passo a passo da análise ---------- */
+.lst-etapas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: .375rem 0 1.25rem;
+    padding: 0;
+    list-style: none;
+}
+
+.lst-etapa {
+    display: flex;
+    align-items: center;
+    gap: .5625rem;
+    flex: 1;
+    min-width: 9.375rem;
+    color: var(--mute);
+    font-weight: 700;
+}
+
+.lst-etapa-num {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1.5px solid var(--line);
+    border-radius: 50%;
+    background: #fff;
+    font-size: .857em;
+}
+
+/* Traço entre um passo e o próximo */
+.lst-etapa::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    margin-left: .25rem;
+    border-radius: 2px;
+    background: var(--line);
+}
+
+.lst-etapa:last-child::after {
+    display: none;
+}
+
+.lst-etapa.is-on {
+    color: var(--wine);
+}
+
+.lst-etapa.is-on .lst-etapa-num {
+    border-color: var(--wine);
+    background: var(--wine);
+    color: #fff;
+    box-shadow: 0 0 0 4px var(--rose);
+}
+
+.lst-etapa.is-done {
+    color: var(--ink);
+}
+
+.lst-etapa.is-done .lst-etapa-num {
+    border-color: var(--rose);
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.lst-etapa.is-done::after {
+    background: var(--wine);
+}
+
+/* ---------- Colunas da tela ---------- */
+.lst-detalhe {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(19.375rem, 1fr);
+    gap: 1.125rem;
+    align-items: start;
+}
+
+.lst-pilha {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.lst-lateral {
+    position: sticky;
+    top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ---------- Cabeçalho de card e títulos ---------- */
+.lst-card-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .625rem;
+    margin-bottom: .75rem;
+}
+
+.lst-card-titulo {
+    margin-bottom: .75rem;
+    font-size: 1.143em;
+    font-weight: 800;
+}
+
+.lst-card-topo .lst-card-titulo {
+    margin-bottom: 0;
+}
+
+.lst-selo {
+    padding: .125rem .625rem;
+    border-radius: 99px;
+    background: #F3F0F0;
+    color: var(--mute);
+    font-size: .857em;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ---------- Resumo da profissional (faixa vinho) ---------- */
+.lst-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 1.625rem;
+    border-radius: 1.25rem;
+    background:
+        radial-gradient(circle at 92% 8%, rgba(255, 255, 255, .22), transparent 38%),
+        radial-gradient(circle at 70% 120%, rgba(232, 161, 172, .55), transparent 45%),
+        linear-gradient(120deg, #6e1020, #9B1B2A 55%, #C9475A);
+    box-shadow: 0 10px 30px rgba(155, 27, 42, .25);
+    color: #fff;
+}
+
+.lst-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(135deg, rgba(255, 255, 255, .04) 0 2px, transparent 2px 14px);
+}
+
+.lst-hero > * {
+    position: relative;
+}
+
+.lst-hero-topo {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.125rem;
+}
+
+.lst-hero-avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 5.5rem;
+    height: 5.5rem;
+    border: 2px solid rgba(255, 255, 255, .55);
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, .18);
+    backdrop-filter: blur(6px);
+    font-size: 2.125rem;
+    font-weight: 800;
+}
+
+.lst-hero-info {
+    flex: 1;
+    min-width: 12.5rem;
+}
+
+.lst-hero h1 {
+    font-size: 1.75rem;
+    overflow-wrap: anywhere;
+}
+
+.lst-hero-sub {
+    margin-top: .125rem;
+    font-weight: 600;
+    opacity: .85;
+}
+
+.lst-pilulas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: .75rem;
+}
+
+.lst-pilula {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    padding: .25rem .75rem;
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 99px;
+    background: rgba(255, 255, 255, .16);
+    font-size: .857em;
+    font-weight: 700;
+}
+
+.lst-pilula--branca {
+    border-color: #fff;
+    background: #fff;
+    color: var(--wine);
+}
+
+.lst-pilula--grande {
+    padding: .4375rem .875rem;
+    font-size: .929em;
+}
+
+.lst-page .lst-pilula svg.lucide {
+    width: .875rem;
+    height: .875rem;
+}
+
+/* ---------- Visualizador de documentos ---------- */
+.lst-palco {
+    --zoom: 1;
+    --giro: 0deg;
+    --ajuste: 1; /* diminui o documento em telas pequenas (veja os @media no fim) */
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 20.625rem;
+    overflow: hidden;
+    border-radius: .875rem;
+    background-color: #F6F1F2;
+    background-image: radial-gradient(#E4D8DB 1.2px, transparent 1.2px);
+    background-size: 18px 18px;
+}
+
+/* O documento de exemplo (zoom e giro vêm das variáveis do palco) */
+.lst-papel {
+    position: relative;
+    flex: none;
+    width: 23.125rem;
+    height: 14.5rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 14px 40px rgba(60, 20, 30, .2);
+    font-size: .6875rem;
+    transform: scale(calc(var(--zoom) * var(--ajuste))) rotate(var(--giro));
+    transition: transform .25s;
+}
+
+.lst-papel-faixa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .625rem .875rem;
+    color: #fff;
+    font-size: .955em;
+    font-weight: 800;
+    letter-spacing: .4px;
+}
+
+.lst-papel-faixa--vinho {
+    background: var(--wine);
+}
+
+.lst-papel-faixa--cinza {
+    background: #4a5560;
+}
+
+.lst-papel-faixa--verde {
+    background: var(--ok);
+}
+
+.lst-papel-corpo {
+    display: grid;
+    grid-template-columns: 4.875rem 1fr;
+    gap: .875rem;
+    padding: .875rem;
+}
+
+.lst-papel-foto {
+    display: grid;
+    place-items: center;
+    width: 4.875rem;
+    height: 6.125rem;
+    border-radius: .5rem;
+    background: linear-gradient(160deg, #E8D9DC, #CDB5BA);
+    color: #fff;
+}
+
+.lst-page .lst-papel-foto svg.lucide {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.lst-papel dl {
+    display: grid;
+    gap: .4375rem;
+    margin: 0;
+}
+
+.lst-papel dt {
+    color: #9a8b8f;
+    font-size: .773em;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.lst-papel dd {
+    margin: 0;
+    color: var(--ink);
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 1.09em;
+    font-weight: 800;
+}
+
+.lst-papel-holo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1.375rem;
+    background: linear-gradient(90deg, #f6c, #7cf, #8f9, #fd6, #f6c);
+    opacity: .55;
+}
+
+.lst-papel-qr {
+    position: absolute;
+    right: .875rem;
+    bottom: 1.875rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: .25rem;
+    background: conic-gradient(#2B1F22 25%, #fff 0 50%, #2B1F22 0 75%, #fff 0) 0 0 / 11px 11px;
+}
+
+.lst-papel-linhas i {
+    display: block;
+    height: .4375rem;
+    margin: .5625rem .875rem;
+    border-radius: .25rem;
+    background: #EFE7E8;
+}
+
+.lst-papel-carimbo {
+    position: absolute;
+    right: 1.625rem;
+    bottom: 2.125rem;
+    padding: .125rem .75rem;
+    border: 3px solid var(--ok);
+    border-radius: .5rem;
+    color: var(--ok);
+    font-size: 1.636em;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transform: rotate(-12deg);
+}
+
+/* Zoom e giro */
+.lst-ferramentas {
+    position: absolute;
+    right: .75rem;
+    bottom: .75rem;
+    display: flex;
+    gap: .25rem;
+    padding: .25rem;
+    border-radius: .75rem;
+    background: #fff;
+    box-shadow: var(--sombra);
+}
+
+.lst-ferr-btn {
+    display: grid;
+    place-items: center;
+    width: 2.125rem;
+    height: 2.125rem;
+    border-radius: .5625rem;
+    color: var(--wine);
+}
+
+.lst-ferr-btn:hover {
+    background: var(--rose);
+}
+
+.lst-ferramentas span {
+    align-self: center;
+    min-width: 2.625rem;
+    color: var(--mute);
+    font-size: .857em;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* ---------- Dados e histórico ---------- */
+.lst-dados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+    gap: 1.125rem;
+}
+
+.lst-dados b {
+    overflow-wrap: anywhere;
+}
+
+.lst-dados-rotulo {
+    display: block;
+    margin-bottom: .125rem;
+    color: var(--mute);
+    font-size: .857em;
+    font-weight: 700;
+}
+
+.lst-linha-tempo {
+    position: relative;
+    margin-top: .375rem;
+    padding-left: 1.375rem;
+}
+
+.lst-linha-tempo::before {
+    content: "";
+    position: absolute;
+    top: .375rem;
+    bottom: .375rem;
+    left: .375rem;
+    width: 2px;
+    background: var(--rose2);
+}
+
+.lst-linha-tempo > div {
+    position: relative;
+    padding: .375rem 0 .625rem;
+}
+
+.lst-linha-tempo > div::before {
+    content: "";
+    position: absolute;
+    top: .6875rem;
+    left: -1.3125rem;
+    width: .625rem;
+    height: .625rem;
+    border: 3px solid var(--wine);
+    border-radius: 50%;
+    background: #fff;
+}
+
+/* ---------- Verificação externa ---------- */
+.lst-pessoa--espaco {
+    margin-bottom: .75rem;
+}
+
+.lst-pessoa > div:nth-child(2) {
+    min-width: 0;
+}
+
+.lst-pessoa-fim {
+    margin-left: auto;
+}
+
+.lst-btn--grande {
+    width: 100%;
+    padding: .8125rem;
+    border-radius: .75rem;
+    font-size: 1.0714em;
+}
+
+.lst-btn--ok:disabled {
+    background: #B9D9C9;
+    opacity: 1;
+}
+
+.lst-dica--centro {
+    text-align: center;
+}
+
+/* ---------- Checklist ---------- */
+.lst-checklist-topo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.lst-checklist-topo .lst-card-titulo {
+    margin-bottom: .125rem;
+}
+
+.lst-anel {
+    position: relative;
+    flex: none;
+    width: 5.25rem;
+    height: 5.25rem;
+}
+
+.lst-anel svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.lst-anel b {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--wine);
+    font-size: 1.286em;
+    font-weight: 800;
+}
+
+.lst-anel-trilha {
+    stroke: var(--rose2);
+}
+
+.lst-anel-progresso {
+    stroke: var(--wine);
+    transition: stroke-dasharray .4s, stroke .4s;
+}
+
+.lst-anel.is-completo .lst-anel-progresso {
+    stroke: var(--ok);
+}
+
+.lst-item-check {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    width: 100%;
+    margin-top: .5rem;
+    padding: .6875rem .75rem;
+    border: 1.5px solid var(--line);
+    border-radius: .75rem;
+    text-align: left;
+    cursor: pointer;
+    transition: .15s;
+}
+
+/* A caixa de seleção de verdade fica escondida; quem aparece é a caixinha desenhada */
+.lst-item-check input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.lst-item-check input:focus-visible + .lst-item-check-caixa {
+    outline: 2px solid var(--wine);
+    outline-offset: 2px;
+}
+
+.lst-item-check:hover {
+    border-color: var(--rose2);
+}
+
+.lst-item-check.is-on {
+    border-color: var(--rose2);
+    background: var(--rose);
+}
+
+.lst-item-check-caixa {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1.375rem;
+    height: 1.375rem;
+    margin-top: .0625rem;
+    border: 2px solid #D8CCCF;
+    border-radius: .4375rem;
+    color: #fff;
+    transition: .15s;
+}
+
+.lst-page .lst-item-check-caixa svg.lucide {
+    width: .875rem;
+    height: .875rem;
+    stroke-width: 3;
+    opacity: 0;
+}
+
+.lst-item-check.is-on .lst-item-check-caixa {
+    border-color: var(--wine);
+    background: var(--wine);
+}
+
+.lst-page .lst-item-check.is-on .lst-item-check-caixa svg.lucide {
+    opacity: 1;
+}
+
+.lst-item-check small {
+    display: block;
+    color: var(--mute);
+    font-size: .857em;
+    font-weight: 600;
+}
+
+/* ---------- Botões de decisão ---------- */
+.lst-botoes-decisao {
+    display: flex;
+    flex-direction: column;
+    gap: .625rem;
+    margin-top: 1rem;
+}
+
+.lst-decisao--solta {
+    margin-top: 0;
+}
+
+/* ---------- Modal com fundo clicável ---------- */
+.lst-modal-fundo {
+    position: absolute;
+    inset: 0;
+}
+
+.lst-modal-caixa--acima {
+    position: relative;
+}
+
+/* ---------- Tablet e celular ---------- */
+@media (max-width: 62.5rem) {
+    .lst-detalhe {
+        grid-template-columns: 1fr;
+    }
+
+    .lst-lateral {
+        position: static;
+    }
+}
+
+@media (max-width: 37.5rem) {
+    .lst-hero {
+        padding: 1.125rem;
+    }
+
+    .lst-hero-avatar {
+        width: 4.25rem;
+        height: 4.25rem;
+        font-size: 1.625rem;
+    }
+
+    .lst-hero h1 {
+        font-size: 1.375rem;
+    }
+
+    .lst-decisao--solta {
+        grid-template-columns: 1fr;
+    }
+
+    /* Visualizador menor e documento reduzido para caber */
+    .lst-palco {
+        --ajuste: .85;
+        height: 18rem;
+    }
+}
+
+@media (max-width: 26rem) {
+    .lst-palco {
+        --ajuste: .7;
+        height: 16rem;
+    }
+}
+
+/* =========================================================
+   ADIÇÕES - LISTA DE USUÁRIOS
+   (só acrescenta; nada acima foi alterado)
+   ========================================================= */
+
+/* Filtro empurrado para a direita da barra */
+.lst-filtro--fim {
+    margin-left: auto;
+}
+
+/* Botões do painel um embaixo do outro */
+.lst-acoes--coluna {
+    flex-direction: column;
+    margin-top: 1.375rem;
+}
+
+.lst-acoes--coluna .lst-btn {
+    width: 100%;
+}
+
+/* Campo de texto de uma linha dentro da caixa de escrever */
+.lst-escrever input {
+    display: block;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+}
+
+@media (max-width: 37.5rem) {
+    .lst-filtro--fim {
+        margin-left: 0;
+    }
+}

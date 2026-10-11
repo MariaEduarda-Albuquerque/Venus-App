@@ -1,0 +1,563 @@
+/* =========================================================
+   BASE FLUIDA (zoom e monitores grandes)
+   ========================================================= */
+
+html {
+    font-size: clamp(14px, 0.85vw + 3px, 20px);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+:root {
+    --wine: #9B1B2A;
+    --wine-d: #7d1422;
+    --rose: #F8E9EC;
+    --rose2: #F0CDD4;
+    --ink: #2B1F22;
+    --mute: #7E7075;
+    --line: #EFE7E8;
+    --ok: #2E8B63;
+    --sh: 0 1px 2px rgba(60,20,30,.04), 0 4px 16px rgba(60,20,30,.04);
+    --content-max: 72rem;
+}
+
+@media (min-width: 1900px) {
+    :root {
+        --content-max: 84rem;
+    }
+}
+
+.wrap {
+    width: min(100%, var(--content-max));
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: var(--sh);
+    padding: 1.125rem;
+}
+
+.sm {
+    color: var(--mute);
+    font-size: 0.75rem;
+}
+
+h3 {
+    font-size: 0.9375rem;
+    font-weight: 800;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5625rem 1rem;
+    border-radius: 0.625rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+    transition: .15s;
+}
+
+.btn.p {
+    background: var(--wine);
+    color: #fff;
+}
+
+.btn.p:hover {
+    background: var(--wine-d);
+}
+
+.btn.g {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+}
+
+.btn.g:hover {
+    border-color: var(--rose2);
+}
+
+.btn.s {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+.ico {
+    width: 2.375rem;
+    height: 2.375rem;
+    border-radius: 0.75rem;
+    background: var(--rose);
+    color: var(--wine);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+
+/* ===== Capa + avatar (página Perfil) ===== */
+
+.pcover {
+    height: 9.375rem;
+    border-radius: 1rem 1rem 0 0;
+    margin: -1.125rem -1.125rem 0;
+    background: radial-gradient(circle at 85% 20%, rgba(255,255,255,.25), transparent 40%),
+                radial-gradient(circle at 10% 130%, rgba(232,161,172,.7), transparent 50%),
+                linear-gradient(120deg, #6e1020, var(--wine) 55%, #C9475A);
+    position: relative;
+    overflow: hidden;
+}
+
+.pcover button {
+    position: absolute;
+    right: 0.875rem;
+    top: 0.875rem;
+    background: rgba(255,255,255,.18);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 0.625rem;
+    padding: 0.375rem 0.75rem;
+    font-weight: 700;
+    display: flex;
+    gap: 0.375rem;
+    align-items: center;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.top2 {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-top: -2.375rem;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+}
+
+.pav {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--wine), #C9475A);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.75rem;
+    font-weight: 800;
+    border: 0.3125rem solid #fff;
+    box-shadow: 0 0.5rem 1.5rem rgba(155,27,42,.3);
+    position: relative;
+    flex-shrink: 0;
+}
+
+.camb {
+    position: absolute;
+    right: -0.25rem;
+    bottom: -0.25rem;
+    width: 1.875rem;
+    height: 1.875rem;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--wine);
+    box-shadow: var(--sh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grow {
+    flex: 1;
+    min-width: 12.5rem;
+    padding-bottom: 0.375rem;
+}
+
+.grow h1 {
+    font-size: 1.625rem;
+}
+
+.grow .sm {
+    margin-top: 0.25rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.stt {
+    border-radius: 99px;
+    padding: 0.1875rem 0.6875rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    gap: 0.3125rem;
+    align-items: center;
+}
+
+.stt.dk {
+    background: var(--ink);
+    color: #fff;
+}
+
+.pst {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+}
+
+.pst div {
+    background: #FAF8F8;
+    border-radius: 0.875rem;
+    padding: 0.875rem;
+    text-align: center;
+}
+
+.pst b {
+    display: block;
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--wine);
+}
+
+.pst span {
+    font-size: 0.75rem;
+    color: var(--mute);
+    font-weight: 700;
+}
+
+
+/* ===== Grid principal (Perfil) ===== */
+
+.pg {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1.5fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.ct {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.625rem 0;
+}
+
+.ct label {
+    display: block;
+    color: var(--mute);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.875rem;
+    padding: 0.5rem 0;
+}
+
+.tog {
+    position: relative;
+    width: 2.75rem;
+    height: 1.625rem;
+    flex-shrink: 0;
+}
+
+.tog input {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    margin: 0;
+}
+
+.tog i {
+    position: absolute;
+    inset: 0;
+    background: #DDD3D5;
+    border-radius: 99px;
+    transition: .2s;
+}
+
+.tog i::after {
+    content: "";
+    position: absolute;
+    left: 0.1875rem;
+    top: 0.1875rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: #fff;
+    border-radius: 50%;
+    transition: .2s;
+    box-shadow: 0 0.0625rem 0.1875rem rgba(0,0,0,.2);
+}
+
+.tog input:checked + i {
+    background: var(--wine);
+}
+
+.tog input:checked + i::after {
+    transform: translateX(1.125rem);
+}
+
+.dl {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.125rem;
+}
+
+.dl label {
+    display: block;
+    color: var(--mute);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0.125rem;
+}
+
+.dl b {
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.tln {
+    position: relative;
+    padding-left: 1.375rem;
+    margin-top: 0.375rem;
+}
+
+.tln::before {
+    content: "";
+    position: absolute;
+    left: 0.375rem;
+    top: 0.375rem;
+    bottom: 0.375rem;
+    width: 0.125rem;
+    background: var(--rose2);
+}
+
+.tln div {
+    position: relative;
+    padding: 0.375rem 0 0.625rem;
+}
+
+.tln div::before {
+    content: "";
+    position: absolute;
+    left: -1.3125rem;
+    top: 0.6875rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background: #fff;
+    border: 0.1875rem solid var(--wine);
+}
+
+
+/* ===== Editar perfil ===== */
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.head h1 {
+    font-size: 1.5rem;
+    color: var(--ink);
+}
+
+.bk {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--wine);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.ef {
+    display: grid;
+    grid-template-columns: minmax(0,18.75rem) minmax(0,1fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.drop {
+    display: block;
+    width: 100%;
+    border: 0.125rem dashed var(--rose2);
+    border-radius: 0.875rem;
+    padding: 1rem;
+    margin: 1rem 0 0.5rem;
+    text-align: center;
+    color: var(--mute);
+    background: #FDFAFA;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.drop i[data-lucide] {
+    color: var(--wine);
+    margin-bottom: 0.375rem;
+}
+
+.sech {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.sech p {
+    color: var(--mute);
+    font-size: 0.75rem;
+}
+
+.two {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem,1fr));
+    gap: 0 0.875rem;
+}
+
+.f {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.f label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.375rem;
+    font-size: 0.8125rem;
+}
+
+.f label em {
+    color: var(--wine);
+    font-style: normal;
+}
+
+.f input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 0.09375rem solid var(--line);
+    background: #FDFCFC;
+    border-radius: 0.625rem;
+    padding: 0.625rem 0.75rem;
+    font: inherit;
+    color: var(--ink);
+    outline: 0;
+    transition: .15s;
+}
+
+.f input:focus {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 0.1875rem var(--rose);
+    background: #fff;
+}
+
+.f input:disabled {
+    background: #F7F3F3;
+    color: var(--mute);
+}
+
+.f.ic input {
+    padding-left: 2.375rem;
+}
+
+.f.ic > i[data-lucide] {
+    position: absolute;
+    left: 0.75rem;
+    top: 2.125rem;
+    width: 1rem;
+    height: 1rem;
+    color: var(--mute);
+}
+
+.hint {
+    color: var(--mute);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.savebar {
+    position: sticky;
+    bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1.875rem rgba(60,20,30,.15);
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+    .pg,
+    .ef {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .pst {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dl {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .top2 {
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .grow {
+        min-width: 0;
+    }
+
+    .head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 420px) {
+    .dl {
+        grid-template-columns: 1fr;
+    }
+}
