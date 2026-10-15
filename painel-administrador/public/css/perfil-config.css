@@ -561,3 +561,14 @@ h3 {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* ---------- Esconde todas as barras de rolagem ---------- */
+* {
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE/Edge antigo */
+}
+
+*::-webkit-scrollbar {
+    display: none;              /* Chrome, Safari, Edge */
+}

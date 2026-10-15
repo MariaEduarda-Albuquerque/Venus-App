@@ -6,9 +6,9 @@
 
 <div class="head">
     <h1>Painel administrativo</h1>
-    <button class="date" id="datebtn" aria-label="Abrir calendário">
+    <button class="date" id="datebtn" onclick="paginaCalendario()" aria-label="Abrir calendário">
         <i data-lucide="calendar"></i>
-        <span id="datetxt">23 de maio de 2026</span>
+        <span id="datetxt"><?php echo e($dataHoje); ?></span>
     </button>
 </div>
 
@@ -21,11 +21,11 @@
 <div class="grid g3">
     <div class="card kpi">
         <div class="ico"><i data-lucide="users"></i></div>
-        <div><b><?php echo e($usuariasAtivas); ?></b><span>Usuárias ativas</span> <span class="up">↑ 8,2% no mês</span></div>
+        <div><b><?php echo e($usuariasAtivas); ?></b><span>Usuárias ativas</span> <span class="up">↑ <?php echo e($porcentagemUsuariasAtivasNoMes); ?>% no mês</span></div>
     </div>
     <div class="card kpi">
         <div class="ico"><i data-lucide="stethoscope"></i></div>
-        <div><b><?php echo e($profissionaisAtivos); ?></b><span>Profissionais ativos</span> <span class="up">↑ 5,6% no mês</span></div>
+        <div><b><?php echo e($profissionaisAtivos); ?></b><span>Profissionais ativos</span> <span class="up">↑ <?php echo e($porcentagemProfissionaisAtivosNoMes); ?>% no mês</span></div>
     </div>
     <div class="card kpi">
         <div class="ico"><i data-lucide="user-plus"></i></div>
@@ -66,7 +66,7 @@
         </div>
         <div class="card kpi">
             <div class="ico"><i data-lucide="file-text"></i></div>
-            <div style="flex:1"><b>9</b><span>Conteúdos aguardando revisão · 5 artigos e 4 vídeos</span></div>
+            <div style="flex:1"><b><?php echo e($conteudosAguardandoRev); ?></b><span>Conteúdos aguardando revisão · <?php echo e($conteudosAguardandoRevArtigo); ?> artigos e <?php echo e($conteudosAguardandoRevVideo); ?> vídeos</span></div>
             <button class="btn g s">Ir para conteúdos</button>
         </div>
     </div>
@@ -75,22 +75,22 @@
 <div class="grid g3 mt">
     <div class="card kpi">
         <div class="ico"><i data-lucide="clock"></i></div>
-        <div><b>2h 45min</b><span>Tempo médio de resposta a denúncias</span></div>
+        <div><b><?php echo e($tempoMedio); ?></b><span>Tempo médio de resposta a denúncias</span></div>
     </div>
     <div class="card kpi">
         <div class="ico"><i data-lucide="smile"></i></div>
-        <div><b>4,6/5</b><span>Satisfação das usuárias (30 dias)</span></div>
+        <div><b><?php echo e($avaliacaoMediaUsuarias); ?>/5</b><span>Satisfação das usuárias referente ás consultas (30 dias)</span></div>
     </div>
     <div class="card">
         <div class="kpi">
             <div class="ico"><i data-lucide="flag"></i></div>
-            <div><b>23</b><span>Denúncias pendentes</span> <span class="dn">↑ 4 desde ontem</span></div>
+            <div><b><?php echo e($qtdDenunciasPendentes); ?></b><span>Denúncias pendentes</span> <span class="dn">↑ <?php echo e($qtdDenunciasPendentesDesdeOntem); ?> desde ontem</span></div>
         </div>
     </div>
 </div>
 
 <div class="card mt">
-    <h3>Denúncias por tipo</h3>
+    <h3>Denúncias por tipo de alvo</h3>
     <p class="sm">Passe o mouse para ver detalhes</p>
     <div id="c-pie" class="chart" style="height:280px"></div>
 </div>
@@ -112,7 +112,7 @@
 
     const l = echarts.init(document.getElementById('c-line'));
     const p = echarts.init(document.getElementById('c-pie'));
-    const x = ['23/03','04/04','11/04','18/04','25/04','02/05','09/05','16/05'];
+    const x = [<?php echo json_encode($semana8, 15, 512) ?>,<?php echo json_encode($semana7, 15, 512) ?>,<?php echo json_encode($semana6, 15, 512) ?>,<?php echo json_encode($semana5, 15, 512) ?>,<?php echo json_encode($semana4, 15, 512) ?>,<?php echo json_encode($semana3, 15, 512) ?>,<?php echo json_encode($semana2, 15, 512) ?>, <?php echo json_encode($semana1, 15, 512) ?>];
 
     l.setOption({
         textStyle: font,
@@ -124,8 +124,8 @@
         xAxis: { type: 'category', data: x, boundaryGap: false, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#7E7075' } },
         yAxis: { type: 'value', axisLabel: { color: '#7E7075' }, splitLine: { lineStyle: { color: '#F1EAEB' } } },
         series: [
-            { name: 'Usuárias', type: 'line', smooth: true, symbolSize: 6, data: [540,670,500,630,700,760,720,860], areaStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(232,161,172,.35)'},{offset:1,color:'rgba(232,161,172,0)'}]) } },
-            { name: 'Profissionais', type: 'line', smooth: true, symbolSize: 6, data: [200,250,190,220,200,240,225,255] }
+            { name: 'Usuárias', type: 'line', smooth: true, symbolSize: 6, data: [<?php echo json_encode($usuariosSemana8, 15, 512) ?>,<?php echo json_encode($usuariosSemana7, 15, 512) ?>,<?php echo json_encode($usuariosSemana6, 15, 512) ?>,<?php echo json_encode($usuariosSemana5, 15, 512) ?>,<?php echo json_encode($usuariosSemana4, 15, 512) ?>,<?php echo json_encode($usuariosSemana3, 15, 512) ?>,<?php echo json_encode($usuariosSemana2, 15, 512) ?>,<?php echo json_encode($usuariosSemana1, 15, 512) ?>], areaStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(232,161,172,.35)'},{offset:1,color:'rgba(232,161,172,0)'}]) } },
+            { name: 'Profissionais', type: 'line', smooth: true, symbolSize: 6, data: [<?php echo json_encode($profissionaisSemana8, 15, 512) ?>,<?php echo json_encode($profissionaisSemana8, 15, 512) ?>,<?php echo json_encode($profissionaisSemana6, 15, 512) ?>,<?php echo json_encode($profissionaisSemana5, 15, 512) ?>,<?php echo json_encode($profissionaisSemana4, 15, 512) ?>,<?php echo json_encode($profissionaisSemana3, 15, 512) ?>,<?php echo json_encode($profissionaisSemana2, 15, 512) ?>,<?php echo json_encode($profissionaisSemana1, 15, 512) ?>] }
         ]
     });
 
@@ -140,7 +140,7 @@
             itemStyle: { borderRadius: 8, borderColor: '#fff', borderWidth: 3 },
             label: { show: false },
             emphasis: { scaleSize: 8, label: { show: true, fontWeight: 800, fontSize: 14, formatter: '{b}' } },
-            data: [{value:9,name:'Assédio'},{value:6,name:'Conteúdo impróprio'},{value:4,name:'Perfil falso'},{value:3,name:'Spam'},{value:1,name:'Outros'}]
+            data: [{value:<?php echo json_encode($qtdDenunciasForumPublicação, 15, 512) ?>,name:'Fórum: Publicação'},{value:<?php echo json_encode($qtdDenunciasForumResposta, 15, 512) ?>,name:'Fórum: Resposta'},{value:<?php echo json_encode($qtdDenunciasMensagemChat, 15, 512) ?>,name:'Mensagem no chat'},{value:<?php echo json_encode($qtdDenunciasPerfilProfissional, 15, 512) ?>,name:'Perfil Profissional'}]
         }]
     });
 
@@ -157,71 +157,140 @@
         tt = setTimeout(() => e.classList.remove('show'), 2400);
     }
 
-    /* ---------- NOVO: calendário ---------- */
-    const TODAY = new Date(2026, 4, 23);
-    const same = (a, b) => a.toDateString() === b.toDateString();
-    const fdl = d => d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
-
-    let calSel = new Date(TODAY);
-    let calV = new Date(2026, 4, 1);
-
-    function renderCal() {
-        const y = calV.getFullYear(), m = calV.getMonth(), f = new Date(y, m, 1).getDay();
-
-        const cells = Array.from({ length: 42 }, (_, i) => {
-            const d = new Date(y, m, 1 - f + i);
-            return `<button type="button" class="cal-d${d.getMonth() !== m ? ' o' : ''}${same(d, TODAY) ? ' t' : ''}${same(d, calSel) ? ' on' : ''}" data-cd="${d.getTime()}" aria-label="${fdl(d)}">${d.getDate()}</button>`;
-        }).join('');
-
-        $('#cmb4').innerHTML = `
-            <div class="cal-h">
-                <h3>${calV.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</h3>
-                <div class="nv">
-                    <button type="button" class="nvb" data-cn="-1" aria-label="Mês anterior"><i data-lucide="chevron-left"></i></button>
-                    <button type="button" class="nvb" data-cn="1" aria-label="Próximo mês"><i data-lucide="chevron-right"></i></button>
-                </div>
-            </div>
-            <div class="cal-g">${['D','S','T','Q','Q','S','S'].map(w => `<div class="cal-w">${w}</div>`).join('')}${cells}</div>
-            <div class="acts" style="margin-top:20px;align-items:center">
-                <span class="sm">Selecionado: <b style="color:var(--ink)">${fdl(calSel)}</b></span>
-                <div>
-                    <button type="button" class="btn g s" data-ct="1">Hoje</button>
-                    <button type="button" class="btn p s" data-cc="1">Fechar</button>
-                </div>
-            </div>`;
-        lucide.createIcons();
+/* =========================================================
+   Dashboard: calendário
+   ========================================================= */
+function paginaCalendario() {
+    const botaoData = document.getElementById('datebtn');
+    const janela = document.getElementById('cm4');
+    const caixa = document.getElementById('cmb4');
+    const toast = document.getElementById('toast');
+    if (!botaoData || !janela || !caixa) {
+        return;
     }
 
-    $('#datebtn').addEventListener('click', () => {
-        calV = new Date(calSel.getFullYear(), calSel.getMonth(), 1);
-        renderCal();
-        $('#cm4').classList.add('show');
-    });
+    let ano = <?php echo json_encode($ano, 15, 512) ?>;
+    let mes = <?php echo json_encode($mes, 15, 512) ?> - 1;
+    let dia = <?php echo json_encode($dia, 15, 512) ?>;
 
-    document.addEventListener('click', e => {
-        let b;
-        if ((b = e.target.closest('[data-cn]'))) {
-            calV = new Date(calV.getFullYear(), calV.getMonth() + +b.dataset.cn, 1);
-            renderCal();
-        } else if ((b = e.target.closest('[data-cd]'))) {
-            calSel = new Date(+b.dataset.cd);
-            $('#datetxt').textContent = fdl(calSel);
-            $('#cm4').classList.remove('show');
-            toast('Data selecionada: ' + fdl(calSel));
-        } else if (e.target.closest('[data-ct]')) {
-            calSel = new Date(TODAY);
-            calV = new Date(2026, 4, 1);
-            $('#datetxt').textContent = fdl(calSel);
-            renderCal();
-        } else if (e.target.closest('[data-cc]')) {
-            $('#cm4').classList.remove('show');
+    const DIAS = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    const HOJE = new Date(ano, mes, dia);   // data de exemplo (23/05/2026)
+
+    let diaEscolhido = new Date(HOJE);    // dia selecionado
+    let mesAberto = new Date(ano, mes, 1); // mês que aparece na tela
+
+    // Escreve a data por extenso: "23 de maio de 2026"
+    function dataPorExtenso(data) {
+        return data.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    // Duas datas são o mesmo dia?
+    function mesmoDia(a, b) {
+        return a.toDateString() === b.toDateString();
+    }
+
+    // Monta o calendário do mês aberto
+    function desenhar() {
+     const anoAberto = mesAberto.getFullYear();
+     const mesAbertoNum = mesAberto.getMonth();
+     const diaDaSemanaDoPrimeiro = new Date(anoAberto, mesAbertoNum, 1).getDay();
+
+        // Cabeçalho com D S T Q Q S S
+        let semana = '';
+        for (let i = 0; i < DIAS.length; i++) {
+            semana += '<div class="cal-w">' + DIAS[i] + '</div>';
         }
-        if (e.target.id === 'cm4') e.target.classList.remove('show');
+
+        // 42 quadradinhos (6 semanas), começando no domingo antes do dia 1
+        let dias = '';
+        for (let i = 0; i < 42; i++) {
+            const dia = new Date(ano, mes, 1 - diaDaSemanaDoPrimeiro + i);
+
+            let classe = 'cal-d';
+            if (dia.getMonth() !== mes) classe += ' o';            // dia de outro mês
+            if (mesmoDia(dia, HOJE)) classe += ' t';               // hoje
+            if (mesmoDia(dia, diaEscolhido)) classe += ' on';      // escolhido
+
+            dias += '<button type="button" class="' + classe + '" data-dia="' + dia.getTime() + '">' + dia.getDate() + '</button>';
+        }
+
+        caixa.innerHTML =
+            '<div class="cal-h">'
+          +   '<h3>' + mesAberto.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) + '</h3>'
+          +   '<div class="nv">'
+          +     '<button type="button" class="nvb" data-mes="-1" aria-label="Mês anterior"><i data-lucide="chevron-left"></i></button>'
+          +     '<button type="button" class="nvb" data-mes="1" aria-label="Próximo mês"><i data-lucide="chevron-right"></i></button>'
+          +   '</div>'
+          + '</div>'
+          + '<div class="cal-g">' + semana + dias + '</div>'
+          + '<div class="acts" style="margin-top:20px;align-items:center">'
+          +   '<span class="sm">Selecionado: <b style="color:var(--ink)">' + dataPorExtenso(diaEscolhido) + '</b></span>'
+          +   '<div>'
+          +     '<button type="button" class="btn g s" data-hoje>Hoje</button>'
+          +     '<button type="button" class="btn p s" data-fechar-cal>Fechar</button>'
+          +   '</div>'
+          + '</div>';
+
+        criarIcones();
+    }
+
+    function abrir() {
+        mesAberto = new Date(diaEscolhido.getFullYear(), diaEscolhido.getMonth(), 1);
+        desenhar();
+        janela.classList.add('show');
+    }
+
+    function fechar() {
+        janela.classList.remove('show');
+    }
+
+    // Botão com a data: abre o calendário
+    botaoData.addEventListener('click', abrir);
+
+    // Cliques dentro do calendário
+    document.addEventListener('click', function (e) {
+        const alvo = e.target;
+
+        // Setas de mês
+        const botaoMes = alvo.closest('[data-mes]');
+        if (botaoMes) {
+            mesAberto = new Date(mesAberto.getFullYear(), mesAberto.getMonth() + Number(botaoMes.dataset.mes), 1);
+            desenhar();
+            return;
+        }
+
+        // Escolher um dia
+        const botaoDia = alvo.closest('[data-dia]');
+        if (botaoDia) {
+            diaEscolhido = new Date(Number(botaoDia.dataset.dia));
+            escreverTexto('datetxt', dataPorExtenso(diaEscolhido));
+            fechar();
+            mostrarToast(toast, 'Data selecionada: ' + dataPorExtenso(diaEscolhido));
+            return;
+        }
+
+        // Botão "Hoje"
+        if (alvo.closest('[data-hoje]')) {
+            diaEscolhido = new Date(HOJE);
+            mesAberto = new Date(ano, mes, 1);
+            escreverTexto('datetxt', dataPorExtenso(diaEscolhido));
+            desenhar();
+            return;
+        }
+
+        // Botão "Fechar" ou clique no fundo escuro
+        if (alvo.closest('[data-fechar-cal]') || alvo === janela) {
+            fechar();
+        }
     });
 
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') $('#cm4').classList.remove('show');
+    // Esc fecha
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            fechar();
+        }
     });
+}
 </script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laravel\Venus-App\Painel-Administrador\resources\views/dashboard.blade.php ENDPATH**/ ?>

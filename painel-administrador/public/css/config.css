@@ -132,8 +132,6 @@
     position: sticky;
     top: 1rem;
     padding: .75rem;
-    max-height: calc(100vh - 2rem); /* evita cortar o menu com zoom alto */
-    overflow: auto;
 }
 
 .cfg-quem {
@@ -579,8 +577,6 @@
 .cfg-modal-caixa {
     width: 100%;
     max-width: 26rem;
-    max-height: 100%;
-    overflow: auto;
     padding: 1.625rem;
     text-align: center;
 }
@@ -684,4 +680,14 @@
         transition: none !important;
         animation: none !important;
     }
+}
+
+/* ---------- Esconde todas as barras de rolagem ---------- */
+* {
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE/Edge antigo */
+}
+
+*::-webkit-scrollbar {
+    display: none;              /* Chrome, Safari, Edge */
 }

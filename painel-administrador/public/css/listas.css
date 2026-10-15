@@ -1306,10 +1306,11 @@
     overflow: hidden;
     padding: 1.625rem;
     border-radius: 1.25rem;
-    background:
+    background-color: #6e1020;
+    /* background:
         radial-gradient(circle at 92% 8%, rgba(255, 255, 255, .22), transparent 38%),
         radial-gradient(circle at 70% 120%, rgba(232, 161, 172, .55), transparent 45%),
-        linear-gradient(120deg, #6e1020, #9B1B2A 55%, #C9475A);
+        linear-gradient(120deg, #6e1020, #9B1B2A 55%, #C9475A); */
     box-shadow: 0 10px 30px rgba(155, 27, 42, .25);
     color: #fff;
 }
@@ -1725,6 +1726,7 @@
 .lst-item-check input:focus-visible + .lst-item-check-caixa {
     outline: 2px solid var(--wine);
     outline-offset: 2px;
+    color: white;
 }
 
 .lst-item-check:hover {
@@ -1903,4 +1905,149 @@
     flex: 1;
 }
 
-/* //para salvar no git */
+
+/* =========================================================
+   SEM BARRAS DE ROLAGEM
+   Esconde a barra, mas o conteúdo continua rolando.
+   ========================================================= */
+
+/* Tabela, modais, painel lateral e a própria página de listas */
+.lst-tabela-wrap,
+.lst-modal,
+.lst-modal-caixa,
+.lst-painel-caixa,
+.lst-menu,
+.lst-page,
+html:has(.lst-page) {
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* Edge antigo */
+}
+
+/* Chrome, Edge, Safari */
+.lst-tabela-wrap::-webkit-scrollbar,
+.lst-modal::-webkit-scrollbar,
+.lst-modal-caixa::-webkit-scrollbar,
+.lst-painel-caixa::-webkit-scrollbar,
+.lst-menu::-webkit-scrollbar,
+.lst-page::-webkit-scrollbar,
+html:has(.lst-page)::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* ---------- Palco com arquivo real (imagem ou PDF) ---------- */
+.lst-palco--real {
+    height: 26rem;
+}
+
+.lst-arquivo-real {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .625rem;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 1rem 3.5rem;
+    transform: scale(calc(var(--zoom) * var(--ajuste))) rotate(var(--giro));
+    transition: transform .25s;
+}
+
+.lst-arquivo-real img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    min-height: 0;
+    object-fit: contain;
+    border-radius: .75rem;
+    box-shadow: 0 14px 40px rgba(60, 20, 30, .2);
+}
+
+.lst-arquivo-real iframe {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: 0;
+    border-radius: .75rem;
+    background: #fff;
+    box-shadow: 0 14px 40px rgba(60, 20, 30, .2);
+}
+
+@media (min-width: 100rem) {
+    .lst-palco--real { height: 34rem; }
+}
+
+@media (max-width: 37.5rem) {
+    .lst-palco--real { height: 22rem; }
+}
+
+/* Filtro empurrado para a direita da barra */
+.lst-filtro--fim {
+    margin-left: auto;
+}
+
+/* Botões do painel um embaixo do outro */
+.lst-acoes--coluna {
+    flex-direction: column;
+    margin-top: 1.375rem;
+}
+
+.lst-acoes--coluna .lst-btn {
+    width: 100%;
+}
+
+/* Campo de texto de uma linha dentro da caixa de escrever */
+.lst-escrever input {
+    display: block;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+}
+
+@media (max-width: 37.5rem) {
+    .lst-filtro--fim {
+        margin-left: 0;
+    }
+}
+
+.lst-item-check {
+    position: relative;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.lst-item-check input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.lst-item-check:has(input:checked) .lst-item-check-caixa {
+    background-color: #99182a;
+    border-color: #99182a;
+    color: #fff;
+}
+
+.lst-item-check:has(input:checked) .lst-item-check-caixa i {
+    display: block;
+}
+
+.lst-papel img,
+.lst-papel iframe {
+    display: block;
+    width: 100%;
+    max-height: 32rem;
+    object-fit: contain;
+    border: 0;
+}
+.lst-papel iframe { height: 32rem; }
+
+.lst-doc-aba.is-on {
+    color: var(--wine);
+    border-color: var(--wine);
+}

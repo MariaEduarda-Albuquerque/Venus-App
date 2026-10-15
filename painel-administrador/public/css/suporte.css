@@ -594,3 +594,17 @@ h3 {
     opacity: 1;
     transform: none;
 }
+
+/* =========================================================
+   OCULTAR TODAS AS BARRAS DE ROLAGEM
+   Mantém a rolagem funcional.
+   ========================================================= */
+
+* {
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE/Edge antigo */
+}
+
+*::-webkit-scrollbar {
+    display: none;               /* Chrome, Safari e Edge */
+}

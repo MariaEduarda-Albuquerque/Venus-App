@@ -5,6 +5,31 @@
    Tamanhos em rem: acompanham o zoom do navegador.
    ========================================================= */
 
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Oculta todas as barras visuais */
+* {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+*::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
 .rel-page {
     --wine: #9B1B2A;
     --wine-d: #7D1422;
@@ -25,6 +50,17 @@
     font-size: .875rem;
     line-height: 1.4;
     color: var(--ink);
+
+    /* Oculta as barras de rolagem da área */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.rel-page::-webkit-scrollbar,
+.rel-page *::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 .rel-page *,

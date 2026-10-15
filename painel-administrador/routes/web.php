@@ -1,17 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\AdmController;
-use App\Http\Controllers\ConteudoController;
-use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\DenunciaController;
-use App\Http\Controllers\ProfissionalController;
 use App\Http\Controllers\DashboardController;
-
-
-// Login:
-
+use App\Http\Controllers\ProfissionalController;
+use App\Http\Controllers\CadastroController;
+// Login
 Route::middleware('guest:admin')->group(function () {
     Route::get('/login', [AdmController::class, 'showLogin'])->name('login');
     Route::post('/login', [AdmController::class, 'login'])->name('login.autenticar');
@@ -20,131 +14,56 @@ Route::middleware('guest:admin')->group(function () {
     Route::view('/nova-senha', 'login.nova-senha')->name('senha.nova');
 });
 
-
-
 Route::middleware('auth:admin')->group(function () {
     Route::post('/logout', [AdmController::class, 'logout'])->name('logout');
 
-//Dashboard:
+    // Dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+    // Perfil/Configuração
+    Route::view('/perfil', 'perfil-config.perfil-adm')->name('perfil');
+    Route::view('/editar/perfil', 'perfil-config.editar-perfil')->name('perfil.editar');
+    Route::view('/configuracoes', 'perfil-config.configuracoes')->name('configuracoes');
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    // Usuários
+    Route::view('/denuncias', 'usuario.lista-denuncias')->name('denuncias');
+    Route::get('/aprovar-cadastros', [CadastroController::class, 'index'])->name('cadastros.aprovar');
+    Route::get('/aprovar-cadastros/{profissional}', [CadastroController::class, 'show'])->name('cadastro.aprovar');
+    Route::post('/aprovar-cadastros/{profissional}/decisao', [CadastroController::class, 'decidir'])->name('cadastro.decidir');
+    Route::get('/aprovar-cadastros/{profissional}/documento/{tipo}', [CadastroController::class, 'documento'])->name('cadastro.documento');
+    Route::view('/denuncias-mensagens', 'usuario.denuncias-mensagens')->name('denuncias.mensagens');
 
+    // Profissionais
+    Route::prefix('profissionais')->name('profissional.')->group(function () {
+        Route::get('/', [ProfissionalController::class, 'index'])->name('index');
+        Route::patch('/{profissional}/status', [ProfissionalController::class, 'atualizarStatus'])->name('status');
+        Route::patch('/{profissional}/verificacao', [ProfissionalController::class, 'atualizarVerificacao'])->name('verificacao');
+        Route::delete('/{profissional}', [ProfissionalController::class, 'excluir'])->name('excluir');
+    });
 
-//Perfil/Contiguração:
+    // Conteúdos
+    Route::view('/conteudos-aprender', 'conteudos.lista-conteudo-aprender')->name('conteudos.aprender');
+    Route::view('/destaques-principais', 'conteudos.destaques')->name('destaques');
+    Route::view('/criar-destaque', 'conteudos.criar-destaque')->name('destaques.criar');
 
-Route::get('/perfil', function () {
-    return view('perfil-config.perfil-adm');
+    // Outros
+    Route::view('/feedbacks', 'outros.feedbacks')->name('feedbacks');
+    Route::view('/suporte', 'outros.suporte')->name('suporte');
+    Route::view('/conversas', 'outros.conversas')->name('conversas');
+
+    // Painel
+    Route::view('/relatorio', 'painel.relatorio')->name('painel.relatorio');
+    Route::view('/grc', 'painel.grc')->name('painel.grc');
+    Route::view('/logistica', 'painel.logistica')->name('painel.logistica');
+
+    // Histórico
+    Route::view('/atividades-recentes', 'historico.atividades-recentes')->name('historico.atividades');
+    Route::view('/acessos', 'historico.acessos')->name('historico.acessos');
+
+    // Relatórios
+    Route::prefix('relatorios')->name('relatorios.')->group(function () {
+        Route::view('/usuarias', 'relatorios.usuarias')->name('usuarias');
+        Route::view('/atendimento', 'relatorios.atendimento')->name('atendimento');
+        Route::view('/denuncias', 'relatorios.denuncias')->name('denuncias');
+    });
 });
-
-Route::get('/editar/perfil', function () {
-    return view('perfil-config.editar-perfil');
-});
-
-Route::get('/configuracoes', function () {
-    return view('perfil-config.configuracoes');
-});
-
-
-//Usuario:
-
-Route::get('/denuncias', function () {
-    return view('usuario.lista-denuncias ');
-});
-
-Route::get('/usuarios', function () {
-    return view('usuario.lista-usuarios ');
-});
-
-Route::get('/aprovar-cadastros', function () {
-    return view('usuario.aprovar-cadastros ');
-});
-
-Route::get('/aprovar-cadastro', function () {
-    return view('usuario.aprovar-cadastro ');
-});
-
-Route::get('/denuncias-mensagens', function () {
-    return view('usuario.denuncias-mensagens ');
-});
-
-
-
-// Conteudos:
-
-Route::get('/conteudos-aprender', function () {
-    return view('conteudos.lista-conteudo-aprender ');
-});
-
-Route::get('/destaques-principais', function () {
-    return view('conteudos.destaques');
-});
-
-Route::get('/criar-destaque', function () {
-    return view('conteudos.criar-destaque');
-});
-
-
-//OUtros:
-
-Route::get('/feedbacks', function () {
-    return view('outros.feedbacks');
-});
-
-Route::get('/suporte', function () {
-    return view('outros.suporte');
-});
-
-Route::get('/conversas', function () {
-    return view('outros.conversas');
-});
-
-
-
-
-// Painel:
-Route::get('/relatorio', function () {
-    return view('painel.relatorio');
-});
-
-Route::get('/grc', function () {
-    return view('painel.grc');
-});
-
-Route::get('/logistica', function () {
-    return view('painel.logistica');
-});
-
-
-
-//Histórico
-Route::get('/atividades-recentes', function () {
-    return view('historico.atividades-recentes');
-});
-
-Route::get('/acessos', function () {
-    return view('historico.acessos');
-});
-
-
-
-//Relatórios:
-Route::get('/relatorios/usuarias', function () {
-    return view('relatorios.usuarias');
-});
-
-Route::get('/relatorios/atendimento', function () {
-    return view('relatorios.atendimento');
-});
-
-Route::get('/relatorios/denuncias', function () {
-    return view('relatorios.denuncias');
-});
-
-});
-
-
-

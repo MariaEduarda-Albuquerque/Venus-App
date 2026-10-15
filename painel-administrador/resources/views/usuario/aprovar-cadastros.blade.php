@@ -8,265 +8,146 @@
 
 @section('content')
 
-{{--
-    ENDEREÇO DA TELA DE ANÁLISE (botões "Analisar" e "Ver")
-    Por enquanto é a mesma tela para todos os cadastros.
-    Quando existir uma por cadastro, cada linha terá o seu endereço.
---}}
 @php
-    $urlAnalisar = url('/aprovar-cadastro');
+
+    $q = fn (array $extra = []) => array_filter(
+        array_merge(['aba' => $aba, 'conselho' => $conselho, 'busca' => $busca], $extra),
+        fn ($v) => $v !== null && $v !== ''
+    );
+
+    $kpis = [
+        'p' => ['Aguardando análise', 'user-check',   '',                 'em_analise'],
+        'r' => ['Reenvio solicitado', 'rotate-ccw',   'lst-icone--amarelo', 'pendencia'],
+        'a' => ['Aprovados',          'badge-check',  'lst-icone--verde',   'aprovado'],
+        'x' => ['Reprovados',         'user-x',       '',                 'reprovado'],
+    ];
+
+    $abas = ['p' => 'Pendentes', 'r' => 'Reenvio', 'a' => 'Aprovados', 'x' => 'Reprovados'];
+    
 @endphp
 
 <div class="lst-page">
 
-    {{-- Título --}}
     <div class="lst-topo">
         <div>
             <h1>Aprovação de cadastros</h1>
-            <p class="lst-mute">Valide o número de conselho de cada profissional antes de liberar o acesso.</p>
+            <p class="lst-mute">Valide os documentos de cada profissional antes de liberar o acesso.</p>
         </div>
     </div>
 
-    {{-- Cards de resumo: clicar mostra aquela aba --}}
+    {{-- Cards de resumo: cada um abre a sua aba --}}
     <div class="lst-kpis">
-        <button type="button" class="lst-card lst-kpi is-active" data-aba="p" aria-pressed="true"
-                title="Mostrar os pendentes">
-            <span class="lst-icone"><i data-lucide="user-check"></i></span>
-            <span class="lst-kpi-texto"><b id="ap-total-p">5</b><span class="lst-kpi-rotulo">Aguardando análise</span></span>
-        </button>
-
-        <button type="button" class="lst-card lst-kpi" data-aba="r" aria-pressed="false"
-                title="Mostrar os reenvios solicitados">
-            <span class="lst-icone lst-icone--amarelo"><i data-lucide="rotate-ccw"></i></span>
-            <span class="lst-kpi-texto"><b id="ap-total-r">1</b><span class="lst-kpi-rotulo">Reenvio solicitado</span></span>
-        </button>
-
-        <button type="button" class="lst-card lst-kpi" data-aba="a" aria-pressed="false"
-                title="Mostrar os aprovados">
-            <span class="lst-icone lst-icone--verde"><i data-lucide="badge-check"></i></span>
-            <span class="lst-kpi-texto"><b id="ap-total-a">1</b><span class="lst-kpi-rotulo">Aprovados</span></span>
-        </button>
-
-        <div class="lst-card lst-kpi lst-kpi--info">
-            <span class="lst-icone"><i data-lucide="clock"></i></span>
-            <span class="lst-kpi-texto"><b>3h 12min</b><span class="lst-kpi-rotulo">Tempo médio de análise</span></span>
-        </div>
+        @foreach ($kpis as $chave => [$rotulo, $icone, $classeIcone, $st])
+            <a href="{{ route('cadastros.aprovar', ['aba' => $chave]) }}"
+               class="lst-card lst-kpi {{ $aba === $chave ? 'is-active' : '' }}">
+                <span class="lst-icone {{ $classeIcone }}"><i data-lucide="{{ $icone }}"></i></span>
+                <span class="lst-kpi-texto">
+                    <b>{{ $contagens[$st] ?? 0 }}</b>
+                    <span class="lst-kpi-rotulo">{{ $rotulo }}</span>
+                </span>
+            </a>
+        @endforeach
     </div>
 
-    {{-- Tabela --}}
     <div class="lst-card lst-espaco">
         <div class="lst-barra">
             <div class="lst-abas">
-                <button type="button" class="lst-aba is-active" data-aba="p" aria-pressed="true">
-                    Pendentes<span class="lst-aba-badge" id="ap-badge-p">5</span>
-                </button>
-                <button type="button" class="lst-aba" data-aba="r" aria-pressed="false">Reenvio</button>
-                <button type="button" class="lst-aba" data-aba="a" aria-pressed="false">Aprovados</button>
-                <button type="button" class="lst-aba" data-aba="x" aria-pressed="false">Reprovados</button>
+                @foreach ($abas as $chave => $rotulo)
+                    <a href="{{ route('cadastros.aprovar', $q(['aba' => $chave])) }}"
+                       class="lst-aba {{ $aba === $chave ? 'is-active' : '' }}">
+                        {{ $rotulo }}
+                        @if ($chave === 'p' && ($contagens['em_analise'] ?? 0))
+                            <span class="lst-aba-badge">{{ $contagens['em_analise'] }}</span>
+                        @endif
+                    </a>
+                @endforeach
             </div>
 
-            <div class="lst-abas lst-abas--fim" aria-label="Filtrar por conselho">
-                <button type="button" class="lst-aba is-active" data-conselho-filtro="" aria-pressed="true">Todos</button>
-                <button type="button" class="lst-aba" data-conselho-filtro="CRM" aria-pressed="false">CRM</button>
-                <button type="button" class="lst-aba" data-conselho-filtro="CRP" aria-pressed="false">CRP</button>
-                <button type="button" class="lst-aba" data-conselho-filtro="COREN" aria-pressed="false">COREN</button>
-                <button type="button" class="lst-aba" data-conselho-filtro="CRESS" aria-pressed="false">CRESS</button>
+            <div class="lst-abas lst-abas--fim" aria-label="Filtrar por categoria">
+                <a href="{{ route('cadastros.aprovar', $q(['conselho' => ''])) }}"
+                   class="lst-aba {{ $conselho === '' ? 'is-active' : '' }}">Todos</a>
+                @foreach ($conselhos as $c)
+                    <a href="{{ route('cadastros.aprovar', $q(['conselho' => $c])) }}"
+                       class="lst-aba {{ $conselho === $c ? 'is-active' : '' }}">{{ $c }}</a>
+                @endforeach
             </div>
 
-            <label class="lst-busca">
-                <i data-lucide="search"></i>
-                <input type="search" id="ap-busca" placeholder="Nome ou nº de conselho…" aria-label="Pesquisar cadastros">
-            </label>
-        </div>
-
-        {{-- Barra que aparece ao selecionar cadastros --}}
-        <div class="lst-lote" id="ap-lote">
-            <b class="lst-lote-texto" id="ap-lote-n"></b>
-            <button type="button" class="lst-btn lst-btn--pequeno lst-btn--contorno" data-lote="reenvio">
-                <i data-lucide="rotate-ccw"></i>Solicitar reenvio
-            </button>
-            <button type="button" class="lst-btn lst-btn--pequeno" data-lote="aprovar">
-                <i data-lucide="check"></i>Aprovar selecionados
-            </button>
+            <form method="GET" action="{{ route('cadastros.aprovar') }}" class="lst-busca">
+                <input type="hidden" name="aba" value="{{ $aba }}">
+                @if ($conselho !== '') <input type="hidden" name="conselho" value="{{ $conselho }}"> @endif
+                <button type="submit" class="lst-icone-btn" aria-label="Pesquisar"><i data-lucide="search"></i></button>
+                <input type="search" name="busca" value="{{ $busca }}" placeholder="Nome, e-mail ou especialidade…">
+            </form>
         </div>
 
         <div class="lst-tabela-wrap">
             <table class="lst-tabela lst-tabela--larga">
                 <thead>
                     <tr>
-                        <th class="lst-col-chk">
-                            <input type="checkbox" class="lst-chk" id="ap-todos" aria-label="Selecionar todos">
-                        </th>
                         <th>Profissional</th>
-                        <th>Conselho</th>
+                        <th>Categoria</th>
                         <th>Especialidade</th>
                         <th>Aguardando</th>
                         <th>Status</th>
                         <th><span class="lst-mute">Ação</span></th>
                     </tr>
                 </thead>
-
-                {{-- Exemplo estático: trocar por @foreach quando tiver o back-end --}}
-                                <tbody id="ap-corpo">
-                    <tr data-id="PR1038" data-status="p" data-conselho="CRESS" data-nome="Luciana Prado" data-numero="34.221 (9ª)">
-                        <td><input type="checkbox" class="lst-chk" data-selecionar="PR1038" aria-label="Selecionar Luciana Prado"></td>
-                        <td>
-                            <div class="lst-pessoa">
-                                <div class="lst-avatar">L</div>
-                                <div><b>Luciana Prado</b><span class="lst-mute">luciana.prado@email.com</span></div>
-                            </div>
-                        </td>
-                        <td><span class="lst-conselho">CRESS 34.221 (9ª)</span></td>
-                        <td>Serviço social</td>
-                        <td data-espera><span class="lst-atraso"><i data-lucide="triangle-alert"></i>2 dias</span></td>
-                        <td><span class="lst-status lst-status--pendente">Pendente</span></td>
-                        <td><a href="{{ $urlAnalisar }}" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a></td>
-                    </tr>
-                    <tr data-id="PR1039" data-status="p" data-conselho="CRM" data-nome="Dr. Rafael Teixeira" data-numero="98211-RJ">
-                        <td><input type="checkbox" class="lst-chk" data-selecionar="PR1039" aria-label="Selecionar Dr. Rafael Teixeira"></td>
-                        <td>
-                            <div class="lst-pessoa">
-                                <div class="lst-avatar">R</div>
-                                <div><b>Dr. Rafael Teixeira</b><span class="lst-mute">rafael.teixeira@email.com</span></div>
-                            </div>
-                        </td>
-                        <td><span class="lst-conselho">CRM 98211-RJ</span></td>
-                        <td>Infectologia</td>
-                        <td data-espera><span class="lst-atraso"><i data-lucide="triangle-alert"></i>1 dia</span></td>
-                        <td><span class="lst-status lst-status--pendente">Pendente</span></td>
-                        <td><a href="{{ $urlAnalisar }}" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a></td>
-                    </tr>
-                    <tr data-id="PR1037" data-status="r" data-conselho="CRP" data-nome="Dra. Bianca Furtado" data-numero="05/88231">
-                        <td><input type="checkbox" class="lst-chk" data-selecionar="PR1037" aria-label="Selecionar Dra. Bianca Furtado" disabled></td>
-                        <td>
-                            <div class="lst-pessoa">
-                                <div class="lst-avatar">B</div>
-                                <div><b>Dra. Bianca Furtado</b><span class="lst-mute">bianca.furtado@email.com</span></div>
-                            </div>
-                        </td>
-                        <td><span class="lst-conselho">CRP 05/88231</span></td>
-                        <td>Psicologia</td>
-                        <td data-espera>20h</td>
-                        <td><span class="lst-status lst-status--reenvio">Reenvio solicitado</span></td>
-                        <td><a href="{{ $urlAnalisar }}" class="lst-btn lst-btn--neutro lst-btn--pequeno">Ver</a></td>
-                    </tr>
-                    <tr data-id="PR1040" data-status="p" data-conselho="COREN" data-nome="Dra. Ana Lima" data-numero="412908-SP">
-                        <td><input type="checkbox" class="lst-chk" data-selecionar="PR1040" aria-label="Selecionar Dra. Ana Lima"></td>
-                        <td>
-                            <div class="lst-pessoa">
-                                <div class="lst-avatar">A</div>
-                                <div><b>Dra. Ana Lima</b><span class="lst-mute">ana.lima@email.com</span></div>
-                            </div>
-                        </td>
-                        <td><span class="lst-conselho">COREN 412908-SP</span></td>
-                        <td>Enfermagem obstétrica</td>
-                        <td data-espera>8h</td>
-                        <td><span class="lst-status lst-status--pendente">Pendente</span></td>
-                        <td><a href="{{ $urlAnalisar }}" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a></td>
-                    </tr>
-                    <tr data-id="PR1041" data-status="p" data-conselho="CRM" data-nome="Dra. Camila Souza" data-numero="123456-SP">
-                        <td><input type="checkbox" class="lst-chk" data-selecionar="PR1041" aria-label="Selecionar Dra. Camila Souza"></td>
-                        <td>
-                            <div class="lst-pessoa">
-                                <div class="lst-avatar">C</div>
-                                <div><b>Dra. Camila Souza</b><span class="lst-mute">camila.souza@email.com</span></div>
-                            </div>
-                        </td>
-                        <td><span class="lst-conselho">CRM 123456-SP</span></td>
-                        <td>Ginecologia e obstetrícia</td>
-                        <td data-espera>5h</td>
-                        <td><span class="lst-status lst-status--pendente">Pendente</span></td>
-                        <td><a href="{{ $urlAnalisar }}" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a></td>
-                    </tr>
-                    <tr data-id="PR1042" data-status="p" data-conselho="CRP" data-nome="Dra. Juliana Mendes" data-numero="06/123456">
-                        <td><input type="checkbox" class="lst-chk" data-selecionar="PR1042" aria-label="Selecionar Dra. Juliana Mendes"></td>
-                        <td>
-                            <div class="lst-pessoa">
-                                <div class="lst-avatar">J</div>
-                                <div><b>Dra. Juliana Mendes</b><span class="lst-mute">juliana.mendes@email.com</span></div>
-                            </div>
-                        </td>
-                        <td><span class="lst-conselho">CRP 06/123456</span></td>
-                        <td>Psicologia clínica</td>
-                        <td data-espera>2h</td>
-                        <td><span class="lst-status lst-status--pendente">Pendente</span></td>
-                        <td><a href="{{ $urlAnalisar }}" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a></td>
-                    </tr>
-                    <tr data-id="PR1036" data-status="a" data-conselho="CRM" data-nome="Dra. Helena Rocha" data-numero="77412-MG">
-                        <td><input type="checkbox" class="lst-chk" data-selecionar="PR1036" aria-label="Selecionar Dra. Helena Rocha" disabled></td>
-                        <td>
-                            <div class="lst-pessoa">
-                                <div class="lst-avatar">H</div>
-                                <div><b>Dra. Helena Rocha</b><span class="lst-mute">helena.rocha@email.com</span></div>
-                            </div>
-                        </td>
-                        <td><span class="lst-conselho">CRM 77412-MG</span></td>
-                        <td>Dermatologia</td>
-                        <td data-espera>—</td>
-                        <td><span class="lst-status lst-status--ok">Aprovado</span></td>
-                        <td><a href="{{ $urlAnalisar }}" class="lst-btn lst-btn--neutro lst-btn--pequeno">Ver</a></td>
-                    </tr>
-                    <tr data-id="PR1035" data-status="x" data-conselho="COREN" data-nome="Marcos Vieira" data-numero="000812-SP">
-                        <td><input type="checkbox" class="lst-chk" data-selecionar="PR1035" aria-label="Selecionar Marcos Vieira" disabled></td>
-                        <td>
-                            <div class="lst-pessoa">
-                                <div class="lst-avatar">M</div>
-                                <div><b>Marcos Vieira</b><span class="lst-mute">marcos.vieira@email.com</span></div>
-                            </div>
-                        </td>
-                        <td><span class="lst-conselho">COREN 000812-SP</span></td>
-                        <td>Enfermagem</td>
-                        <td data-espera>—</td>
-                        <td><span class="lst-status">Reprovado</span></td>
-                        <td><a href="{{ $urlAnalisar }}" class="lst-btn lst-btn--neutro lst-btn--pequeno">Ver</a></td>
-                    </tr>
-
-                    <tr id="ap-vazio" hidden>
-                        <td colspan="7" class="lst-vazio"></td>
-                    </tr>
+                <tbody>
+                    @forelse ($cadastros as $c)
+                        @php
+                            $info  = $statusInfo[$c->statusVerificacao] ?? ['rotulo' => $c->statusVerificacao, 'classe' => ''];
+                            $desde = \Carbon\Carbon::parse($c->dataCadastro);
+                            $atraso = $c->statusVerificacao === 'em_analise' && $desde->diffInHours(now()) >= 24;
+                        @endphp
+                        <tr>
+                            <td>
+                                <div class="lst-pessoa">
+                                    <div class="lst-avatar">{{ mb_strtoupper(mb_substr($c->nomeProfissionalSaude, 0, 1)) }}</div>
+                                    <div>
+                                        <b>{{ $c->nomeProfissionalSaude }}</b>
+                                        <span class="lst-mute">{{ $c->emailProfissionalSaude }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="lst-conselho">{{ $c->categoriaProfissional ?? '—' }}</span></td>
+                            <td>{{ $c->especialidadeProfissionalSaude ?? '—' }}</td>
+                            <td>
+                                @if ($c->statusVerificacao === 'em_analise')
+                                    @if ($atraso)
+                                        <span class="lst-atraso"><i data-lucide="triangle-alert"></i>{{ $desde->locale('pt_BR')->diffForHumans(null, true) }}</span>
+                                    @else
+                                        {{ $desde->locale('pt_BR')->diffForHumans(null, true) }}
+                                    @endif
+                                @else
+                                    —
+                                @endif
+                            </td>
+                            <td><span class="lst-status {{ $info['classe'] }}">{{ $info['rotulo'] }}</span></td>
+                            <td>
+                                @if ($c->statusVerificacao === 'em_analise')
+                                    <a href="{{ route('cadastro.aprovar', $c) }}" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a>
+                                @else
+                                    <a href="{{ route('cadastro.aprovar', $c) }}" class="lst-btn lst-btn--neutro lst-btn--pequeno">Ver</a>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="6" class="lst-vazio">Nenhum cadastro nesta aba.</td></tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
+
+        @if ($cadastros->total())
+            <p class="lst-mute lst-dica">Mostrando {{ $cadastros->firstItem() }}–{{ $cadastros->lastItem() }} de {{ $cadastros->total() }}</p>
+        @endif
+        @if ($cadastros->hasPages())
+            <div class="lst-paginacao">{{ $cadastros->links() }}</div>
+        @endif
     </div>
 
-    {{-- Modal: aprovar / solicitar reenvio (o JavaScript troca os textos) --}}
-    <div class="lst-modal" id="ap-modal" role="dialog" aria-modal="true" aria-labelledby="ap-modal-titulo">
-        <div class="lst-card lst-modal-caixa">
-
-            <div class="lst-modal-cabeca">
-                <div class="lst-icone" id="ap-modal-icone"></div>
-                <h3 id="ap-modal-titulo"></h3>
-                <p id="ap-modal-texto"></p>
-            </div>
-
-            <div id="ap-motivo-bloco" hidden>
-                <div class="lst-rapidas">
-                    <button type="button" data-motivo="Documento ilegível">Documento ilegível</button>
-                    <button type="button" data-motivo="Número divergente">Número divergente</button>
-                    <button type="button" data-motivo="Documento vencido">Documento vencido</button>
-                    <button type="button" data-motivo="Foto não confere">Foto não confere</button>
-                </div>
-                <div class="lst-escrever" id="ap-motivo-caixa">
-                    <textarea id="ap-motivo" placeholder="Descreva o motivo (obrigatório)…" aria-label="Motivo"></textarea>
-                </div>
-                <span class="lst-erro-msg">Escreva o motivo com pelo menos 10 caracteres.</span>
-            </div>
-
-            <div class="lst-acoes">
-                <button type="button" class="lst-btn lst-btn--neutro" data-fechar>Cancelar</button>
-                <button type="button" class="lst-btn" id="ap-confirmar"></button>
-            </div>
-        </div>
-    </div>
-
-    {{-- Aviso rápido --}}
-    <div class="lst-toast" id="ap-toast" role="status" aria-live="polite">
-        <i data-lucide="check-circle-2"></i><span></span>
-    </div>
-
+    @if (session('sucesso'))
+        <div class="lst-toast lst-toast--show"><i data-lucide="check-circle-2"></i><span>{{ session('sucesso') }}</span></div>
+    @endif
 </div>
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('js/aprovacao-cadastros.js') }}"></script>
-@endpush
