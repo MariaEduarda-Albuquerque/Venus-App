@@ -1,0 +1,60 @@
+CORREÇÃO DO ENVIO DE CÓDIGO POR E-MAIL — VÊNUS
+
+O que foi corrigido:
+- A coluna codigoRedefinicao agora comporta o hash do código (255 caracteres).
+  Antes, a migration definia tamanho 6, mas o controller salvava Hash::make($codigo),
+  que é muito maior. Isso pode truncar o hash e impedir a verificação.
+- O .env.example agora mostra a configuração SMTP de exemplo para Gmail.
+
+IMPORTANTE: este pacote NÃO contém sua senha de e-mail e não pode ativar SMTP sozinho.
+Você precisa configurar o arquivo .env do seu projeto real.
+
+PASSO 1 — Configure o Gmail
+1. Ative a verificação em duas etapas na conta Google.
+2. Crie uma Senha de app nas configurações de segurança da conta.
+3. No .env do Laravel, configure:
+   MAIL_MAILER=smtp
+   MAIL_SCHEME=tls
+   MAIL_HOST=smtp.gmail.com
+   MAIL_PORT=587
+   MAIL_USERNAME=SEU_EMAIL@gmail.com
+   MAIL_PASSWORD=SUA_SENHA_DE_APP
+   MAIL_FROM_ADDRESS=SEU_EMAIL@gmail.com
+   MAIL_FROM_NAME="Vênus"
+
+Use uma Senha de app do Google, não a senha normal do Gmail. Nunca compartilhe essa senha.
+
+PASSO 2 — Atualize a tabela
+Se a migration de redefinição de senha AINDA NÃO foi executada:
+   php artisan migrate
+
+Se ela JÁ foi executada, editar a migration não altera a tabela existente.
+Crie uma migration para aumentar a coluna:
+   php artisan make:migration alter_codigo_redefinicao_size_in_tb_redefinicao_senha
+
+No método up(), use:
+   Schema::table('tbRedefinicaoSenha', function (Blueprint $table) {
+       $table->string('codigoRedefinicao', 255)->change();
+   });
+
+No método down(), pode retornar a coluna para 6 apenas se tiver certeza de que não há hashes salvos (não recomendado em produção).
+Depois execute:
+   php artisan migrate
+
+Confira se o driver de banco é MySQL e se a tabela tbRedefinicaoSenha foi criada.
+
+PASSO 3 — Limpe o cache de configuração e reinicie
+Dentro da pasta do Laravel:
+   php artisan optimize:clear
+   php artisan serve
+
+PASSO 4 — Verifique os logs
+Tente solicitar o código novamente. Se falhar:
+- veja storage/logs/laravel.log;
+- confira se o e-mail existe em tbUsuario.emailUsuario;
+- confira usuário/senha SMTP, porta 587 e acesso à internet;
+- confirme que a rota existe: php artisan route:list --path=redefinir-senha
+
+Observação de segurança:
+A API responde uma mensagem genérica se o e-mail não estiver cadastrado. Isso é intencional.
+Se a API retornar 200, mas nenhum e-mail chegar, verifique o spam e o log do Laravel.

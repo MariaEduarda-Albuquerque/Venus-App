@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "App Saúde da Mulher",
+    "slug": "app-saude-mulher",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.appsaudemulher.app"
+    },
+    "android": {
+      "package": "com.appsaudemulher.app"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}
