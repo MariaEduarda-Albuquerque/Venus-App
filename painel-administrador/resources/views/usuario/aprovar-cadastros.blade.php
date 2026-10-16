@@ -76,7 +76,7 @@
                 <input type="hidden" name="aba" value="{{ $aba }}">
                 @if ($conselho !== '') <input type="hidden" name="conselho" value="{{ $conselho }}"> @endif
                 <button type="submit" class="lst-icone-btn" aria-label="Pesquisar"><i data-lucide="search"></i></button>
-                <input type="search" name="busca" value="{{ $busca }}" placeholder="Nome, e-mail ou especialidade…">
+                <input type="search" name="busca" value="{{ $busca }}" placeholder="Nome ou nº de conselho…">
             </form>
         </div>
 

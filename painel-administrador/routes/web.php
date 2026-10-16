@@ -32,6 +32,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/aprovar-cadastros/{profissional}/decisao', [CadastroController::class, 'decidir'])->name('cadastro.decidir');
     Route::get('/aprovar-cadastros/{profissional}/documento/{tipo}', [CadastroController::class, 'documento'])->name('cadastro.documento');
     Route::view('/denuncias-mensagens', 'usuario.denuncias-mensagens')->name('denuncias.mensagens');
+    Route::view('/usuarios', 'usuario.lista-usuarios')->name('denuncias.mensagens');
 
     // Profissionais
     Route::prefix('profissionais')->name('profissional.')->group(function () {

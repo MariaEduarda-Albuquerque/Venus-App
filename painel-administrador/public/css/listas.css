@@ -203,6 +203,10 @@
     gap: 1rem;
 }
 
+.lst-kpis a{
+    text-decoration: none;
+}
+
 .lst-kpi {
     display: flex;
     align-items: center;
@@ -232,10 +236,14 @@
     font-weight: 800;
     letter-spacing: -.5px;
     line-height: 1.1;
+    text-decoration: none;
+    color: black;
 }
 
 .lst-kpi-rotulo {
     color: var(--mute);
+    text-decoration: none;
+
 }
 
 /* ---------- Ícone em caixa ---------- */

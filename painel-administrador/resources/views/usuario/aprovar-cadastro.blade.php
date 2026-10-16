@@ -103,7 +103,6 @@
                     <div class="lst-abas">
                         <button type="button" class="lst-aba is-active" id="dc-aba-0" onclick="abrirDocumento(0)">Carteira do conselho</button>
                         <button type="button" class="lst-aba" id="dc-aba-1" onclick="abrirDocumento(1)">Documento com foto</button>
-                        <button type="button" class="lst-aba" id="dc-aba-2" onclick="abrirDocumento(2)">Comprovante</button>
                     </div>
                 </div>
 

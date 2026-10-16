@@ -77,7 +77,7 @@
                 <input type="hidden" name="aba" value="<?php echo e($aba); ?>">
                 <?php if($conselho !== ''): ?> <input type="hidden" name="conselho" value="<?php echo e($conselho); ?>"> <?php endif; ?>
                 <button type="submit" class="lst-icone-btn" aria-label="Pesquisar"><i data-lucide="search"></i></button>
-                <input type="search" name="busca" value="<?php echo e($busca); ?>" placeholder="Nome, e-mail ou especialidade…">
+                <input type="search" name="busca" value="<?php echo e($busca); ?>" placeholder="Nome ou nº de conselho…">
             </form>
         </div>
 

@@ -48,3 +48,4 @@ class Conteudo extends Model
     }
 
 }
+    
