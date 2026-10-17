@@ -1,0 +1,469 @@
+/* =========================================================
+   CONSULTA INDIVIDUAL DO PROFISSIONAL (somente leitura)
+   Tudo usa rem, então acompanha o mesmo tamanho-base do restante
+   do seu painel (html com clamp). Todas as classes começam com "pf-"
+   para não misturar com o CSS das outras telas.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+
+.pf-page {
+    --pf-wine: #8f1529;
+    --pf-wine-dark: #6d0f2b;
+    --pf-wine-soft: #a01c2f;
+    --pf-rose: #f9e3e8;
+    --pf-ink: #2b1f22;
+    --pf-mute: #857379;
+    --pf-line: #efe3e6;
+    --pf-ok: #1f7a46;
+    --pf-ok-bg: #e6f4ec;
+
+    font-family: 'Poppins', system-ui, sans-serif;
+    color: var(--pf-ink);
+    max-width: var(--content-max, 80rem);
+}
+
+.pf-page *,
+.pf-page *::before,
+.pf-page *::after {
+    box-sizing: border-box;
+}
+
+
+/* ---------- TÍTULO DA PÁGINA ---------- */
+
+.pf-header {
+    margin-bottom: 1.6rem;
+}
+
+.pf-header h1 {
+    margin: 0;
+    font-family: 'Nunito', 'Poppins', sans-serif;
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--pf-wine-dark);
+}
+
+.pf-subtitle {
+    margin: 0.4rem 0 0;
+    font-size: 0.88rem;
+    color: var(--pf-mute);
+}
+
+
+/* ---------- GRADE: coluna principal + prévia ---------- */
+
+.pf-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: 1.6rem;
+    align-items: start;
+}
+
+.pf-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    min-width: 0;
+}
+
+.pf-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    min-width: 0;
+}
+
+/* na coluna estreita da direita, os campos viram 1 coluna se não couberem 2 */
+.pf-side .pf-fields {
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+}
+
+/* "Dados do cadastro": 3 campos curtos na mesma linha (quebra se não couber) */
+.pf-side .pf-fields--compact {
+    grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+}
+
+
+/* ---------- CARD ---------- */
+
+.pf-card {
+    background: #fff;
+    border: 1px solid #f3e3e6;
+    border-radius: 1.4rem;
+    box-shadow: 0 0.3rem 1.4rem rgba(120, 30, 50, 0.05);
+    overflow: hidden;
+}
+
+
+/* ---------- CAPA VINHO COM CÍRCULOS ---------- */
+
+.pf-cover {
+    position: relative;
+    height: 6rem;
+    overflow: hidden;
+    background: linear-gradient(105deg, #6b1128 0%, #8b1429 55%, #a01a2c 100%);
+}
+
+.pf-cover::before,
+.pf-cover::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+}
+
+.pf-cover::before {                 /* círculo grande, canto direito */
+    right: 1.4rem;
+    top: -6.5rem;
+    width: 11rem;
+    height: 11rem;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.pf-cover::after {                  /* círculo menor, canto esquerdo */
+    left: -0.2rem;
+    bottom: -4.5rem;
+    width: 8rem;
+    height: 8rem;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.pf-preview .pf-cover {
+    height: 4rem;
+}
+
+
+/* ---------- HERO (foto, botões e nome) ---------- */
+
+.pf-hero {
+    padding: 0 1.75rem 1.4rem;
+}
+
+.pf-hero-row {
+    position: relative;             /* fica por cima da capa */
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: -2.75rem;           /* a foto "sobe" por cima da capa */
+}
+
+
+.pf-avatar {
+    width: 6rem;
+    height: 6rem;
+    flex: none;
+    border-radius: 50%;
+    border: 0.25rem solid #fff;
+    background: linear-gradient(135deg, #b23a5b, #a32a4a);
+    box-shadow: 0 0.3rem 1rem rgba(90, 15, 40, 0.25);
+    object-fit: cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Nunito', 'Poppins', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 800;
+}
+
+
+.pf-identity {
+    margin-top: 1rem;
+}
+
+.pf-identity h2 {
+    margin: 0;
+    font-family: 'Nunito', 'Poppins', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--pf-wine-dark);
+}
+
+.pf-identity-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0.7rem 0 0.8rem;
+}
+
+.pf-identity p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--pf-mute);
+}
+
+
+/* ---------- LINK "VOLTAR PARA A LISTA" ---------- */
+
+.pf-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--pf-wine);
+    text-decoration: none;
+}
+
+.pf-back svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.pf-back:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------- ETIQUETAS (especialidade, status) ---------- */
+
+.pf-chip {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 99px;
+    background: var(--pf-rose);
+    color: var(--pf-wine);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.pf-chip--ok {                      /* status Ativa / Verificado */
+    background: var(--pf-ok-bg);
+    color: var(--pf-ok);
+}
+
+
+/* ---------- SEÇÕES DE DADOS ---------- */
+
+.pf-section {
+    padding: 1.4rem 1.75rem 1.65rem;
+}
+
+.pf-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1.1rem;
+    font-family: 'Nunito', 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--pf-wine-dark);
+}
+
+.pf-section-title::before {         /* tracinho vermelho antes do título */
+    content: "";
+    width: 0.25rem;
+    height: 1.1rem;
+    border-radius: 0.2rem;
+    background: var(--pf-wine-soft);
+}
+
+.pf-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem 1.5rem;
+    margin: 0;
+}
+
+.pf-field {
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--pf-line);
+    min-width: 0;
+}
+
+.pf-field--full {
+    grid-column: 1 / -1;
+}
+
+.pf-field dt {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--pf-mute);
+}
+
+.pf-field dd {
+    margin: 0.15rem 0 0;
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: var(--pf-ink);
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------- PRÉVIA PÚBLICA ---------- */
+
+.pf-preview {
+    text-align: center;
+    padding-bottom: 1.6rem;
+}
+
+.pf-preview-label {
+    margin: 0.9rem 1.5rem 0;
+    text-align: left;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--pf-mute);
+}
+
+.pf-preview-label strong {
+    display: block;
+    font-family: 'Nunito', 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--pf-wine-dark);
+}
+
+.pf-preview .pf-avatar {
+    width: 5.1rem;
+    height: 5.1rem;
+    margin: 1.25rem auto 0;
+    font-size: 2rem;
+}
+
+.pf-preview .pf-chip--ok {
+    margin-top: 0.8rem;
+}
+
+.pf-preview-name {
+    margin: 1rem 0 0;
+    font-family: 'Nunito', 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--pf-ink);
+}
+
+.pf-preview-spec {
+    margin: 0.15rem 0 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--pf-wine-soft);
+}
+
+.pf-preview-bio {
+    margin: 1rem 1.5rem 0;
+    padding: 0.95rem 1.1rem;
+    border-radius: 1rem;
+    background: #fbeeed;
+    text-align: left;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--pf-mute);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+/* uma coluna só: os cards ficam um embaixo do outro
+   (a prévia vai para o final) */
+@media (max-width: 1100px) {
+    .pf-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.35rem;
+    }
+
+    .pf-main,
+    .pf-side {
+        display: contents;
+    }
+
+    .pf-preview {
+        order: 1;
+    }
+}
+
+/* celulares */
+@media (max-width: 700px) {
+    .pf-hero {
+        padding: 0 1.15rem 1.3rem;
+    }
+
+    .pf-section {
+        padding: 1.2rem 1.15rem 1.3rem;
+    }
+
+    .pf-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   ADIÇÃO - DOCUMENTOS COM FOTO
+   Cole este bloco no FINAL do seu public/css/profissional.css
+   (não altera nada do que já existe)
+   ========================================================= */
+
+/* Card com as duas imagens, uma embaixo da outra */
+.pf-docs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Cada documento: título em cima, imagem embaixo */
+.pf-doc {
+    margin: 0;
+}
+
+.pf-doc figcaption {
+    margin-bottom: 8px;
+    color: var(--mute, #7E7075);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* A imagem ocupa a largura do card e nunca passa dela */
+.pf-doc img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--line, #EFE7E8);
+    border-radius: 14px;
+}
+
+
+/* =========================================================
+   SEM BARRAS DE ROLAGEM
+   Esconde a barra em qualquer lugar desta tela, mas o conteúdo
+   continua rolando (roda do mouse, toque e teclado).
+   ========================================================= */
+
+/* Dentro da tela (cards, textos, imagens) */
+.pf-page,
+.pf-page * {
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* Edge antigo */
+}
+
+.pf-page::-webkit-scrollbar,
+.pf-page *::-webkit-scrollbar {     /* Chrome, Edge e Safari */
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* A barra da página inteira (regra separada: se o navegador não
+   entender o ":has", só esta regra é ignorada) */
+html:has(.pf-page) {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html:has(.pf-page)::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}

@@ -386,6 +386,12 @@
     vertical-align: middle;
 }
 
+.lst-tabela td a{
+    vertical-align: middle;
+    text-decoration: none;
+    color:#2B1F22;
+}
+
 .lst-tabela tbody tr[data-id] {
     cursor: pointer;
     transition: background .15s;
@@ -645,11 +651,33 @@
     text-align: left;
 }
 
+.lst-menu  a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    width: 100%;
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+    color: var(--mute);
+    font-weight: 600;
+    text-align: left;
+}
+
 .lst-menu button:hover {
     background: var(--rose);
 }
 
+.lst-menu a:hover {
+    background: var(--rose);
+}
+
 .lst-menu button[aria-pressed="true"] {
+    color: var(--wine);
+}
+
+.lst-menu a[aria-pressed="true"] {
     color: var(--wine);
 }
 
@@ -660,6 +688,10 @@
 }
 
 .lst-menu button[aria-pressed="true"] svg.lucide {
+    visibility: visible;
+}
+
+.lst-menu a[aria-pressed="true"] svg.lucide {
     visibility: visible;
 }
 
@@ -2058,4 +2090,18 @@ html:has(.lst-page)::-webkit-scrollbar {
 .lst-doc-aba.is-on {
     color: var(--wine);
     border-color: var(--wine);
+}
+
+.btn-ver-mais-modal{
+    color: #99182a;
+    text-decoration: none;
+    background-color: var( --rose);
+    padding: 7px;
+    border-radius: 20px;
+    transition: .3s;
+    font-weight: bold;
+}
+
+.btn-ver-mais-modal:hover{
+    background-color: var( --rose2);
 }

@@ -5,6 +5,8 @@ use App\Http\Controllers\AdmController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfissionalController;
 use App\Http\Controllers\CadastroController;
+use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\RelatorioController;
 // Login
 Route::middleware('guest:admin')->group(function () {
     Route::get('/login', [AdmController::class, 'showLogin'])->name('login');
@@ -22,7 +24,7 @@ Route::middleware('auth:admin')->group(function () {
 
     // Perfil/Configuração
     Route::view('/perfil', 'perfil-config.perfil-adm')->name('perfil');
-    Route::view('/editar/perfil', 'perfil-config.editar-perfil')->name('perfil.editar');
+    Route::view('/editar/perfil',  [PerfilController::class, 'index'])->name('perfil.editar');
     Route::view('/configuracoes', 'perfil-config.configuracoes')->name('configuracoes');
 
     // Usuários
@@ -41,6 +43,8 @@ Route::middleware('auth:admin')->group(function () {
         Route::patch('/{profissional}/verificacao', [ProfissionalController::class, 'atualizarVerificacao'])->name('verificacao');
         Route::delete('/{profissional}', [ProfissionalController::class, 'excluir'])->name('excluir');
     });
+    Route::view('/profissional', 'usuario.profissional-selecionado-lista')->name('profissional.selecionado');
+
 
     // Conteúdos
     Route::view('/conteudos-aprender', 'conteudos.lista-conteudo-aprender')->name('conteudos.aprender');
@@ -63,8 +67,10 @@ Route::middleware('auth:admin')->group(function () {
 
     // Relatórios
     Route::prefix('relatorios')->name('relatorios.')->group(function () {
-        Route::view('/usuarias', 'relatorios.usuarias')->name('usuarias');
+        Route::get('/usuarias', [RelatorioController::class, 'Usuarias'])->name('usuarias');
         Route::view('/atendimento', 'relatorios.atendimento')->name('atendimento');
         Route::view('/denuncias', 'relatorios.denuncias')->name('denuncias');
+        Route::view('/profissional', 'relatorios.profissional')->name('relatorio-profissional');
+
     });
 });

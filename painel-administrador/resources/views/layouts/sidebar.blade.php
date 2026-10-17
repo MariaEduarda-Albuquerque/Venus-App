@@ -28,7 +28,8 @@
         <i data-lucide="chevron-down" class="chev"></i>
     </button>
     <div class="sub" id="g2">
-        <a class="nav {{ request()->is('usuarios') ? 'on' : '' }}" href="/usuarios">Contas</a>
+        <a class="nav {{ request()->is('usuarios') ? 'on' : '' }}" href="/usuarios">Contas de Usuarias</a>
+        <a class="nav {{ request()->is('profissionais') ? 'on' : '' }}" href="/profissionais">Contas de Profissionais</a>
         <a class="nav {{ request()->is('aprovar-cadastros') ? 'on' : '' }}" href="/aprovar-cadastros">
             Aprovação de cadastros<span class="bd">5</span>
         </a>
@@ -57,6 +58,7 @@
         <a class="nav {{ request()->is('relatorios/usuarias') ? 'on' : '' }}" href="/relatorios/usuarias">Usuárias</a>
         <a class="nav {{ request()->is('relatorios/atendimento') ? 'on' : '' }}" href="/relatorios/atendimento">Atendimento</a>
         <a class="nav {{ request()->is('relatorios/denuncias') ? 'on' : '' }}" href="/relatorios/denuncias">Denúncias</a>
+        <a class="nav {{ request()->is('relatorios/profissional') ? 'on' : '' }}" href="/relatorios/profissional">Profissionais</a>
     </div>
 
     <button class="nav" data-grp="g4">

@@ -7,26 +7,44 @@ use Illuminate\Http\Request;
 
 class ProfissionalController extends Controller
 {
-    public function index(Request $request)
-    {
-        $profissionais = ProfissionalModel::query()
-            ->when(in_array($request->input('status'), ['ativa', 'suspensa', 'excluida']), function ($query) use ($request) {
+public function index(Request $request)
+{
+    $profissionais = ProfissionalModel::query()
+        ->when(
+            in_array($request->input('status'), ['ativa', 'suspensa', 'excluida']),
+            function ($query) use ($request) {
                 $query->where('statusConta', $request->input('status'));
-            })
-            ->when($request->filled('busca'), function ($query) use ($request) {
-                $busca = $request->input('busca');
+            }
+        )
+        ->when($request->filled('busca'), function ($query) use ($request) {
+            $busca = $request->input('busca');
 
-                $query->where(function ($q) use ($busca) {
-                    $q->where('nomeProfissionalSaude', 'like', "%{$busca}%")
-                    ->orWhere('emailProfissionalSaude', 'like', "%{$busca}%");
-                });
-            })
-            ->orderByDesc('dataCadastro')
-            ->paginate(10)
-            ->withQueryString();
+            $query->where(function ($q) use ($busca) {
+                $q->where('nomeProfissionalSaude', 'like', "%{$busca}%")
+                  ->orWhere('emailProfissionalSaude', 'like', "%{$busca}%");
+            });
+        })
+        ->orderByDesc('dataCadastro')
+        ->paginate(10)
+        ->withQueryString();
 
-        return view('listas.profissional', compact('profissionais'));
+    // Busca o profissional selecionado para exibir os detalhes.
+    $detalhe = null;
+
+    if ($request->filled('detalhe')) {
+        $detalhe = ProfissionalModel::find($request->input('detalhe'));
     }
+
+    // Verifica se o usuário solicitou a confirmação da exclusão.
+    $confirmarExclusao = $request->input('excluir') == '1'
+        && $detalhe !== null;
+
+    return view('usuario.lista-profissionais', compact(
+        'profissionais',
+        'detalhe',
+        'confirmarExclusao'
+    ));
+}
 
     public function atualizarVerificacao(Request $request, ProfissionalModel $profissional)
     {

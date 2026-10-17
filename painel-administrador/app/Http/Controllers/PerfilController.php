@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
+
 
 use Illuminate\Http\Request;
 
-class ConteudoController extends Controller
+class PerfilController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,6 +15,13 @@ class ConteudoController extends Controller
     public function index()
     {
         //
+    $admin = Auth::Admin();
+
+    $nome = $admin->nomeAdmin;
+
+            return view('perfil-config.perfil-adm', compact('nome'));
+
+
     }
 
     /**

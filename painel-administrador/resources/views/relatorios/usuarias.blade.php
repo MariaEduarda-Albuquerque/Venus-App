@@ -60,9 +60,9 @@ window.RELATORIO = {
     extra: '+8,2%',
     graficos: [
         { t: 'Faixa etária', s: 'Distribuição das usuárias', rosa: false,
-          d: [['14 a 25 anos', 5200], ['26 a 40 anos', 4300], ['41 a 60 anos', 2300], ['Mais de 60', 658]] },
+          d: [['14 a 25 anos', @json($faixaEtaria14a25)], ['26 a 40 anos', @json($faixaEtaria26a40)], ['41 a 60 anos', @json($faixaEtaria41a60)], ['Mais de 60', @json($faixaEtaria60mais)]] },
         { t: 'Tipo de perfil', s: 'Quem usa a plataforma', rosa: false,
-          d: [['Usuárias', 11240], ['Profissionais', 1230], ['Moderação', 48]] },
+          d: [['Usuárias', @json($totalUsuarias)], ['Profissionais', @json($totalProfissionais)], ['Moderação', @json($totalAdmins)]] },
         { t: 'Região', s: 'Onde estão cadastradas', rosa: true,
           d: [['Sudeste', 5900], ['Nordeste', 2800], ['Sul', 2000], ['Centro-Oeste', 1100], ['Norte', 658]] }
     ]
