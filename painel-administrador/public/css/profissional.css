@@ -42,13 +42,13 @@
     font-size: 1.55rem;
     font-weight: 800;
     line-height: 1.2;
-    color: var(--pf-wine-dark);
+    color: var(--pf-ink);
 }
 
 .pf-subtitle {
     margin: 0.4rem 0 0;
     font-size: 0.88rem;
-    color: var(--pf-mute);
+    color: var(--pf-ink);
 }
 
 
@@ -75,12 +75,10 @@
     min-width: 0;
 }
 
-/* na coluna estreita da direita, os campos viram 1 coluna se não couberem 2 */
 .pf-side .pf-fields {
     grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
 }
 
-/* "Dados do cadastro": 3 campos curtos na mesma linha (quebra se não couber) */
 .pf-side .pf-fields--compact {
     grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
 }
@@ -113,7 +111,7 @@
     border-radius: 50%;
 }
 
-.pf-cover::before {                 /* círculo grande, canto direito */
+.pf-cover::before {
     right: 1.4rem;
     top: -6.5rem;
     width: 11rem;
@@ -121,7 +119,7 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
-.pf-cover::after {                  /* círculo menor, canto esquerdo */
+.pf-cover::after {
     left: -0.2rem;
     bottom: -4.5rem;
     width: 8rem;
@@ -141,13 +139,13 @@
 }
 
 .pf-hero-row {
-    position: relative;             /* fica por cima da capa */
+    position: relative;
     z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-    margin-top: -2.75rem;           /* a foto "sobe" por cima da capa */
+    margin-top: -2.75rem;
 }
 
 
@@ -181,7 +179,7 @@
     font-size: 1.35rem;
     font-weight: 800;
     line-height: 1.3;
-    color: var(--pf-wine-dark);
+    color: var(--pf-ink);
 }
 
 .pf-identity-meta {
@@ -194,7 +192,7 @@
 .pf-identity p {
     margin: 0;
     font-size: 0.85rem;
-    color: var(--pf-mute);
+    color: var(--pf-ink);
 }
 
 
@@ -235,7 +233,7 @@
     white-space: nowrap;
 }
 
-.pf-chip--ok {                      /* status Ativa / Verificado */
+.pf-chip--ok {
     background: var(--pf-ok-bg);
     color: var(--pf-ok);
 }
@@ -256,10 +254,10 @@
     font-size: 1.1rem;
     font-weight: 800;
     line-height: 1.3;
-    color: var(--pf-wine-dark);
+    color: var(--pf-ink);
 }
 
-.pf-section-title::before {         /* tracinho vermelho antes do título */
+.pf-section-title::before {
     content: "";
     width: 0.25rem;
     height: 1.1rem;
@@ -365,8 +363,6 @@
    RESPONSIVIDADE
    ========================================================= */
 
-/* uma coluna só: os cards ficam um embaixo do outro
-   (a prévia vai para o final) */
 @media (max-width: 1100px) {
     .pf-grid {
         display: flex;
@@ -384,7 +380,6 @@
     }
 }
 
-/* celulares */
 @media (max-width: 700px) {
     .pf-hero {
         padding: 0 1.15rem 1.3rem;
@@ -399,20 +394,17 @@
     }
 }
 
+
 /* =========================================================
    ADIÇÃO - DOCUMENTOS COM FOTO
-   Cole este bloco no FINAL do seu public/css/profissional.css
-   (não altera nada do que já existe)
    ========================================================= */
 
-/* Card com as duas imagens, uma embaixo da outra */
 .pf-docs {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-/* Cada documento: título em cima, imagem embaixo */
 .pf-doc {
     margin: 0;
 }
@@ -424,7 +416,6 @@
     font-weight: 700;
 }
 
-/* A imagem ocupa a largura do card e nunca passa dela */
 .pf-doc img {
     display: block;
     width: 100%;
@@ -437,26 +428,21 @@
 
 /* =========================================================
    SEM BARRAS DE ROLAGEM
-   Esconde a barra em qualquer lugar desta tela, mas o conteúdo
-   continua rolando (roda do mouse, toque e teclado).
    ========================================================= */
 
-/* Dentro da tela (cards, textos, imagens) */
 .pf-page,
 .pf-page * {
-    scrollbar-width: none;          /* Firefox */
-    -ms-overflow-style: none;       /* Edge antigo */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .pf-page::-webkit-scrollbar,
-.pf-page *::-webkit-scrollbar {     /* Chrome, Edge e Safari */
+.pf-page *::-webkit-scrollbar {
     display: none;
     width: 0;
     height: 0;
 }
 
-/* A barra da página inteira (regra separada: se o navegador não
-   entender o ":has", só esta regra é ignorada) */
 html:has(.pf-page) {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -466,4 +452,442 @@ html:has(.pf-page)::-webkit-scrollbar {
     display: none;
     width: 0;
     height: 0;
+}
+
+/* =========================================================
+   RELATÓRIO
+   ========================================================= */
+
+.pf-main .rel-page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+
+    --rel-wine: #9B1B2A;
+    --rel-rose: #F8E9EC;
+    --rel-ink: #2B1F22;
+    --rel-mute: #7E7075;
+    --rel-line: #EFE7E8;
+}
+
+/* ---------- Topo ---------- */
+
+.rel-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.rel-topo h1 {
+    margin: 0;
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.15;
+
+    color: var(--rel-ink);
+}
+
+.rel-acoes {
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+}
+
+.rel-btn {
+    height: 3rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+
+    padding: 0 1rem;
+
+    border: 1.5px solid var(--rel-line);
+    border-radius: .75rem;
+
+    background: #fff;
+    color: var(--rel-ink);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: .85rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.rel-btn:hover {
+    border-color: #e4c3c9;
+}
+
+.rel-btn svg {
+    width: 1.05rem;
+    height: 1.05rem;
+}
+
+.rel-select {
+    height: 3rem;
+    min-width: 13rem;
+
+    padding: 0 1rem;
+
+    border: 1.5px solid var(--rel-line);
+    border-radius: .75rem;
+
+    background: #fff;
+    color: var(--rel-ink);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: .85rem;
+    font-weight: 500;
+
+    outline: none;
+    cursor: pointer;
+}
+
+/* ---------- Cards ---------- */
+
+.rel-kpis {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+}
+
+.rel-card {
+    min-width: 0;
+
+    padding: 1rem;
+
+    border-radius: 1rem;
+
+    background: #fff;
+
+    border: 1px solid #f2e9eb;
+
+    box-shadow:
+        0 2px 5px rgba(60, 20, 30, .025),
+        0 7px 18px rgba(60, 20, 30, .035);
+}
+
+.rel-kpi {
+    min-height: 6.1rem;
+
+    display: flex;
+    align-items: center;
+
+    gap: .8rem;
+}
+
+.rel-icone {
+    flex: none;
+
+    width: 3rem;
+    height: 3rem;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: .8rem;
+
+    background: var(--rel-rose);
+    color: var(--rel-wine);
+}
+
+.rel-icone svg {
+    width: 1.35rem;
+    height: 1.35rem;
+
+    stroke-width: 1.8;
+}
+
+.rel-kpi-texto {
+    display: block;
+    min-width: 0;
+}
+
+.rel-kpi-texto b {
+    display: block;
+
+    color: var(--rel-ink);
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+
+    letter-spacing: -.5px;
+    line-height: 1.05;
+}
+
+.rel-kpi-texto > span {
+    display: block;
+
+    margin-top: .15rem;
+
+    color: var(--rel-mute);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: .75rem;
+
+    line-height: 1.25;
+}
+
+.rel-kpi-texto-menor {
+    font-size: 1.25rem !important;
+}
+
+/* =========================================================
+   GRÁFICO DE LINHA + TABELA
+   ========================================================= */
+
+.rel-conteudo {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, .8fr);
+
+    gap: 1rem;
+}
+
+.rel-grafico-card,
+.rel-tabela-card {
+    min-width: 0;
+
+    background: #fff;
+
+    border: 1px solid #f2e9eb;
+    border-radius: 1rem;
+
+    box-shadow:
+        0 2px 5px rgba(60, 20, 30, .025),
+        0 7px 18px rgba(60, 20, 30, .035);
+
+    overflow: hidden;
+}
+
+/* ---------- Título ---------- */
+
+.rel-grafico-header {
+    padding: 1rem 1rem 0;
+}
+
+.rel-grafico-header h3 {
+    margin: 0;
+
+    color: var(--rel-ink);
+
+    font-family: 'Nunito', sans-serif;
+    font-size: .95rem;
+    font-weight: 800;
+}
+
+.rel-grafico-header p {
+    margin: .25rem 0 0;
+
+    color: var(--rel-mute);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: .7rem;
+}
+
+/* ---------- Linha ---------- */
+
+.rel-chart {
+    width: 100%;
+    height: 14rem;
+
+    margin-top: .25rem;
+}
+
+/* ---------- Tabela ---------- */
+
+.rel-tabela-wrap {
+    padding: .65rem 1rem 1rem;
+}
+
+.rel-tabela {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+.rel-tabela th {
+    padding: .4rem .25rem;
+
+    border-bottom: 1px solid var(--rel-line);
+
+    color: var(--rel-mute);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: .65rem;
+    font-weight: 600;
+
+    text-align: left;
+}
+
+.rel-tabela td {
+    padding: .45rem .25rem;
+
+    border-bottom: 1px solid #f4edef;
+
+    color: var(--rel-ink);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: .68rem;
+}
+
+.rel-tabela th:not(:first-child),
+.rel-tabela td:not(:first-child) {
+    text-align: center;
+}
+
+.rel-tabela tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------- Toast ---------- */
+
+.rel-toast {
+    position: fixed;
+
+    right: 1.5rem;
+    bottom: 1.5rem;
+
+    z-index: 1100;
+
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+
+    padding: .75rem 1.125rem;
+
+    border-radius: .75rem;
+
+    background: #2B1F22;
+    color: #fff;
+
+    font-weight: 700;
+
+    opacity: 0;
+    transform: translateY(5.5rem);
+
+    pointer-events: none;
+
+    transition: .3s;
+}
+
+.rel-toast.is-show {
+    opacity: 1;
+    transform: none;
+}
+
+/* ---------- Responsividade APENAS do relatório ---------- */
+
+@media (max-width: 700px) {
+
+    .rel-topo {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .rel-topo h1 {
+        white-space: normal;
+    }
+
+    .rel-acoes {
+        width: 100%;
+    }
+
+    .rel-btn,
+    .rel-select {
+        flex: 1;
+    }
+
+    .rel-kpis {
+        grid-template-columns: 1fr;
+    }
+
+    .rel-conteudo {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   AÇÕES DA CONTA
+   ========================================= */
+
+.pf-acoes-conta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+    margin-top: 16px;
+    background: #fff;
+    border: 1px solid #f3e3e6;
+    border-radius: 1.4rem;
+    box-shadow: 0 0.3rem 1.4rem rgba(120, 30, 50, 0.05);
+    overflow: hidden;
+    padding: 25px 40px;
+}
+
+.pf-acoes-conta button {
+    width: 100%;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    border-radius: 12px;
+    background: #fff;
+
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.pf-acoes-conta button svg {
+    width: 19px;
+    height: 19px;
+}
+
+
+/* Suspender */
+
+.pf-acoes-conta .btn-suspender {
+    border: 1px solid #eadcdf;
+    color: #2b1f22;
+}
+
+.pf-acoes-conta .btn-suspender:hover {
+    background: #fdf6f7;
+}
+
+
+/* Excluir */
+
+.pf-acoes-conta .btn-excluir {
+    border: 1px solid #eda3ae;
+    color: #c51f36;
+}
+
+.pf-acoes-conta .btn-excluir:hover {
+    background: #fff5f6;
 }

@@ -66,13 +66,13 @@
                     @forelse ($profissionais as $p)
                         @php $urlDetalhe = route('profissional.index', $qs + ['detalhe' => $p->getKey()]); @endphp
                         <tr data-id="{{ $p->getKey() }}">
-                            <td class="lst-mono"><a href="{{ $urlDetalhe }}">{{ $p->getKey() }}</a></td>
-                            <td><a href="{{ $urlDetalhe }}">{{ $p->nomeProfissionalSaude }}</a></td>
-                            <td><a href="{{ $urlDetalhe }}">{{ $p->categoriaProfissional }}</a></td>
-                            <td><a href="{{ $urlDetalhe }}">{{ $p->especialidadeProfissionalSaude }}</a></td>
-                            <td><a href="{{ $urlDetalhe }}">{{ optional($p->dataCadastro)->format('d/m/Y') }}</a></td>
+                            <td class="lst-mono"><a href="/profissional">{{ $p->getKey() }}</a></td>
+                            <td><a href="/profissional">{{ $p->nomeProfissionalSaude }}</a></td>
+                            <td><a href="/profissional">{{ $p->categoriaProfissional }}</a></td>
+                            <td><a href="/profissional">{{ $p->especialidadeProfissionalSaude }}</a></td>
+                            <td><a href="/profissional">{{ optional($p->dataCadastro)->format('d/m/Y') }}</a></td>
                             <td>
-                                <a href="{{ $urlDetalhe }}">
+                                <a href="/profissional">
                                     <span class="lst-status {{ $statusClasses[$p->statusConta] ?? '' }}">
                                         {{ $statusRotulos[$p->statusConta] ?? $p->statusConta }}
                                     </span>

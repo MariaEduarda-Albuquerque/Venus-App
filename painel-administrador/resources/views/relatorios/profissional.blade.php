@@ -35,7 +35,7 @@
         </div>
         <div class="rel-card rel-kpi">
             <span class="rel-icone"><i data-lucide="user-plus"></i></span>
-            <span class="rel-kpi-texto"><b id="k-extra">—</b><span>Novos cadastros</span></span>
+            <span class="rel-kpi-texto"><b id="k-extra">—</b><span>Satisfação média</span></span>
         </div>
     </div>
 
@@ -57,14 +57,14 @@ window.RELATORIO = {
     arquivo: 'relatorio-profissionais',
     periodo: false, // números fixos, como no arquivo de referência
     rotulos: ['Total de profissionais', 'Maior grupo', 'Novos cadastros'],
-    extra: '+8,2%',
+    extra: '7/10',
     graficos: [
         { t: 'Categoria', s: 'Categorias as quais os profissionais pertencem', rosa: false, 
           d: [['Médico', 313], ['Enfermeiro', 232], ['Psicologo', 312], ['Assistente social', 231], ['Outro', 543]] },
         { t: 'Status da Verificação', s: 'Status de verificação das contas de profissionais', rosa: false,
           d: [['Em analise', 323], ['Aprovado', 334], ['Pendente', 442]] },
-        { t: 'Região', s: 'Onde estão cadastradas', rosa: true,
-          d: [['Sudeste', 5900], ['Nordeste', 2800], ['Sul', 2000], ['Centro-Oeste', 1100], ['Norte', 658]] }
+        { t: 'Atendimentos por período', s: 'Quantidade de atendimentos nos últimos meses', rosa: true,
+          d: [['Junho', 20], ['Julho', 28], ['Agosto', 2], ['Setembro', 11], ['Outubro', 13]] }
     ]
 };
 </script>
