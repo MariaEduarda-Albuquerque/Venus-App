@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProfissionalModel extends Model
 {
@@ -45,5 +46,14 @@ class ProfissionalModel extends Model
             'dataCadastro'    => 'datetime',
             'dataAtualizacao' => 'datetime',
         ];
+    }
+
+    public function atendimentos(): HasMany
+    {
+        return $this->hasMany(
+            AtendimentoModel::class,
+            'codProfissionalSaude', 
+            'codProfissionalSaude'  
+        );
     }
 }

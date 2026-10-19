@@ -16,11 +16,12 @@
                 <i data-lucide="download"></i>Baixar PDF
             </button>
 
-            <select class="rel-select" id="rel-p" aria-label="Período">
-                <option value="1">Últimos 30 dias</option>
-                <option value="2.8">Últimos 90 dias</option>
-                <option value="11">Último ano</option>
-            </select>
+        <select class="rel-select" id="rel-p" aria-label="Período"
+                onchange="window.location = '?periodo=' + this.value">
+            <option value="30"  <?php if($periodo == 30): echo 'selected'; endif; ?>>Últimos 30 dias</option>
+            <option value="90"  <?php if($periodo == 90): echo 'selected'; endif; ?>>Últimos 90 dias</option>
+            <option value="365" <?php if($periodo == 365): echo 'selected'; endif; ?>>Último ano</option>
+        </select>
         </div>
     </div>
 
@@ -55,16 +56,18 @@
 window.RELATORIO = {
     titulo: 'Relatório de denúncias',
     arquivo: 'relatorio-denuncias',
-    periodo: true, // os números acompanham o seletor de período
+    periodo: false,
     rotulos: ['Total de denúncias', 'Mais frequente', 'Variação no período'],
-    extra: '+6,4%',
+    extra: '<?php echo e($variacaoPeriodo > 0 ? "+" : ""); ?><?php echo e($variacaoPeriodo); ?>%',
     graficos: [
-        { t: 'Denúncias por tipo', s: 'Motivos mais citados', rosa: true,
-          d: [['Assédio', 142], ['Conteúdo impróprio', 96], ['Perfil falso', 64], ['Spam', 41], ['Outros', 22]] },
+        { t: 'Denúncias por tipo', s: 'Onde ocorreram', rosa: true,
+          d: [['Publicação no fórum', <?php echo e($denunciasTipoFP); ?>], ['Resposta no fórum', <?php echo e($denunciasTipoFR); ?>],
+              ['Mensagem no chat', <?php echo e($denunciasTipoMC); ?>], ['Perfil profissional', <?php echo e($denunciasTipoPP); ?>]] },
         { t: 'Denúncias por status', s: 'Situação atual', rosa: false,
-          d: [['Resolvidas', 210], ['Pendentes', 88], ['Em análise', 45], ['Recusadas', 22]] },
-        { t: 'Denúncias por origem', s: 'Onde ocorreram', rosa: false,
-          d: [['Fórum', 150], ['Chat', 120], ['Perfil', 64], ['Conteúdos', 31]] }
+          d: [['Pendentes', <?php echo e($denunciasStatusPendente); ?>], ['Em análise', <?php echo e($denunciasStatusEmAnalise); ?>],
+              ['Resolvidas', <?php echo e($denunciasStatusResolvida); ?>], ['Arquivadas', <?php echo e($denunciasStatusArquivada); ?>]] },
+        { t: 'Denúncias por gravidade', s: 'Nível de risco', rosa: false,
+          d: [['Baixa', <?php echo e($denunciasGravidadeBaixa); ?>], ['Média', <?php echo e($denunciasGravidadeMedia); ?>], ['Alta', <?php echo e($denunciasGravidadeAlta); ?>]] }
     ]
 };
 </script>

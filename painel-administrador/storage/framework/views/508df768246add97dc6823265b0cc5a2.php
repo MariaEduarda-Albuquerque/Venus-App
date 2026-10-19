@@ -16,11 +16,12 @@
                 <i data-lucide="download"></i>Baixar PDF
             </button>
 
-            <select class="rel-select" id="rel-p" aria-label="Período">
-                <option value="1">Últimos 30 dias</option>
-                <option value="2.8">Últimos 90 dias</option>
-                <option value="11">Último ano</option>
-            </select>
+        <select class="rel-select" id="rel-p" aria-label="Período"
+                onchange="window.location = '?periodo=' + this.value">
+            <option value="30"  <?php if($periodo == 30): echo 'selected'; endif; ?>>Últimos 30 dias</option>
+            <option value="90"  <?php if($periodo == 90): echo 'selected'; endif; ?>>Últimos 90 dias</option>
+            <option value="365" <?php if($periodo == 365): echo 'selected'; endif; ?>>Último ano</option>
+        </select>
         </div>
     </div>
 
@@ -55,16 +56,18 @@
 window.RELATORIO = {
     titulo: 'Relatório de usuárias',
     arquivo: 'relatorio-usuarias',
-    periodo: false, // números fixos, como no arquivo de referência
+    periodo: false,   // o servidor já filtra, o JS não multiplica de novo
     rotulos: ['Total de usuárias', 'Maior grupo', 'Novos cadastros'],
-    extra: '+8,2%',
+    extra: '<?php echo e($porcentagemUsuariasNovasNoMes); ?>%',
     graficos: [
         { t: 'Faixa etária', s: 'Distribuição das usuárias', rosa: false,
-          d: [['14 a 25 anos', <?php echo json_encode($faixaEtaria14a25, 15, 512) ?>], ['26 a 40 anos', <?php echo json_encode($faixaEtaria26a40, 15, 512) ?>], ['41 a 60 anos', <?php echo json_encode($faixaEtaria41a60, 15, 512) ?>], ['Mais de 60', <?php echo json_encode($faixaEtaria60mais, 15, 512) ?>]] },
+          d: [['14 a 25 anos', <?php echo e($faixaEtaria14a25); ?>], ['26 a 40 anos', <?php echo e($faixaEtaria26a40); ?>],
+              ['41 a 60 anos', <?php echo e($faixaEtaria41a60); ?>], ['Mais de 60', <?php echo e($faixaEtaria60mais); ?>]] },
         { t: 'Tipo de perfil', s: 'Quem usa a plataforma', rosa: false,
-          d: [['Usuárias', <?php echo json_encode($totalUsuarias, 15, 512) ?>], ['Profissionais', <?php echo json_encode($totalProfissionais, 15, 512) ?>], ['Moderação', <?php echo json_encode($totalAdmins, 15, 512) ?>]] },
+          d: [['Usuárias', <?php echo e($totalUsuarias); ?>], ['Profissionais', <?php echo e($totalProfissionais); ?>], ['Administração', <?php echo e($totalAdmins); ?>]] },
         { t: 'Região', s: 'Onde estão cadastradas', rosa: true,
-          d: [['Sudeste', 5900], ['Nordeste', 2800], ['Sul', 2000], ['Centro-Oeste', 1100], ['Norte', 658]] }
+          d: [['Sudeste', <?php echo e($totalUsuariosSudeste); ?>], ['Nordeste', <?php echo e($totalUsuariosNordeste); ?>], ['Sul', <?php echo e($totalUsuariosSul); ?>],
+              ['Centro-Oeste', <?php echo e($totalUsuariosCentroOeste); ?>], ['Norte', <?php echo e($totalUsuariosNorte); ?>]] }
     ]
 };
 </script>

@@ -16,11 +16,12 @@
                 <i data-lucide="download"></i>Baixar PDF
             </button>
 
-            <select class="rel-select" id="rel-p" aria-label="Período">
-                <option value="1">Últimos 30 dias</option>
-                <option value="2.8">Últimos 90 dias</option>
-                <option value="11">Último ano</option>
-            </select>
+        <select class="rel-select" id="rel-p" aria-label="Período"
+                onchange="window.location = '?periodo=' + this.value">
+            <option value="30"  @selected($periodo == 30)>Últimos 30 dias</option>
+            <option value="90"  @selected($periodo == 90)>Últimos 90 dias</option>
+            <option value="365" @selected($periodo == 365)>Último ano</option>
+        </select>
         </div>
     </div>
 
@@ -37,6 +38,10 @@
             <span class="rel-icone"><i data-lucide="user-plus"></i></span>
             <span class="rel-kpi-texto"><b id="k-extra">—</b><span>Satisfação média</span></span>
         </div>
+        <div class="rel-card rel-kpi">
+            <span class="rel-icone"><i data-lucide="user-plus"></i></span>
+            <span class="rel-kpi-texto"><b>{{ $atendimentosPeriodo }}</b><span>Total de atendimentos</span></span>
+        </div>
     </div>
 
     <div class="rel-graficos" id="rel-c"></div>
@@ -47,7 +52,7 @@
 
 @endsection
 
-@push('scripts')
+@push('scripts') 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
@@ -55,16 +60,17 @@
 window.RELATORIO = {
     titulo: 'Relatório de profissionais',
     arquivo: 'relatorio-profissionais',
-    periodo: false, // números fixos, como no arquivo de referência
-    rotulos: ['Total de profissionais', 'Maior grupo', 'Novos cadastros'],
-    extra: '7/10',
+    periodo: false, 
+    rotulos: ['Total de profissionais', 'Maior grupo', 'Satisfação média', 'Total de atendimentos'],
+    extra: '{{ $avaliacaoMedia }}/10',
     graficos: [
-        { t: 'Categoria', s: 'Categorias as quais os profissionais pertencem', rosa: false, 
-          d: [['Médico', 313], ['Enfermeiro', 232], ['Psicologo', 312], ['Assistente social', 231], ['Outro', 543]] },
-        { t: 'Status da Verificação', s: 'Status de verificação das contas de profissionais', rosa: false,
-          d: [['Em analise', 323], ['Aprovado', 334], ['Pendente', 442]] },
-        { t: 'Atendimentos por período', s: 'Quantidade de atendimentos nos últimos meses', rosa: true,
-          d: [['Junho', 20], ['Julho', 28], ['Agosto', 2], ['Setembro', 11], ['Outubro', 13]] }
+        { t: 'Categoria', s: 'Categorias as quais os profissionais pertencem', rosa: false,
+          d: [['Médico', {{ $categoriaMedico }}], ['Enfermeiro', {{ $categoriaMedicoEnfermeiro }}],
+              ['Psicólogo', {{ $categoriaMedicoPsicologo }}], ['Assistente social', {{ $categoriaAssistenteSocial }}],
+              ['Outro', {{ $categoriaOutro }}]] },
+        { t: 'Status da verificação', s: 'Status de verificação das contas de profissionais', rosa: false,
+          d: [['Em análise', {{ $verificacaoEmAnalise }}], ['Aprovado', {{ $verificacaoAprovado }}],
+              ['Pendente', {{ $verificacaoPendente }}]] }
     ]
 };
 </script>

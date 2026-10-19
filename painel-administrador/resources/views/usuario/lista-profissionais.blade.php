@@ -9,7 +9,19 @@
 @php
     $statusRotulos = ['ativa' => 'Ativa', 'suspensa' => 'Suspensa', 'excluida' => 'Excluída'];
     $statusClasses = ['ativa' => 'lst-status--ok', 'suspensa' => 'lst-status--pendente', 'excluida' => 'lst-status--recusado'];
-    $verifRotulos  = ['em_analise' => 'Em análise', 'aprovado' => 'Aprovado', 'pendencia' => 'Pendência'];
+    $verifRotulos  = [
+        'em_analise' => 'Em análise',
+        'aprovado'   => 'Aprovado',
+        'pendencia'  => 'Pendência',
+        'reprovado'  => 'Reprovado',
+    ];
+    $categorias = [
+        'medico'            => 'Médico(a)',
+        'enfermeiro'        => 'Enfermeiro(a)',
+        'psicologo'         => 'Psicólogo(a)',
+        'assistente_social' => 'Assistente social',
+        'outro'             => 'Outro',
+    ];
     $filtroAtual   = request('status');
     $qs            = request()->only('busca', 'status', 'page'); // estado da lista, sem detalhe/excluir
 @endphp
@@ -64,26 +76,25 @@
                 </thead>
                 <tbody>
                     @forelse ($profissionais as $p)
-                        @php $urlDetalhe = route('profissional.index', $qs + ['detalhe' => $p->getKey()]); @endphp
+                        @php $urlVer = route('profissional.show', $p); @endphp
                         <tr data-id="{{ $p->getKey() }}">
-                            <td class="lst-mono"><a href="/profissional">{{ $p->getKey() }}</a></td>
-                            <td><a href="/profissional">{{ $p->nomeProfissionalSaude }}</a></td>
-                            <td><a href="/profissional">{{ $p->categoriaProfissional }}</a></td>
-                            <td><a href="/profissional">{{ $p->especialidadeProfissionalSaude }}</a></td>
-                            <td><a href="/profissional">{{ optional($p->dataCadastro)->format('d/m/Y') }}</a></td>
+                            <td class="lst-mono"><a href="{{ $urlVer }}">{{ $p->getKey() }}</a></td>
+                            <td><a href="{{ $urlVer }}">{{ $p->nomeProfissionalSaude }}</a></td>
+                            <td><a href="{{ $urlVer }}">{{ $categorias[$p->categoriaProfissional] ?? $p->categoriaProfissional }}</a></td>
+                            <td><a href="{{ $urlVer }}">{{ $p->especialidadeProfissionalSaude ?: '—' }}</a></td>
+                            <td><a href="{{ $urlVer }}">{{ optional($p->dataCadastro)->format('d/m/Y') }}</a></td>
                             <td>
-                                <a href="/profissional">
+                                <a href="{{ $urlVer }}">
                                     <span class="lst-status {{ $statusClasses[$p->statusConta] ?? '' }}">
                                         {{ $statusRotulos[$p->statusConta] ?? $p->statusConta }}
                                     </span>
                                 </a>
-
                             </td>
                         </tr>
                     @empty
                         <tr><td colspan="6" class="lst-vazio">Nenhum profissional encontrado.</td></tr>
                     @endforelse
-                 </tbody>
+                </tbody>
             </table>
         </div>
 
@@ -125,7 +136,7 @@
                     <p class="lst-mute lst-espaco">Verificação</p>
                     <b>{{ $verifRotulos[$detalhe->statusVerificacao] ?? '—' }}</b>
                 </div>
-                <a class="btn-ver-mais-modal" href="/profissional">Ver mais</a>
+                <a class="btn-ver-mais-modal" href="{{ route('profissional.show', $detalhe) }}">Ver mais</a>
 
                 @if ($detalhe->statusConta !== 'excluida')
                     <div class="lst-acoes lst-acoes--coluna">

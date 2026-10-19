@@ -70,6 +70,44 @@
     flex: none;
 }
 
+.lst-pag {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+}
+.lst-pag-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  color: inherit;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+a.lst-pag-item:hover { 
+    background: #f3f3f3; 
+}
+.lst-pag-item.is-active { 
+    background: var(--wine); 
+    color: #fff; 
+    
+}
+
+.lst-pag-item.is-disabled { opacity: .4; 
+    pointer-events: none; 
+}
+
+.lst-pag-item svg { width: 18px; 
+    height: 18px; 
+}
+
 /* Monitores grandes: mais espaço e texto um pouco maior */
 @media (min-width: 100rem) {
     .lst-page {

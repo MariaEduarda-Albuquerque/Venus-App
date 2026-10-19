@@ -35,10 +35,10 @@ function paginaRelatorio() {
         return total;
     }
 
-    // Acha o nome do item com o maior número
+    // Acha o nome do item com o maior número (se todos forem 0, devolve um traço)
     function acharMaior(lista) {
-        let nome = '';
-        let maior = -1;
+        let nome = '—';
+        let maior = 0;
         for (let i = 0; i < lista.length; i++) {
             if (lista[i][1] > maior) {
                 maior = lista[i][1];
@@ -48,20 +48,29 @@ function paginaRelatorio() {
         return nome;
     }
 
-    // Devolve os dados já multiplicados pelo período escolhido
-    // (30 dias x1, 90 dias x2,8, 1 ano x11). Se "periodo" for false, fica x1.
+    // Devolve os dados do período escolhido. "d" de cada gráfico pode ser:
+    // - um objeto com um número para cada período: { '30': [...], '90': [...], '365': [...] }
+    //   (usa a lista do período que está no seletor)
+    // - uma lista simples: [['A', 10], ['B', 5]]
+    //   (30 dias x1, 90 dias x2,8, 1 ano x11 se "periodo" for true; senão fica x1)
     function dadosDoPeriodo() {
-        let fator = 1;
-        if (config.periodo) {
-            fator = Number(seletorPeriodo.value);
-        }
-
         const resultado = [];
         for (let i = 0; i < graficos.length; i++) {
+            let lista = graficos[i].d;
+            let fator = 1;
+
+            if (Array.isArray(lista)) {
+                if (config.periodo) {
+                    fator = Number(seletorPeriodo.value);
+                }
+            } else {
+                lista = lista[seletorPeriodo.value];
+            }
+
             const itens = [];
-            for (let j = 0; j < graficos[i].d.length; j++) {
-                const nome = graficos[i].d[j][0];
-                const valor = graficos[i].d[j][1];
+            for (let j = 0; j < lista.length; j++) {
+                const nome = lista[j][0];
+                const valor = lista[j][1];
                 itens.push([nome, Math.round(valor * fator)]);
             }
             resultado.push({ t: graficos[i].t, s: graficos[i].s, rosa: graficos[i].rosa, d: itens });
@@ -128,10 +137,16 @@ function paginaRelatorio() {
 
         const dados = dadosDoPeriodo();
 
+        // "extra" pode ser um texto só ou um texto para cada período: { '30': '+8%', '90': '+20%' }
+        let extra = config.extra;
+        if (typeof extra === 'object') {
+            extra = extra[seletorPeriodo.value];
+        }
+
         // Os 3 cards de cima usam o primeiro gráfico
         document.getElementById('k-total').textContent = somar(dados[0].d).toLocaleString('pt-BR');
         document.getElementById('k-grupo').textContent = acharMaior(dados[0].d);
-        document.getElementById('k-extra').textContent = config.extra;
+        document.getElementById('k-extra').textContent = extra;
 
         // Cria as caixas dos gráficos
         let html = '';

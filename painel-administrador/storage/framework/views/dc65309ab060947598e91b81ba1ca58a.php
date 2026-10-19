@@ -16,11 +16,12 @@
                 <i data-lucide="download"></i>Baixar PDF
             </button>
 
-            <select class="rel-select" id="rel-p" aria-label="Período">
-                <option value="1">Últimos 30 dias</option>
-                <option value="2.8">Últimos 90 dias</option>
-                <option value="11">Último ano</option>
-            </select>
+        <select class="rel-select" id="rel-p" aria-label="Período"
+                onchange="window.location = '?periodo=' + this.value">
+            <option value="30"  <?php if($periodo == 30): echo 'selected'; endif; ?>>Últimos 30 dias</option>
+            <option value="90"  <?php if($periodo == 90): echo 'selected'; endif; ?>>Últimos 90 dias</option>
+            <option value="365" <?php if($periodo == 365): echo 'selected'; endif; ?>>Último ano</option>
+        </select>
         </div>
     </div>
 
@@ -55,16 +56,20 @@
 window.RELATORIO = {
     titulo: 'Relatório de atendimento',
     arquivo: 'relatorio-atendimento',
-    periodo: true, // os números acompanham o seletor de período
+    periodo: false,   // o servidor já filtra, o JS não multiplica de novo
     rotulos: ['Chamados atendidos', 'Canal mais usado', 'Satisfação média'],
-    extra: '4,6 / 5',
+    extra: '<?php echo e($avaliacaoMedia); ?> / 5',
     graficos: [
         { t: 'Canais de atendimento', s: 'Por onde as usuárias nos procuram', rosa: false,
-          d: [['Chat', 420], ['E-mail', 260], ['Formulário', 180], ['Telefone', 90]] },
+          d: [['Chat', <?php echo e($canalAtendimentoChat); ?>], ['E-mail', <?php echo e($canalAtendimentoEmail); ?>],
+              ['Formulário', <?php echo e($canalAtendimentoForm); ?>], ['Telefone', <?php echo e($canalAtendimentoTel); ?>]] },
         { t: 'Motivos dos chamados', s: 'Assuntos mais comuns', rosa: true,
-          d: [['Dúvidas de uso', 310], ['Acesso e senha', 240], ['Erros técnicos', 170], ['Conta e dados', 130], ['Sugestões', 100]] },
+          d: [['Dúvidas de uso', <?php echo e($motivoChamadoDuvida); ?>], ['Acesso e senha', <?php echo e($motivoChamadoAcessoAsenha); ?>],
+              ['Erros técnicos', <?php echo e($motivoChamadoErroTecnico); ?>], ['Conta e dados', <?php echo e($motivoChamadoDadosConta); ?>],
+              ['Sugestões', <?php echo e($motivoChamadoSugestoes); ?>]] },
         { t: 'Satisfação com o atendimento', s: 'Avaliações recebidas', rosa: false,
-          d: [['Muito satisfeita', 520], ['Satisfeita', 300], ['Neutra', 90], ['Insatisfeita', 40]] }
+          d: [['Muito satisfeita', <?php echo e($avaliacaoMuitoSatisfeita); ?>], ['Satisfeita', <?php echo e($avaliacaoSatisfeita); ?>],
+              ['Neutra', <?php echo e($avaliacaoNeutra); ?>], ['Insatisfeita', <?php echo e($avaliacaoInsatisfeita); ?>]] }
     ]
 };
 </script>

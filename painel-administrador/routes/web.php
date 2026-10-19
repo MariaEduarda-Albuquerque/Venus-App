@@ -39,12 +39,12 @@ Route::middleware('auth:admin')->group(function () {
     // Profissionais
     Route::prefix('profissionais')->name('profissional.')->group(function () {
         Route::get('/', [ProfissionalController::class, 'index'])->name('index');
+        Route::get('/{profissional}', [ProfissionalController::class, 'show'])->name('show');
         Route::patch('/{profissional}/status', [ProfissionalController::class, 'atualizarStatus'])->name('status');
         Route::patch('/{profissional}/verificacao', [ProfissionalController::class, 'atualizarVerificacao'])->name('verificacao');
         Route::delete('/{profissional}', [ProfissionalController::class, 'excluir'])->name('excluir');
+        Route::get('/{profissional}/arquivo/{tipo}', [ProfissionalController::class, 'arquivo'])->name('arquivo');
     });
-    Route::view('/profissional', 'usuario.profissional-selecionado-lista')->name('profissional.selecionado');
-
 
     // Conteúdos
     Route::view('/conteudos-aprender', 'conteudos.lista-conteudo-aprender')->name('conteudos.aprender');
@@ -68,9 +68,9 @@ Route::middleware('auth:admin')->group(function () {
     // Relatórios
     Route::prefix('relatorios')->name('relatorios.')->group(function () {
         Route::get('/usuarias', [RelatorioController::class, 'Usuarias'])->name('usuarias');
-        Route::view('/atendimento', 'relatorios.atendimento')->name('atendimento');
-        Route::view('/denuncias', 'relatorios.denuncias')->name('denuncias');
-        Route::view('/profissional', 'relatorios.profissional')->name('relatorio-profissional');
+        Route::get('/atendimento', [RelatorioController::class, 'Atendimento'])->name('atendimento');
+        Route::get('/denuncias', [RelatorioController::class, 'Denuncias'])->name('denuncias');
+        Route::get('/profissional', [RelatorioController::class, 'Profissional'])->name('relatorio-profissional');
 
     });
 });

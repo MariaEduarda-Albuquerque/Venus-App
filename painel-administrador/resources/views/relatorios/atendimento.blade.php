@@ -16,11 +16,12 @@
                 <i data-lucide="download"></i>Baixar PDF
             </button>
 
-            <select class="rel-select" id="rel-p" aria-label="Período">
-                <option value="1">Últimos 30 dias</option>
-                <option value="2.8">Últimos 90 dias</option>
-                <option value="11">Último ano</option>
-            </select>
+        <select class="rel-select" id="rel-p" aria-label="Período"
+                onchange="window.location = '?periodo=' + this.value">
+            <option value="30"  @selected($periodo == 30)>Últimos 30 dias</option>
+            <option value="90"  @selected($periodo == 90)>Últimos 90 dias</option>
+            <option value="365" @selected($periodo == 365)>Último ano</option>
+        </select>
         </div>
     </div>
 
@@ -55,16 +56,20 @@
 window.RELATORIO = {
     titulo: 'Relatório de atendimento',
     arquivo: 'relatorio-atendimento',
-    periodo: true, // os números acompanham o seletor de período
+    periodo: false,   // o servidor já filtra, o JS não multiplica de novo
     rotulos: ['Chamados atendidos', 'Canal mais usado', 'Satisfação média'],
-    extra: '4,6 / 5',
+    extra: '{{ $avaliacaoMedia }} / 5',
     graficos: [
         { t: 'Canais de atendimento', s: 'Por onde as usuárias nos procuram', rosa: false,
-          d: [['Chat', 420], ['E-mail', 260], ['Formulário', 180], ['Telefone', 90]] },
+          d: [['Chat', {{ $canalAtendimentoChat }}], ['E-mail', {{ $canalAtendimentoEmail }}],
+              ['Formulário', {{ $canalAtendimentoForm }}], ['Telefone', {{ $canalAtendimentoTel }}]] },
         { t: 'Motivos dos chamados', s: 'Assuntos mais comuns', rosa: true,
-          d: [['Dúvidas de uso', 310], ['Acesso e senha', 240], ['Erros técnicos', 170], ['Conta e dados', 130], ['Sugestões', 100]] },
+          d: [['Dúvidas de uso', {{ $motivoChamadoDuvida }}], ['Acesso e senha', {{ $motivoChamadoAcessoAsenha }}],
+              ['Erros técnicos', {{ $motivoChamadoErroTecnico }}], ['Conta e dados', {{ $motivoChamadoDadosConta }}],
+              ['Sugestões', {{ $motivoChamadoSugestoes }}]] },
         { t: 'Satisfação com o atendimento', s: 'Avaliações recebidas', rosa: false,
-          d: [['Muito satisfeita', 520], ['Satisfeita', 300], ['Neutra', 90], ['Insatisfeita', 40]] }
+          d: [['Muito satisfeita', {{ $avaliacaoMuitoSatisfeita }}], ['Satisfeita', {{ $avaliacaoSatisfeita }}],
+              ['Neutra', {{ $avaliacaoNeutra }}], ['Insatisfeita', {{ $avaliacaoInsatisfeita }}]] }
     ]
 };
 </script>

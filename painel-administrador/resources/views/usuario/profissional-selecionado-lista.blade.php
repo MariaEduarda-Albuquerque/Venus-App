@@ -1,20 +1,58 @@
 @extends('layouts.app')
 
 @push('css')
-<link rel="stylesheet" href="{{ asset('css/profissional.css') }}">
+<link rel="stylesheet" href="{{ asset('css/profissional.css') }}?v={{ @filemtime(public_path('css/profissional.css')) }}">
 @endpush
 
 @section('content')
 
+@php
+    $statusRotulos = ['ativa' => 'Ativa', 'suspensa' => 'Suspensa', 'excluida' => 'Excluída'];
+    $statusChip    = ['ativa' => 'pf-chip--ok'];
+    $verifRotulos  = [
+        'em_analise' => 'Em análise',
+        'aprovado'   => 'Aprovado',
+        'pendencia'  => 'Pendência',
+        'reprovado'  => 'Reprovado',
+    ];
+    $categorias = [
+        'medico'            => 'Médico(a)',
+        'enfermeiro'        => 'Enfermeiro(a)',
+        'psicologo'         => 'Psicólogo(a)',
+        'assistente_social' => 'Assistente social',
+        'outro'             => 'Outro',
+    ];
+    $tipos = ['agendada' => 'Agendada', 'duvida_rapida' => 'Dúvida rápida'];
+
+    $fmt   = fn ($d) => optional($d)->format('d/m/Y') ?? '—';
+    $ehPdf = fn ($caminho) => $caminho && strtolower(pathinfo($caminho, PATHINFO_EXTENSION)) === 'pdf';
+
+    $inicial = mb_strtoupper(mb_substr($p->nomeProfissionalSaude, 0, 1));
+
+    $docs = [
+        ['Carteira de conselho', $p->comprovanteConselhoClasseProfissional, 'conselho'],
+        ['Documento com foto',   $p->documentoComplementarProfissional,   'documento'],
+    ];
+@endphp
+
 <div class="pf-page">
 
-    <a href="/profissionais" class="pf-back">
+    <a href="{{ route('profissional.index') }}" class="pf-back">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
         Voltar para a lista
     </a>
 
+    @if (session('sucesso') || $errors->any())
+        <div role="status" style="margin:12px 0;padding:10px 14px;border-radius:8px;font-size:14px;
+             background:{{ $errors->any() ? '#fdecee' : '#e9f7ef' }};
+             color:{{ $errors->any() ? '#9B1B2A' : '#1e6b3a' }};">
+            {{ session('sucesso') ?? $errors->first() }}
+        </div>
+    @endif
+
     <div class="pf-grid">
 
+        {{-- ================= COLUNA PRINCIPAL ================= --}}
         <div class="pf-main">
 
             <section class="pf-card">
@@ -22,16 +60,27 @@
 
                 <div class="pf-hero">
                     <div class="pf-hero-row">
-                        <span class="pf-avatar">A</span>
+                        @if ($p->fotoPerfilProfissional)
+                            <img class="pf-avatar"
+                                 src="{{ route('profissional.arquivo', [$p, 'foto']) }}"
+                                 alt="{{ $p->nomeProfissionalSaude }}"
+                                 onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'pf-avatar',textContent:'{{ $inicial }}'}))">
+                        @else
+                            <span class="pf-avatar">{{ $inicial }}</span>
+                        @endif
                     </div>
 
                     <div class="pf-identity">
-                        <h2>Ana da Silva Pinto</h2>
+                        <h2>{{ $p->nomeProfissionalSaude }}</h2>
                         <div class="pf-identity-meta">
-                            <span class="pf-chip">Ginecologista</span>
-                            <span class="pf-chip pf-chip--ok">Ativa</span>
+                            @if ($p->especialidadeProfissionalSaude)
+                                <span class="pf-chip">{{ $p->especialidadeProfissionalSaude }}</span>
+                            @endif
+                            <span class="pf-chip {{ $statusChip[$p->statusConta] ?? '' }}">
+                                {{ $statusRotulos[$p->statusConta] ?? $p->statusConta }}
+                            </span>
                         </div>
-                        <p>Cadastrado em 16/10/2026.</p>
+                        <p>Cadastrado em {{ $fmt($p->dataCadastro) }}.</p>
                     </div>
                 </div>
             </section>
@@ -41,19 +90,15 @@
                 <dl class="pf-fields">
                     <div class="pf-field pf-field--full">
                         <dt>Email</dt>
-                        <dd>ana@gmail.com</dd>
+                        <dd>{{ $p->emailProfissionalSaude }}</dd>
                     </div>
                     <div class="pf-field">
                         <dt>Telefone</dt>
-                        <dd>11 96083-6370</dd>
+                        <dd>{{ $p->telProfissionalSaude ?: '—' }}</dd>
                     </div>
                     <div class="pf-field">
                         <dt>CPF ou CNPJ</dt>
-                        <dd>207.770.560-46</dd>
-                    </div>
-                    <div class="pf-field">
-                        <dt>Nº de conselho</dt>
-                        <dd>CRESS 34.221 (9ª)</dd>
+                        <dd>{{ $p->nrFiscalProfissional ?: '—' }}</dd>
                     </div>
                 </dl>
             </section>
@@ -63,24 +108,24 @@
                 <dl class="pf-fields">
                     <div class="pf-field">
                         <dt>CEP</dt>
-                        <dd>88704-261</dd>
+                        <dd>{{ $p->cepProfissional ?: '—' }}</dd>
                     </div>
                     <div class="pf-field">
                         <dt>UF</dt>
-                        <dd>SC</dd>
+                        <dd>{{ $p->ufProfissional ?: '—' }}</dd>
                     </div>
                     <div class="pf-field">
                         <dt>País</dt>
-                        <dd>Brasil</dd>
+                        <dd>{{ $p->paisProfissional ?: '—' }}</dd>
                     </div>
                     <div class="pf-field">
                         <dt>Cidade</dt>
-                        <dd>Tubarão</dd>
+                        <dd>{{ $p->cidadeProfissional ?: '—' }}</dd>
                     </div>
                 </dl>
             </section>
 
-            {{-- RELATÓRIO: dentro da coluna da esquerda, ocupando o espaço em branco --}}
+            {{-- RELATÓRIO --}}
             <div class="rel-page">
 
                 <div class="rel-topo">
@@ -91,10 +136,12 @@
                             <i data-lucide="download"></i>Baixar PDF
                         </button>
 
-                        <select class="rel-select" id="rel-p" aria-label="Período">
-                            <option value="1">Últimos 7 dias</option>
-                            <option value="2.8">Últimos 30 dias</option>
-                            <option value="11">Últimos 90 dias</option>
+                        {{-- Filtra recarregando a página com ?periodo= --}}
+                        <select class="rel-select" id="rel-p" aria-label="Período"
+                                onchange="window.location.search = '?periodo=' + this.value">
+                            <option value="7"  @selected($periodo === 7)>Últimos 7 dias</option>
+                            <option value="30" @selected($periodo === 30)>Últimos 30 dias</option>
+                            <option value="90" @selected($periodo === 90)>Últimos 90 dias</option>
                         </select>
                     </div>
                 </div>
@@ -102,104 +149,93 @@
                 <div class="rel-kpis">
                     <div class="rel-card rel-kpi">
                         <span class="rel-icone"><i data-lucide="users"></i></span>
-                        <span class="rel-kpi-texto"><b>86</b><span>Total de Usuarias atendidas</span></span>
+                        <span class="rel-kpi-texto"><b>{{ $totalUsuarias }}</b><span>Total de usuárias atendidas</span></span>
                     </div>
                     <div class="rel-card rel-kpi">
                         <span class="rel-icone"><i data-lucide="trending-up"></i></span>
-                        <span class="rel-kpi-texto"><b id="k-grupo" class="rel-kpi-texto-menor">3h 23min</b><span>Tempo médio de resposta</span></span>
+                        <span class="rel-kpi-texto"><b id="k-grupo" class="rel-kpi-texto-menor">{{ $tempoMedio }}</b><span>Tempo médio de resposta</span></span>
                     </div>
                     <div class="rel-card rel-kpi">
                         <span class="rel-icone"><i data-lucide="user-plus"></i></span>
-                        <span class="rel-kpi-texto"><b id="k-extra">5/10</b><span>Avaliação média</span></span>
+                        <span class="rel-kpi-texto"><b id="k-extra">{{ $avaliacaoMedia }}{{ $avaliacaoMedia !== '—' ? '/10' : '' }}</b><span>Avaliação média</span></span>
                     </div>
                 </div>
 
-<div class="rel-conteudo">
+                <div class="rel-conteudo">
 
-    <div class="rel-grafico-card">
+                    <div class="rel-grafico-card">
+                        <div class="rel-grafico-header">
+                            <h3>Evolução</h3>
+                            <p>Evolução mensal dos atendimentos</p>
+                        </div>
 
-        <div class="rel-grafico-header">
-            <h3>Evolução</h3>
-            <p>Evolução mensal dos atendimentos</p>
-        </div>
+                        <div id="graficoAtendimentos" class="rel-chart"></div>
+                    </div>
 
-        <div id="graficoAtendimentos" class="rel-chart"></div>
+                    <div class="rel-tabela-card">
+                        <div class="rel-grafico-header">
+                            <h3>Resumo</h3>
+                            <p>Últimos atendimentos no período</p>
+                        </div>
 
-    </div>
+                        <div class="rel-tabela-wrap">
+                            <table class="rel-tabela">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Tipo de atendimento</th>
+                                        <th>Avaliação</th>
+                                    </tr>
+                                </thead>
 
-    <div class="rel-tabela-card">
+                                <tbody>
+                                    @forelse ($recentes as $a)
+                                        <tr>
+                                            <td>{{ $a->dataCadastro->format('d/m') }}</td>
+                                            <td>{{ $tipos[$a->tipoAtendimento] ?? $a->tipoAtendimento }}</td>
+                                            <td>{{ $a->avaliacao !== null ? $a->avaliacao . '/10' : '—' }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3">Nenhum atendimento no período.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-        <div class="rel-grafico-header">
-            <h3>Resumo</h3>
-            <p>Resumo sobre os atendimentos</p>
-        </div>
-
-        <div class="rel-tabela-wrap">
-
-            <table class="rel-tabela">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Tipo de atendimento</th>
-                        <th>Avaliação</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>16/10</td>
-                        <td>Agendada</td>
-                        <td>3/10</td>
-                    </tr>
-                    <tr>
-                        <td>15/10</td>
-                        <td>Dúvida rápida</td>
-                        <td>2/10</td>
-                    </tr>
-                    <tr>
-                        <td>14/10</td>
-                        <td>Dúvida rápida</td>
-                        <td>5/10</td>
-                    </tr>
-                    <tr>
-                        <td>13/10</td>
-                        <td>Agendada</td>
-                        <td>5/10</td>
-                    </tr>
-                    <tr>
-                        <td>12/10</td>
-                        <td>Dúvida rápida</td>
-                        <td>6/10</td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-
-    </div>
-
-</div>
+                </div>
 
                 <div class="rel-toast" id="toast"><i data-lucide="check-circle-2"></i><span></span></div>
             </div>
 
         </div>
 
+        {{-- ================= COLUNA LATERAL ================= --}}
         <aside class="pf-side">
 
-            {{-- TODO (back-end): trocar as imagens pelas que o profissional enviou no cadastro --}}
             <section class="pf-card pf-section pf-docs">
                 <h3 class="pf-section-title">Documentos com foto</h3>
 
-                <figure class="pf-doc">
-                    <figcaption>Carteira de conselho</figcaption>
-                    <img src="{{ asset('images/carteira-conselho.png') }}" alt="Carteira de conselho">
-                </figure>
+                @foreach ($docs as [$titulo, $caminho, $tipo])
+                    @php $url = $caminho ? route('profissional.arquivo', [$p, $tipo]) : null; @endphp
 
-                <figure class="pf-doc">
-                    <figcaption>Documento com foto</figcaption>
-                    <img src="{{ asset('images/documento-foto.png') }}" alt="Documento com foto">
-                </figure>
+                    <figure class="pf-doc">
+                        <figcaption>{{ $titulo }}</figcaption>
+
+                        @if (! $caminho)
+                            <p class="pf-mute">Não enviado.</p>
+                        @elseif ($ehPdf($caminho))
+                            <a href="{{ $url }}" target="_blank" rel="noopener">Abrir PDF</a>
+                        @else
+                            <a href="{{ $url }}" target="_blank" rel="noopener">
+                                <img src="{{ $url }}" alt="{{ $titulo }}"
+                                     onerror="this.replaceWith(document.createTextNode('Arquivo indisponível'))">
+                            </a>
+                        @endif
+                    </figure>
+                @endforeach
             </section>
 
             <section class="pf-card pf-section">
@@ -207,15 +243,15 @@
                 <dl class="pf-fields">
                     <div class="pf-field">
                         <dt>Categoria profissional</dt>
-                        <dd>Médico</dd>
+                        <dd>{{ $categorias[$p->categoriaProfissional] ?? $p->categoriaProfissional }}</dd>
                     </div>
                     <div class="pf-field">
                         <dt>Especialidade</dt>
-                        <dd>Ginecologista</dd>
+                        <dd>{{ $p->especialidadeProfissionalSaude ?: '—' }}</dd>
                     </div>
                     <div class="pf-field pf-field--full">
                         <dt>Apresentação profissional</dt>
-                        <dd>sla n sei sla krai</dd>
+                        <dd>{{ $p->apresentacaoProfissional ?: '—' }}</dd>
                     </div>
                 </dl>
             </section>
@@ -225,36 +261,51 @@
                 <dl class="pf-fields">
                     <div class="pf-field">
                         <dt>ID</dt>
-                        <dd>#3</dd>
+                        <dd>#{{ $p->getKey() }}</dd>
                     </div>
                     <div class="pf-field">
                         <dt>Status</dt>
-                        <dd>Ativa</dd>
+                        <dd>{{ $statusRotulos[$p->statusConta] ?? $p->statusConta }}</dd>
                     </div>
                     <div class="pf-field">
                         <dt>Cadastro</dt>
-                        <dd>16/10/2026</dd>
+                        <dd>{{ $fmt($p->dataCadastro) }}</dd>
                     </div>
                     <div class="pf-field">
-                        <dt>Aprovação</dt>
-                        <dd>16/10/2026</dd>
+                        <dt>Verificação</dt>
+                        <dd>{{ $verifRotulos[$p->statusVerificacao] ?? '—' }}</dd>
                     </div>
                 </dl>
             </section>
 
+            @if ($p->statusConta !== 'excluida')
                 <div class="pf-acoes-conta">
 
-                    <button type="button" class="btn-suspender">
-                        <i data-lucide="user-round-x"></i>
-                        <span>Suspender conta</span>
-                    </button>
+                    <form method="POST" action="{{ route('profissional.status', $p) }}">
+                        @csrf
+                        @method('PATCH')
 
-                    <button type="button" class="btn-excluir">
+                        @if ($p->statusConta === 'ativa')
+                            <button type="submit" name="statusConta" value="suspensa" class="btn-suspender">
+                                <i data-lucide="user-round-x"></i>
+                                <span>Suspender conta</span>
+                            </button>
+                        @else
+                            <button type="submit" name="statusConta" value="ativa" class="btn-suspender">
+                                <i data-lucide="user-round-check"></i>
+                                <span>Reativar conta</span>
+                            </button>
+                        @endif
+                    </form>
+
+                    <a class="btn-excluir"
+                       href="{{ route('profissional.index', ['detalhe' => $p->getKey(), 'excluir' => 1]) }}">
                         <i data-lucide="trash-2"></i>
                         <span>Excluir conta</span>
-                    </button>
+                    </a>
 
                 </div>
+            @endif
         </aside>
 
     </div>
@@ -269,37 +320,18 @@
 <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 <script>
 window.RELATORIO = {
-
-
-
     titulo: 'Relatório do profissional',
-
-    arquivo: 'relatorio-profissional',
-
+    arquivo: 'relatorio-profissional-{{ $p->getKey() }}',
     periodo: false,
 
-    total: '1.631',
-    grupo: '18–25 anos',
-    extra: '+8,2%',
+    total: @json($totalUsuarias),
+    grupo: @json($tempoMedio),
+    extra: @json($avaliacaoMedia !== '—' ? $avaliacaoMedia . '/10' : '—'),
 
     atendimentos: {
-        labels: [
-            'Junho',
-            'Julho',
-            'Agosto',
-            'Setembro',
-            'Outubro'
-        ],
-
-        valores: [
-            12,
-            16,
-            21,
-            14,
-            18
-        ]
-    },
-
+        labels:  @json($labels),
+        valores: @json($valores)
+    }
 };
 </script>
 
@@ -307,110 +339,51 @@ window.RELATORIO = {
 document.addEventListener('DOMContentLoaded', function () {
 
     const elemento = document.getElementById('graficoAtendimentos');
-
     if (!elemento) return;
 
     const grafico = echarts.init(elemento);
-
     const dados = window.RELATORIO.atendimentos;
 
     grafico.setOption({
+        tooltip: { trigger: 'axis' },
 
-        tooltip: {
-            trigger: 'axis'
-        },
-
-        grid: {
-            top: 15,
-            right: 15,
-            bottom: 25,
-            left: 35,
-            containLabel: true
-        },
+        grid: { top: 15, right: 15, bottom: 25, left: 35, containLabel: true },
 
         xAxis: {
             type: 'category',
-
             boundaryGap: false,
-
             data: dados.labels,
-
-            axisLine: {
-                lineStyle: {
-                    color: '#EFE7E8'
-                }
-            },
-
-            axisTick: {
-                show: false
-            },
-
-            axisLabel: {
-                color: '#7E7075',
-                fontSize: 10
-            }
+            axisLine: { lineStyle: { color: '#EFE7E8' } },
+            axisTick: { show: false },
+            axisLabel: { color: '#7E7075', fontSize: 10 }
         },
 
         yAxis: {
             type: 'value',
-
             min: 0,
-
-            splitLine: {
-                lineStyle: {
-                    color: '#F1E9EA'
-                }
-            },
-
-            axisLine: {
-                show: false
-            },
-
-            axisTick: {
-                show: false
-            },
-
-            axisLabel: {
-                color: '#7E7075',
-                fontSize: 10
-            }
+            minInterval: 1,
+            splitLine: { lineStyle: { color: '#F1E9EA' } },
+            axisLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { color: '#7E7075', fontSize: 10 }
         },
 
         series: [{
             name: 'Atendimentos',
-
             type: 'line',
-
             data: dados.valores,
-
             smooth: true,
-
             symbol: 'circle',
             symbolSize: 6,
-
-            lineStyle: {
-                color: '#9B1B2A',
-                width: 2.5
-            },
-
-            itemStyle: {
-                color: '#9B1B2A'
-            },
-
-            areaStyle: {
-                color: 'rgba(155, 27, 42, 0.08)'
-            }
+            lineStyle: { color: '#9B1B2A', width: 2.5 },
+            itemStyle: { color: '#9B1B2A' },
+            areaStyle: { color: 'rgba(155, 27, 42, 0.08)' }
         }]
-
     });
 
     window.addEventListener('resize', function () {
         grafico.resize();
     });
-
 });
 </script>
-<script src="{{ asset('js/relatorio.js') }}"></script>
-
-
 @endpush

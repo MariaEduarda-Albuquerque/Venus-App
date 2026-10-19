@@ -318,3 +318,119 @@ body {
         animation: none !important;
     }
 }
+
+/* ---------- Caixa fechada (vale em todos os navegadores) ---------- */
+.rel-select {
+    -webkit-appearance: none;
+    appearance: none;                       /* tira a setinha e o visual padrão do sistema */
+    min-width: 12rem;
+    padding: .5625rem 2.5rem .5625rem .875rem;
+    border: 1.5px solid var(--line);
+    border-radius: .625rem;
+    background-color: #fff;
+    color: var(--ink);
+    font-weight: 700;                       /* mesmo peso do botão "Baixar PDF" */
+    line-height: 1.4;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+ 
+    /* setinha vinho desenhada por nós */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239B1B2A' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .875rem center;
+    background-size: 1rem;
+}
+ 
+.rel-select:hover {
+    border-color: var(--rose2);             /* igual ao hover do botão */
+}
+ 
+/* ao clicar/usar o teclado: um destaque só (antes eram dois anéis) */
+.rel-page .rel-select:focus,
+.rel-page .rel-select:focus-visible {
+    outline: 0;
+    border-color: var(--wine);
+    box-shadow: 0 0 0 3px var(--rose);
+}
+ 
+/* itens da lista (nos navegadores que deixam estilizar) */
+.rel-select option {
+    padding: .5rem .75rem;
+    background: #fff;
+    color: var(--ink);
+    font-weight: 600;
+}
+ 
+.rel-select option:checked {
+    background-color: var(--rose);
+    color: var(--wine);
+}
+ 
+ 
+/* ---------- Lista aberta personalizada ----------
+   Só funciona nos navegadores novos (Chrome/Edge). Nos outros,
+   a lista aberta continua no estilo do sistema, e a caixa fechada
+   (acima) já fica igual em todos. */
+@supports (appearance: base-select) {
+    .rel-select,
+    .rel-select::picker(select) {
+        appearance: base-select;
+    }
+ 
+    .rel-select {
+        background-image: none;             /* a seta passa a ser a do ::picker-icon */
+        padding-right: .875rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .75rem;
+    }
+ 
+    .rel-select::picker-icon {
+        content: "";
+        width: 1rem;
+        height: 1rem;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239B1B2A' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+        transition: rotate .15s;
+    }
+ 
+    .rel-select:open::picker-icon {
+        rotate: 180deg;                     /* seta vira para cima quando aberto */
+    }
+ 
+    /* a "janela" da lista */
+    .rel-select::picker(select) {
+        margin-top: .25rem;
+        padding: .3rem;
+        border: 1.5px solid var(--line);
+        border-radius: .75rem;
+        background: #fff;
+        box-shadow: 0 .5rem 1.5rem rgba(60, 20, 30, .12);
+    }
+ 
+    .rel-select option {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        border-radius: .5rem;
+        cursor: pointer;
+    }
+ 
+    .rel-select option + option {
+        margin-top: .15rem;                 /* pequeno respiro entre os itens */
+    }
+ 
+    .rel-select option:hover,
+    .rel-select option:focus-visible {
+        background-color: var(--rose);
+        color: var(--wine);
+        outline: 0;
+    }
+ 
+    .rel-select option::checkmark {         /* o "✓" do item escolhido */
+        color: var(--wine);
+        order: 1;
+        margin-left: auto;
+    }
+}
+ 

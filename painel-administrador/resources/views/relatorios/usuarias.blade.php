@@ -16,11 +16,12 @@
                 <i data-lucide="download"></i>Baixar PDF
             </button>
 
-            <select class="rel-select" id="rel-p" aria-label="Período">
-                <option value="1">Últimos 30 dias</option>
-                <option value="2.8">Últimos 90 dias</option>
-                <option value="11">Último ano</option>
-            </select>
+        <select class="rel-select" id="rel-p" aria-label="Período"
+                onchange="window.location = '?periodo=' + this.value">
+            <option value="30"  @selected($periodo == 30)>Últimos 30 dias</option>
+            <option value="90"  @selected($periodo == 90)>Últimos 90 dias</option>
+            <option value="365" @selected($periodo == 365)>Último ano</option>
+        </select>
         </div>
     </div>
 
@@ -55,16 +56,18 @@
 window.RELATORIO = {
     titulo: 'Relatório de usuárias',
     arquivo: 'relatorio-usuarias',
-    periodo: false, // números fixos, como no arquivo de referência
+    periodo: false,   // o servidor já filtra, o JS não multiplica de novo
     rotulos: ['Total de usuárias', 'Maior grupo', 'Novos cadastros'],
-    extra: '+8,2%',
+    extra: '{{ $porcentagemUsuariasNovasNoMes }}%',
     graficos: [
         { t: 'Faixa etária', s: 'Distribuição das usuárias', rosa: false,
-          d: [['14 a 25 anos', @json($faixaEtaria14a25)], ['26 a 40 anos', @json($faixaEtaria26a40)], ['41 a 60 anos', @json($faixaEtaria41a60)], ['Mais de 60', @json($faixaEtaria60mais)]] },
+          d: [['14 a 25 anos', {{ $faixaEtaria14a25 }}], ['26 a 40 anos', {{ $faixaEtaria26a40 }}],
+              ['41 a 60 anos', {{ $faixaEtaria41a60 }}], ['Mais de 60', {{ $faixaEtaria60mais }}]] },
         { t: 'Tipo de perfil', s: 'Quem usa a plataforma', rosa: false,
-          d: [['Usuárias', @json($totalUsuarias)], ['Profissionais', @json($totalProfissionais)], ['Moderação', @json($totalAdmins)]] },
+          d: [['Usuárias', {{ $totalUsuarias }}], ['Profissionais', {{ $totalProfissionais }}], ['Administração', {{ $totalAdmins }}]] },
         { t: 'Região', s: 'Onde estão cadastradas', rosa: true,
-          d: [['Sudeste', 5900], ['Nordeste', 2800], ['Sul', 2000], ['Centro-Oeste', 1100], ['Norte', 658]] }
+          d: [['Sudeste', {{ $totalUsuariosSudeste }}], ['Nordeste', {{ $totalUsuariosNordeste }}], ['Sul', {{ $totalUsuariosSul }}],
+              ['Centro-Oeste', {{ $totalUsuariosCentroOeste }}], ['Norte', {{ $totalUsuariosNorte }}]] }
     ]
 };
 </script>

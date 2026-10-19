@@ -24,6 +24,31 @@ class TbtipoconteudoTableSeeder extends Seeder
                 'codTipoConteudo' => 1,
                 'descricaoTipoConteudo' => 'Artigo',
             ),
+            1 => 
+            array (
+                'codTipoConteudo' => 2,
+                'descricaoTipoConteudo' => 'Video curto',
+            ),
+            2 => 
+            array (
+                'codTipoConteudo' => 3,
+                'descricaoTipoConteudo' => 'Video animado',
+            ),
+            3 => 
+            array (
+                'codTipoConteudo' => 4,
+                'descricaoTipoConteudo' => 'Infografico',
+            ),
+            4 => 
+            array (
+                'codTipoConteudo' => 5,
+                'descricaoTipoConteudo' => 'Cartilha',
+            ),
+            5 => 
+            array (
+                'codTipoConteudo' => 6,
+                'descricaoTipoConteudo' => 'Card comparativo',
+            ),
         ));
         
         

@@ -16,11 +16,12 @@
                 <i data-lucide="download"></i>Baixar PDF
             </button>
 
-            <select class="rel-select" id="rel-p" aria-label="Período">
-                <option value="1">Últimos 30 dias</option>
-                <option value="2.8">Últimos 90 dias</option>
-                <option value="11">Último ano</option>
-            </select>
+        <select class="rel-select" id="rel-p" aria-label="Período"
+                onchange="window.location = '?periodo=' + this.value">
+            <option value="30"  @selected($periodo == 30)>Últimos 30 dias</option>
+            <option value="90"  @selected($periodo == 90)>Últimos 90 dias</option>
+            <option value="365" @selected($periodo == 365)>Último ano</option>
+        </select>
         </div>
     </div>
 
@@ -55,16 +56,18 @@
 window.RELATORIO = {
     titulo: 'Relatório de denúncias',
     arquivo: 'relatorio-denuncias',
-    periodo: true, // os números acompanham o seletor de período
+    periodo: false,
     rotulos: ['Total de denúncias', 'Mais frequente', 'Variação no período'],
-    extra: '+6,4%',
+    extra: '{{ $variacaoPeriodo > 0 ? "+" : "" }}{{ $variacaoPeriodo }}%',
     graficos: [
-        { t: 'Denúncias por tipo', s: 'Motivos mais citados', rosa: true,
-          d: [['Assédio', 142], ['Conteúdo impróprio', 96], ['Perfil falso', 64], ['Spam', 41], ['Outros', 22]] },
+        { t: 'Denúncias por tipo', s: 'Onde ocorreram', rosa: true,
+          d: [['Publicação no fórum', {{ $denunciasTipoFP }}], ['Resposta no fórum', {{ $denunciasTipoFR }}],
+              ['Mensagem no chat', {{ $denunciasTipoMC }}], ['Perfil profissional', {{ $denunciasTipoPP }}]] },
         { t: 'Denúncias por status', s: 'Situação atual', rosa: false,
-          d: [['Resolvidas', 210], ['Pendentes', 88], ['Em análise', 45], ['Recusadas', 22]] },
-        { t: 'Denúncias por origem', s: 'Onde ocorreram', rosa: false,
-          d: [['Fórum', 150], ['Chat', 120], ['Perfil', 64], ['Conteúdos', 31]] }
+          d: [['Pendentes', {{ $denunciasStatusPendente }}], ['Em análise', {{ $denunciasStatusEmAnalise }}],
+              ['Resolvidas', {{ $denunciasStatusResolvida }}], ['Arquivadas', {{ $denunciasStatusArquivada }}]] },
+        { t: 'Denúncias por gravidade', s: 'Nível de risco', rosa: false,
+          d: [['Baixa', {{ $denunciasGravidadeBaixa }}], ['Média', {{ $denunciasGravidadeMedia }}], ['Alta', {{ $denunciasGravidadeAlta }}]] }
     ]
 };
 </script>

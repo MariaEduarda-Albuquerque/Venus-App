@@ -23,7 +23,7 @@ class DashboardController extends Controller
         //Profissionais:
         $profissionaisAtivos = ProfissionalModel::where('statusConta', 'ativa')->count();
         $UltimoMesProfissionais = ProfissionalModel::where('dataCadastro', '>=', now()->subMonth())->count();
-        $porcentagemProfissionaisAtivosNoMes = ($UltimoMesProfissionais / $profissionaisAtivos) * 100;
+        $porcentagemProfissionaisAtivosNoMes = round(($UltimoMesProfissionais / $profissionaisAtivos) * 100,1);
         $aguardandoAprovacao = ProfissionalModel::whereIn('statusVerificacao', [
             'pendencia',
             'em_analise',
@@ -36,7 +36,7 @@ class DashboardController extends Controller
         //Usuarias:
         $usuariasAtivas = Usuaria::where('statusUsuario', 'ativa')->count();
         $UltimoMesUsuarias = Usuaria::where('dataCadastro', '>=', now()->subMonth())->count();
-        $porcentagemUsuariasAtivasNoMes = ($UltimoMesUsuarias / $usuariasAtivas) * 100;
+        $porcentagemUsuariasAtivasNoMes = round(($UltimoMesUsuarias / $usuariasAtivas) * 100,1);
 
 
         //Denuncias:
