@@ -74,7 +74,7 @@ function paginaRelatorio() {
                 item[1] = Math.round(item[1] * fator);
                 itens.push(item);
             }
-            resultado.push({ t: graficos[i].t, s: graficos[i].s, rosa: graficos[i].rosa, tipo: graficos[i].tipo, d: itens });
+            resultado.push({ t: graficos[i].t, s: graficos[i].s, rosa: graficos[i].rosa, tipo: graficos[i].tipo, colunas: graficos[i].colunas, d: itens });
         }
         return resultado;
     }
@@ -283,8 +283,102 @@ function paginaRelatorio() {
         mostrarAviso('PDF gerado com sucesso.');
     }
 
+    // ---------- Planilha (arquivo .csv: abre no Excel, Google Planilhas e LibreOffice) ----------
+
+    // Protege textos que o Excel poderia entender como fórmula (começam com =, @, + ou -).
+    // Números e valores como "+8,2%" ou "-3" não são alterados.
+    function protegerFormula(texto) {
+        const perigoso = /^[=@\t\r]/.test(texto) || /^[+-](?![\d.,]+\s*%?$)/.test(texto);
+        return perigoso ? "'" + texto : texto;
+    }
+
+    // Transforma um valor em uma célula: coloca aspas se tiver ; " ou quebra de linha
+    function celula(valor) {
+        let texto = (valor === undefined || valor === null) ? '' : String(valor);
+        if (typeof valor === 'string') {
+            texto = protegerFormula(texto);
+        }
+        if (/[;"\r\n]/.test(texto)) {
+            texto = '"' + texto.replace(/"/g, '""') + '"';
+        }
+        return texto;
+    }
+
+    // Junta uma lista de valores em uma linha da planilha (separador ";", o padrão do Excel em português)
+    function linhaPlanilha(valores) {
+        const celulas = [];
+        for (let i = 0; i < valores.length; i++) {
+            celulas.push(celula(valores[i]));
+        }
+        return celulas.join(';');
+    }
+
+    // Gera a planilha com os números e as tabelas de cada gráfico (do período escolhido)
+    function baixarPlanilha() {
+        const dados = dadosDoPeriodo();
+        const periodo = seletorPeriodo.options[seletorPeriodo.selectedIndex].text;
+        const linhas = [];
+
+        // Cabeçalho
+        linhas.push(linhaPlanilha([config.titulo]));
+        linhas.push(linhaPlanilha([periodo + ' · Gerado em ' + new Date().toLocaleString('pt-BR')]));
+        linhas.push('');
+
+        // Os 3 números de cima
+        linhas.push(linhaPlanilha(['Indicador', 'Valor']));
+        linhas.push(linhaPlanilha([config.rotulos[0], document.getElementById('k-total').textContent]));
+        linhas.push(linhaPlanilha([config.rotulos[1], document.getElementById('k-grupo').textContent]));
+        linhas.push(linhaPlanilha([config.rotulos[2], document.getElementById('k-extra').textContent]));
+
+        // Uma tabela para cada gráfico
+        for (let i = 0; i < dados.length; i++) {
+            const itens = dados[i].d;
+            const temAlcance = itens.length > 0 && itens[0].length > 2;
+
+            // Nomes das colunas: a página pode definir "colunas: ['Canal', 'Chamados']" no gráfico
+            let colunas = dados[i].colunas;
+            if (!colunas) {
+                if (dados[i].tipo === 'ranking') {
+                    colunas = temAlcance ? [dados[i].t, 'Conteúdos publicados', 'Alcance'] : [dados[i].t, 'Conteúdos publicados'];
+                } else {
+                    colunas = [dados[i].t, 'Quantidade'];
+                }
+            }
+
+            linhas.push('');
+            linhas.push(linhaPlanilha([dados[i].t]));
+            linhas.push(linhaPlanilha(colunas));
+            for (let j = 0; j < itens.length; j++) {
+                linhas.push(linhaPlanilha(itens[j]));
+            }
+        }
+
+        // O "\uFEFF" no começo faz o Excel entender os acentos (UTF-8)
+        const conteudo = '\uFEFF' + linhas.join('\r\n');
+        const arquivo = new Blob([conteudo], { type: 'text/csv;charset=utf-8;' });
+        const endereco = URL.createObjectURL(arquivo);
+
+        const link = document.createElement('a');
+        link.href = endereco;
+        link.download = config.arquivo + '-' + new Date().toISOString().slice(0, 10) + '.csv';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () {
+            URL.revokeObjectURL(endereco);
+        }, 1000);
+
+        mostrarAviso('Planilha gerada com sucesso.');
+    }
+
     // Botão "Baixar PDF"
     document.getElementById('btn-pdf').addEventListener('click', baixarPdf);
+
+    // Botão "Exportar planilha" (opcional: só funciona nas páginas que têm o botão)
+    const botaoPlanilha = document.getElementById('btn-planilha');
+    if (botaoPlanilha) {
+        botaoPlanilha.addEventListener('click', baixarPlanilha);
+    }
 
     // Trocou o período: desenha de novo
     seletorPeriodo.addEventListener('change', desenhar);

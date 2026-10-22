@@ -16,6 +16,10 @@
                 <i data-lucide="download"></i>Baixar PDF
             </button>
 
+            <button type="button" class="rel-btn" id="btn-planilha">
+                <i data-lucide="file-spreadsheet"></i>Baixar planilha
+            </button>
+
             <select class="rel-select" id="rel-p" aria-label="Período"
                     onchange="window.location = '?periodo=' + this.value">
                 <option value="30"  @selected($periodo == 30)>Últimos 30 dias</option>
