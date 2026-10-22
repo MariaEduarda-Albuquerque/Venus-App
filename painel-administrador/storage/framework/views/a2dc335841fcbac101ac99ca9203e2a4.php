@@ -24,21 +24,12 @@
         <div class="card" style="text-align:center">
             <div class="pav" style="margin:6px auto 14px">
                 <span>C</span>
-                <span class="camb"><i data-lucide="camera"></i></span>
             </div>
 
             <b>Clodo</b>
             <div class="sm">Admin · Gerente Administrativo</div>
 
-            <button type="button" class="drop">
-                <i data-lucide="upload"></i>
-                <br><b>Enviar nova foto</b>
-                <div class="sm">JPEG ou PNG · 200×200 px</div>
-            </button>
 
-            <button type="button" class="btn g s" style="width:100%;justify-content:center">
-                <i data-lucide="trash-2"></i> Remover foto
-            </button>
         </div>
 
         <div class="stack">

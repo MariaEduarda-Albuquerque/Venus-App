@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Admin;
+use App\Models\ConteudoAdmin;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -15,13 +18,25 @@ class PerfilController extends Controller
     public function index()
     {
         //
-    $admin = Auth::Admin();
+     $admin = Auth::guard('admin')->user();
 
-    $nome = $admin->nomeAdmin;
+    $nomeCompleto = $admin->nomeAdmin;
+    $partes = explode(' ', trim($nomeCompleto));
+    $primeiroNome = $partes[0];
+    $sobrenome = count($partes) > 1 ? implode(' ', array_slice($partes, 1)) : '';    $cargo = $admin->papel->nomePapel;
+    $inicial = mb_strtoupper(mb_substr($admin->nomeAdmin, 0, 1));
 
-            return view('perfil-config.perfil-adm', compact('nome'));
+    $cidade = $admin->cidadeAdmin;
+    $pais = $admin->paisAdmin;
+    $email = $admin->emailAdmin;
+    $telefone = $admin->telAdmin;
+    $uf = $admin->ufAdmin;
+    $cep = $admin->cepAdmin;
+    $nrfiscal = $admin->nrFiscalAdmin;
+    $statusConta = $admin->statusConta;
+    $codPostal = $admin->codpostalAdmin;
 
-
+            return view('perfil-config.perfil-adm', compact('nomeCompleto', 'primeiroNome', 'sobrenome', 'cargo', 'cidade', 'pais', 'email', 'telefone', 'telefone', 'uf', 'cep', 'nrfiscal', 'statusConta', 'inicial', 'codPostal'));
     }
 
     /**

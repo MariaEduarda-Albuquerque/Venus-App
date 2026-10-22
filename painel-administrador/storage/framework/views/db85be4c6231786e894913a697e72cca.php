@@ -45,7 +45,7 @@
         <i data-lucide="chevron-down" class="chev"></i>
     </button>
     <div class="sub" id="g3">
-        <a class="nav <?php echo e(request()->is('conteudos-aprender') ? 'on' : ''); ?>" href="/conteudos-aprender">Conteúdo Aprender</a>
+        <a class="nav <?php echo e(request()->is('conteudos-aprender') ? 'on' : ''); ?>" href="/conteudos-aprender">Lista conteúdos aprender</a>
         <a class="nav <?php echo e(request()->is('destaques-principais') ? 'on' : ''); ?>" href="/destaques-principais">Destaque sazonal</a>
     </div>
 
@@ -73,6 +73,7 @@
     <div class="sub" id="g4">
         <a class="nav <?php echo e(request()->is('atividades-recentes') ? 'on' : ''); ?>" href="/atividades-recentes">Atividades recentes</a>
         <a class="nav <?php echo e(request()->is('acessos') ? 'on' : ''); ?>" href="/acessos">Acessos</a>
+        <a class="nav <?php echo e(request()->is('meus-conteudos') ? 'on' : ''); ?>" href="/meus-conteudos">Meus Conteúdos</a>
     </div>
 
     <div class="nl">Atendimento</div>

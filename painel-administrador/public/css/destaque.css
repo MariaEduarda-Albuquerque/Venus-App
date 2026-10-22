@@ -1000,3 +1000,204 @@
 *::-webkit-scrollbar {
     display: none;              /* Chrome, Safari, Edge */
 }
+
+/* =========================================================
+   ADIÇÕES - PUBLICAÇÃO DE CONTEÚDO (grade de cartões)
+   (só acrescenta; nada acima foi alterado)
+   ========================================================= */
+
+/* Topo com título em cima e subtítulo embaixo */
+.dst-topo--coluna {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .2em;
+    margin-bottom: .9em;
+}
+
+.dst-topo--coluna .dst-mute {
+    font-size: .857em;
+}
+
+/* Selo amarelo (em revisão) */
+.dst-chip--aviso {
+    background: #FBEFD9;
+    color: #C77D1A;
+}
+
+/* ---------- Filtros em forma de pílula ---------- */
+.dst-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+    margin-bottom: 1.1em;
+}
+
+.dst-filtro {
+    padding: .3em .95em;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    background: #fff;
+    color: var(--mute);
+    font-size: .8em;
+    font-weight: 700;
+    transition: .15s;
+}
+
+.dst-filtro:hover {
+    border-color: var(--rose2);
+}
+
+.dst-filtro.is-on {
+    border-color: var(--rose2);
+    background: var(--rose);
+    color: var(--wine);
+}
+
+/* ---------- Grade de cartões ---------- */
+.dst-grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17em), 1fr));
+    gap: 1em;
+}
+
+.dst-conteudo {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Capa em degradê rosa com o título em serifa */
+.dst-conteudo-capa {
+    display: grid;
+    place-items: center;
+    min-height: 8.5em;
+    padding: 1em;
+    background: linear-gradient(180deg, #FDB9C6, #FBD9DF);
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.6em;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.dst-conteudo-corpo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .55em;
+    flex: 1;
+    padding: 1em;
+}
+
+.dst-conteudo-corpo h2 {
+    font-size: 1em;
+    font-weight: 800;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.dst-conteudo-corpo .dst-mute {
+    font-size: .8em;
+}
+
+.dst-conteudo-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6em;
+    width: 100%;
+    margin-top: auto;
+}
+
+.dst-conteudo-rodape .dst-mute {
+    font-size: .7em;
+    text-align: right;
+}
+
+.dst-vazio-lista {
+    padding: 2em 0;
+    text-align: center;
+}
+
+/* =========================================================
+   ADIÇÃO - TOPO COM BOTÃO "CRIAR CONTEÚDO" (canto superior direito)
+   Cole no FINAL do seu destaque.css (só acrescenta; nada acima muda).
+   O botão em si usa as classes que já existem: .dst-btn .dst-btn--primario
+   ========================================================= */
+
+/* título + subtítulo ficam juntos, à esquerda */
+.dst-topo-texto {
+    display: flex;
+    flex-direction: column;
+    gap: .2em;
+    min-width: 0;
+}
+
+.dst-topo-texto .dst-mute {
+    font-size: .857em;
+}
+
+/* o botão fica alinhado ao topo (na altura do título) e o espaço de baixo é o de antes */
+.dst-topo--botao {
+    align-items: flex-start;
+    margin-bottom: .9em;
+}
+
+/* =========================================================
+   ADIÇÕES - CRIAR CONTEÚDO
+   Cole no FINAL do seu public/css/destaque.css.
+   Só acrescenta; nada do que já existe foi alterado.
+   Reaproveita: .dst-trabalho, .dst-card, .dst-campo, .dst-entrada,
+   .dst-soltar, .dst-arquivo, .dst-filtros, .dst-filtro, .dst-conteudo,
+   .dst-dicas, .dst-modal, .dst-toast e os botões .dst-btn.
+   ========================================================= */
+
+/* Formato (pílulas): dentro de um campo não precisa da margem de baixo */
+.dst-campo .dst-filtros {
+    margin-bottom: 0;
+}
+
+/* Caixa de texto maior para escrever o conteúdo */
+.dst-campo .dst-texto-grande {
+    min-height: 14em;
+}
+
+/* Tempo de leitura: caixa só para ler (o número é calculado sozinho) */
+.dst-leitura {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .6em;
+    padding: .6em .8em;
+    border: 1.5px dashed var(--rose2);
+    border-radius: .6em;
+    background: var(--rose);
+    color: var(--wine);
+}
+
+.dst-leitura b {
+    font-weight: 800;
+}
+
+.dst-leitura .dst-mute {
+    margin-left: auto;
+    font-size: .857em;
+}
+
+/* Prévia no estilo dos cartões de "Meus conteúdos" */
+.dst-conteudo-capa {
+    background-size: cover;
+    background-position: center;
+}
+
+/* Com imagem de capa, o texto de exemplo some */
+.dst-conteudo-capa.tem-imagem span {
+    visibility: hidden;
+}
+
+/* Textos de exemplo (enquanto o campo está vazio) */
+.dst-conteudo-corpo .dst-vazio {
+    color: #C7BBBE;
+    font-style: italic;
+}

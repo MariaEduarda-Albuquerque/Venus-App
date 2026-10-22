@@ -1,5 +1,5 @@
 /* =========================================================
-   RELATÓRIOS (usuárias, atendimento e denúncias)
+   RELATÓRIOS (usuárias, atendimento, denúncias e profissionais)
    Cada página define window.RELATORIO com título, rótulos e gráficos.
    ========================================================= */
 function paginaRelatorio() {
@@ -52,7 +52,8 @@ function paginaRelatorio() {
     // - um objeto com um número para cada período: { '30': [...], '90': [...], '365': [...] }
     //   (usa a lista do período que está no seletor)
     // - uma lista simples: [['A', 10], ['B', 5]]
-    //   (30 dias x1, 90 dias x2,8, 1 ano x11 se "periodo" for true; senão fica x1)
+    //   (30 dias x1, 90 dias x2,8, 1 ano x11 se "periodo" for true; senão fica x1.
+    //    É o caso das páginas em que o servidor já filtra pelo período, como Profissionais)
     function dadosDoPeriodo() {
         const resultado = [];
         for (let i = 0; i < graficos.length; i++) {
@@ -64,22 +65,70 @@ function paginaRelatorio() {
                     fator = Number(seletorPeriodo.value);
                 }
             } else {
-                lista = lista[seletorPeriodo.value];
+                lista = lista[seletorPeriodo.value] || [];
             }
 
             const itens = [];
             for (let j = 0; j < lista.length; j++) {
-                const nome = lista[j][0];
-                const valor = lista[j][1];
-                itens.push([nome, Math.round(valor * fator)]);
+                const item = lista[j].slice();            // copia [nome, valor, alcance...] sem perder o 3º valor do ranking
+                item[1] = Math.round(item[1] * fator);
+                itens.push(item);
             }
-            resultado.push({ t: graficos[i].t, s: graficos[i].s, rosa: graficos[i].rosa, d: itens });
+            resultado.push({ t: graficos[i].t, s: graficos[i].s, rosa: graficos[i].rosa, tipo: graficos[i].tipo, d: itens });
         }
         return resultado;
     }
 
-    // Cria um gráfico de pizza dentro de uma caixa
+    // Cria um gráfico dentro de uma caixa (pizza, ou barras se for "ranking")
     function criarGrafico(caixa, grafico) {
+
+        // Ranking: barras horizontais (cada item: [nome, publicados] ou [nome, publicados, alcance])
+        if (grafico.tipo === 'ranking') {
+            const nomes = [];
+            const publicados = [];
+            for (let i = 0; i < grafico.d.length; i++) {
+                nomes.push(grafico.d[i][0]);
+                publicados.push(grafico.d[i][1]);
+            }
+
+            const r = echarts.init(caixa);
+            r.setOption({
+                textStyle: { fontFamily: 'Nunito' },
+                color: ['#9B1B2A'],
+                animationDuration: 800,
+                grid: { left: 8, right: 36, top: 8, bottom: 8, containLabel: true },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'none' },
+                    backgroundColor: '#fff',
+                    borderWidth: 0,
+                    textStyle: { color: '#2B1F22' },
+                    extraCssText: 'box-shadow:0 4px 16px rgba(0,0,0,.1);border-radius:10px',
+                    formatter: function (p) {
+                        const item = grafico.d[p[0].dataIndex];
+                        let texto = '<b>' + item[0] + '</b><br>' + item[1]
+                                  + (item[1] === 1 ? ' conteúdo publicado' : ' conteúdos publicados');
+                        // O alcance só aparece se a página enviar o 3º número de cada item
+                        if (item[2] !== undefined) {
+                            texto += '<br>' + Number(item[2]).toLocaleString('pt-BR') + ' de alcance';
+                        }
+                        return texto;
+                    }
+                },
+                xAxis: { type: 'value', minInterval: 1, splitLine: { lineStyle: { color: '#F1EAEB' } }, axisLabel: { color: '#7E7075' } },
+                yAxis: { type: 'category', inverse: true, data: nomes, axisTick: { show: false }, axisLine: { show: false }, axisLabel: { color: '#2B1F22' } },
+                series: [{
+                    type: 'bar',
+                    data: publicados,
+                    barWidth: 14,
+                    itemStyle: { borderRadius: 7 },
+                    label: { show: true, position: 'right', color: '#7E7075' }
+                }]
+            });
+            return r;
+        }
+
+        // Pizza
         const itens = [];
         for (let i = 0; i < grafico.d.length; i++) {
             itens.push({ name: grafico.d[i][0], value: grafico.d[i][1] });

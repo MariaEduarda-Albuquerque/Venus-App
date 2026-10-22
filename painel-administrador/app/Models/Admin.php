@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Models;
+use App\Models\PapelModel;
+use App\Models\DenunciaAcao;
+use App\Models\ConteudoAdmin;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -13,7 +16,7 @@ class Admin extends Authenticatable
     protected $fillable = [
         'nomeAdmin', 'emailAdmin', 'telAdmin', 'paisAdmin', 'cidadeAdmin',
         'ufAdmin', 'cepAdmin', 'nrFiscalAdmin', 'temaAdmin', 'senhaAdmin',
-        'codPapel', 'duasEtapasAtiva', 'statusConta',
+        'codPapel', 'duasEtapasAtiva', 'statusConta', 'codpostalAdmin',
     ];
 
     protected $hidden = ['senhaAdmin'];
@@ -38,6 +41,15 @@ class Admin extends Authenticatable
 
     public function papel()
     {
-        return $this->belongsTo(Papel::class, 'codPapel', 'codPapel');
+        return $this->belongsTo(PapelModel::class, 'codPapel', 'codPapel');
+    }
+
+    public function denunciaAcoes()
+    {
+        return $this->hasMany(DenunciaAcao::class, 'codAdmin', 'codAdmin');
+    }
+    public function ConteudoAdmin()
+    {
+        return $this->hasMany(ConteudoAdmin::class, 'codAdmin', 'codAdmin');
     }
 }

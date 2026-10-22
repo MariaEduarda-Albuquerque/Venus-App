@@ -8,11 +8,13 @@ use App\Models\Denuncia;
 use App\Models\Consulta;
 use App\Models\ChamadoSuporte;
 use App\Models\AvaliacaoConsulta;
+use App\Models\Conteudo;
 
 use App\Models\Admin;
 
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -159,6 +161,7 @@ public function Atendimento(Request $request)
 
 public function Profissional(Request $request)
 {
+    // Período escolhido: 30, 90 ou 365 dias (se vier outra coisa, usa 30)
     $periodo = (int) $request->input('periodo', 30);
     if (!in_array($periodo, [30, 90, 365])) {
         $periodo = 30;
@@ -172,20 +175,54 @@ public function Profissional(Request $request)
     $categoriaAssistenteSocial = ProfissionalModel::where('dataCadastro', '>=', $inicio)->where('categoriaProfissional', 'assistente_social')->count();
     $categoriaOutro            = ProfissionalModel::where('dataCadastro', '>=', $inicio)->where('categoriaProfissional', 'outro')->count();
 
-    $verificacaoEmAnalise = ProfissionalModel::where('dataCadastro', '>=', $inicio)->where('statusVerificacao', 'em_analise')->count();
-    $verificacaoAprovado  = ProfissionalModel::where('dataCadastro', '>=', $inicio)->where('statusVerificacao', 'aprovado')->count();
-    $verificacaoPendente  = ProfissionalModel::where('dataCadastro', '>=', $inicio)->where('statusVerificacao', 'pendencia')->count();
+    $conteudosPublicados = Conteudo::where('statusConteudo', 'publicado')
+        ->where('dataCriacao', '>=', $inicio)
+        ->count();
 
-    $avaliacaoMedia = round(AvaliacaoConsulta::where('dataAvaliacao', '>=', $inicio)->avg('nota') ?? 0, 1);
+$conteudosPorCategoria = Conteudo::where('statusConteudo', 'publicado')
+    ->where('dataCriacao', '>=', $inicio)
+    ->select('codTipoCategoria', DB::raw('count(*) as total'))
+    ->groupBy('codTipoCategoria')
+    ->with('tipoCategoria')
+    ->get()
+    ->map(fn($c) => [
+        $c->tipoCategoria->nomeTipoCategoria,
+        (int) $c->total
+    ])
+    ->values();
 
-    $atendimentosPeriodo = Consulta::where('dataCriacao', '>=', $inicio)->count();
+
+$rankingProfissionais = Conteudo::where('tbconteudo.statusConteudo', 'publicado')
+    ->where('tbconteudo.dataCriacao', '>=', $inicio)
+    ->join(
+        'tbprofissionalsaude',
+        'tbconteudo.codProfissionalSaude',
+        '=',
+        'tbprofissionalsaude.codProfissionalSaude'
+    )
+    ->select(
+        'tbprofissionalsaude.nomeProfissionalSaude',
+        DB::raw('count(*) as publicados')
+    )
+    ->groupBy(
+        'tbprofissionalsaude.codProfissionalSaude',
+        'tbprofissionalsaude.nomeProfissionalSaude'
+    )
+    ->orderByDesc('publicados')
+    ->limit(5)
+    ->get()
+    ->map(fn($r) => [
+        $r->nomeProfissionalSaude,
+        (int) $r->publicados
+    ])
+    ->values();
 
     return view('relatorios.profissional', compact(
         'periodo',
         'categoriaMedico', 'categoriaMedicoEnfermeiro', 'categoriaMedicoPsicologo', 'categoriaAssistenteSocial', 'categoriaOutro',
-        'verificacaoEmAnalise', 'verificacaoAprovado', 'verificacaoPendente',
-        'avaliacaoMedia',
-        'atendimentosPeriodo'
+        'conteudosPublicados',
+        'conteudosPorCategoria',
+        'rankingProfissionais'
     ));
 }
     /**

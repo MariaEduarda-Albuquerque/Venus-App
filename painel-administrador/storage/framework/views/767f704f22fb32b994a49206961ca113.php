@@ -10,20 +10,19 @@
 
     <div class="card">
         <div class="pcover">
-            <button type="button"><i data-lucide="image"></i> Trocar capa</button>
         </div>
 
         <div class="top2">
             <div class="pav">
-                <span>C</span>
-                <span class="camb"><i data-lucide="camera"></i></span>
+                <span><?php echo e($inicial); ?></span>
             </div>
 
             <div class="grow">
-                <h1>Clodo Almeida</h1>
+                <h1><?php echo e($nomeCompleto); ?></h1>
                 <p class="sm">
                     <span class="stt dk"><i data-lucide="shield-check"></i> Admin</span>
-                    Gerente Administrativo · São Paulo, Brasil
+                   <?php echo e($cargo); ?> · <?php echo e($cidade); ?>, <?php echo e($pais); ?>
+
                 </p>
             </div>
 
@@ -47,17 +46,17 @@
 
                 <div class="ct">
                     <div class="ico"><i data-lucide="mail"></i></div>
-                    <div><label>E-mail</label><b>ClodoAlmeida@gmail.com</b></div>
+                    <div><label>E-mail</label><b><?php echo e($email); ?></b></div>
                 </div>
 
                 <div class="ct">
                     <div class="ico"><i data-lucide="phone"></i></div>
-                    <div><label>Telefone</label><b>11 99999-9999</b></div>
+                    <div><label>Telefone</label><b><?php echo e($telefone); ?></b></div>
                 </div>
 
                 <div class="ct">
                     <div class="ico"><i data-lucide="map-pin"></i></div>
-                    <div><label>Localização</label><b>São Paulo, Brasil</b></div>
+                    <div><label>Localização</label><b><?php echo e($cidade); ?>, <?php echo e($pais); ?></b></div>
                 </div>
             </div>
 
@@ -91,12 +90,12 @@
             <div class="card">
                 <h3>Informações pessoais</h3>
                 <div class="dl">
-                    <div><label>Primeiro nome</label><b>Clodo</b></div>
-                    <div><label>Sobrenome</label><b>Almeida</b></div>
-                    <div><label>Cargo</label><b>Gerente Administrativo</b></div>
-                    <div><label>Código postal</label><b>01100-000</b></div>
-                    <div><label>Nº fiscal</label><b>000.123.456</b></div>
-                    <div><label>País</label><b>Brasil</b></div>
+                    <div><label>Primeiro nome</label><b><?php echo e($primeiroNome); ?></b></div>
+                    <div><label>Sobrenome</label><b><?php echo e($sobrenome); ?></b></div>
+                    <div><label>Cargo</label><b><?php echo e($cargo); ?></b></div>
+                    <div><label>Código postal</label><b><?php echo e($codPostal); ?></b></div>
+                    <div><label>Nº fiscal</label><b><?php echo e($nrfiscal); ?></b></div>
+                    <div><label>País</label><b><?php echo e($pais); ?></b></div>
                 </div>
             </div>
 
