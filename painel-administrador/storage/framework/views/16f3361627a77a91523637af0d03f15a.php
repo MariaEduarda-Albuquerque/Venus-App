@@ -75,11 +75,11 @@
 <div class="grid g3 mt">
     <div class="card kpi">
         <div class="ico"><i data-lucide="clock"></i></div>
-        <div><b><?php echo e($tempoMedio); ?></b><span>Tempo médio de resposta a denúncias</span></div>
+        <div><b><?php echo e($conteudosPublicados); ?></b><span>Campanhas ativas</span></div>
     </div>
     <div class="card kpi">
         <div class="ico"><i data-lucide="smile"></i></div>
-        <div><b><?php echo e($avaliacaoMediaUsuarias); ?>/5</b><span>Satisfação das usuárias referente ás consultas (30 dias)</span></div>
+        <div><b><?php echo e($conteudosPublicadosUltimas24h); ?></b><span>Conteúdos públicados nas ultimas 24 horas</span></div>
     </div>
     <div class="card">
         <div class="kpi">

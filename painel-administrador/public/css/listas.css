@@ -2143,3 +2143,82 @@ html:has(.lst-page)::-webkit-scrollbar {
 .btn-ver-mais-modal:hover{
     background-color: var( --rose2);
 }
+
+/* =========================================================
+   PAGINAÇÃO (view padrão do Laravel, sem Tailwind)
+   Estiliza o HTML que o links() já gera.
+   ========================================================= */
+
+.lst-paginacao {
+    margin-top: 1rem;
+}
+
+.lst-paginacao nav {
+    display: flex;
+    justify-content: center;
+}
+
+/* Esconde a versão "mobile" (« Previous / Next ») e o texto em inglês
+   "Showing 1 to 10 of 11 results" (a página já mostra "Mostrando 1–10 de 11") */
+.lst-paginacao nav > div:first-child,
+.lst-paginacao nav > div:last-child > div:first-child {
+    display: none;
+}
+
+.lst-paginacao nav > div:last-child {
+    display: block;
+}
+
+/* Linha de botões */
+.lst-paginacao nav > div:last-child > div:last-child > span {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: .375rem;
+}
+
+/* Cada botão: links, página atual, desativados e "..." */
+.lst-paginacao a[href],
+.lst-paginacao span[aria-disabled="true"] > span,
+.lst-paginacao span[aria-current="page"] > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 .625rem;
+    border: 1.5px solid var(--line);
+    border-radius: .625rem;
+    background: #fff;
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+    transition: .15s;
+}
+
+.lst-paginacao a[href]:hover {
+    background: var(--rose);
+    border-color: var(--rose2);
+    color: var(--wine);
+}
+
+/* Página atual */
+.lst-paginacao span[aria-current="page"] > span {
+    background: var(--wine);
+    border-color: var(--wine);
+    color: #fff;
+}
+
+/* Setas desativadas e "..." */
+.lst-paginacao span[aria-disabled="true"] > span {
+    opacity: .45;
+    cursor: default;
+}
+
+/* Setas: era isso que estava gigante */
+.lst-paginacao svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex: none;
+}

@@ -16,7 +16,7 @@ class TbpapelTableSeeder extends Seeder
     {
         
 
-        \DB::table('tbpapel')->delete();
+        // \DB::table('tbpapel')->delete();
         
         \DB::table('tbpapel')->insert(array (
             0 => 

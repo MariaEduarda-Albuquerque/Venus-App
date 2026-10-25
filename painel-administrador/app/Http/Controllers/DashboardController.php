@@ -87,6 +87,10 @@ class DashboardController extends Controller
                 $query->where('nomeTipoCategoria', 'video');
             })
             ->count();
+        $conteudosPublicados = Conteudo::where('statusConteudo', 'publicado')->count();
+        $conteudosPublicadosUltimas24h = Conteudo::where('statusConteudo', 'publicado')
+    ->where('dataCriacao', '>=', now()->subHours(24))
+    ->count();
 
             //Pegar a data/Calendario:
             $dataHoje = Carbon::now()->locale('pt_BR')->translatedFormat('d \d\e F \d\e Y');
@@ -193,7 +197,7 @@ class DashboardController extends Controller
             $qtdDenunciasMensagemChat= Denuncia::where('tipoAlvo', 'mensagem_chat')->count();
             $qtdDenunciasPerfilProfissional = Denuncia::where('tipoAlvo', 'perfil_profissional')->count();
 
-        return view('dashboard', compact('profissionaisAtivos', 'aguardandoAprovacao', 'usuariasAtivas', 'denunciasAltaGravidade', 'denunciasAltaGravidadeUltimas24h', 'profissionaisAguardandoAprovacao', 'conteudosAguardandoRev', 'conteudosAguardandoRevArtigo', 'conteudosAguardandoRevVideo', 'porcentagemUsuariasAtivasNoMes', 'porcentagemProfissionaisAtivosNoMes', 'qtdDenunciasPendentes', 'qtdDenunciasPendentesDesdeOntem', 'dataHoje', 'dia', 'mes', 'ano', 'semana1', 'semana1', 'semana2', 'semana3', 'semana4', 'semana5', 'semana6', 'semana7', 'semana8', 'usuariosSemana1', 'usuariosSemana2', 'usuariosSemana3', 'usuariosSemana4', 'usuariosSemana5', 'usuariosSemana6', 'usuariosSemana7', 'usuariosSemana8', 'profissionaisSemana1', 'profissionaisSemana2', 'profissionaisSemana3', 'profissionaisSemana4', 'profissionaisSemana5', 'profissionaisSemana6', 'profissionaisSemana7', 'profissionaisSemana8', 'qtdDenunciasForumPublicação', 'qtdDenunciasForumResposta', 'qtdDenunciasMensagemChat', 'qtdDenunciasPerfilProfissional', 'tempoMedio', 'avaliacaoMediaUsuarias'));
+        return view('dashboard', compact('profissionaisAtivos', 'aguardandoAprovacao', 'usuariasAtivas', 'denunciasAltaGravidade', 'denunciasAltaGravidadeUltimas24h', 'profissionaisAguardandoAprovacao', 'conteudosAguardandoRev', 'conteudosAguardandoRevArtigo', 'conteudosAguardandoRevVideo', 'porcentagemUsuariasAtivasNoMes', 'porcentagemProfissionaisAtivosNoMes', 'qtdDenunciasPendentes', 'qtdDenunciasPendentesDesdeOntem', 'dataHoje', 'dia', 'mes', 'ano', 'semana1', 'semana1', 'semana2', 'semana3', 'semana4', 'semana5', 'semana6', 'semana7', 'semana8', 'usuariosSemana1', 'usuariosSemana2', 'usuariosSemana3', 'usuariosSemana4', 'usuariosSemana5', 'usuariosSemana6', 'usuariosSemana7', 'usuariosSemana8', 'profissionaisSemana1', 'profissionaisSemana2', 'profissionaisSemana3', 'profissionaisSemana4', 'profissionaisSemana5', 'profissionaisSemana6', 'profissionaisSemana7', 'profissionaisSemana8', 'qtdDenunciasForumPublicação', 'qtdDenunciasForumResposta', 'qtdDenunciasMensagemChat', 'qtdDenunciasPerfilProfissional', 'tempoMedio', 'avaliacaoMediaUsuarias', 'conteudosPublicados', 'conteudosPublicadosUltimas24h'));
 
     }
 

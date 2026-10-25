@@ -125,7 +125,7 @@
                             <td><span class="lst-status {{ $info['classe'] }}">{{ $info['rotulo'] }}</span></td>
                             <td>
                                 @if ($c->statusVerificacao === 'em_analise')
-                                    <a href="{{ route('cadastro.aprovar', $c) }}" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a>
+                                    <a href="{{ route('cadastro.aprovar', $c) }}" style="color:white" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a>
                                 @else
                                     <a href="{{ route('cadastro.aprovar', $c) }}" class="lst-btn lst-btn--neutro lst-btn--pequeno">Ver</a>
                                 @endif

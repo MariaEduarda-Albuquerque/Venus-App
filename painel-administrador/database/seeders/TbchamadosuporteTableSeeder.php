@@ -28,6 +28,9 @@ class TbchamadosuporteTableSeeder extends Seeder
                 'anexoChamado' => 'anexos/chamados/1.png',
                 'statusChamado' => 'em_atendimento',
                 'dataAbertura' => '2026-09-17 18:19:08',
+                'canalChamado' => 'formulario',
+                'motivoChamado' => 'acesso_a_senha',
+                'avaliacaoChamado' => '5',
             ),
             1 => 
             array (
@@ -38,6 +41,9 @@ class TbchamadosuporteTableSeeder extends Seeder
                 'anexoChamado' => NULL,
                 'statusChamado' => 'resolvido',
                 'dataAbertura' => '2026-09-26 09:40:00',
+                'canalChamado' => 'formulario',
+                'motivoChamado' => 'acesso_a_senha',
+                'avaliacaoChamado' => '2',
             ),
             2 => 
             array (
@@ -48,6 +54,9 @@ class TbchamadosuporteTableSeeder extends Seeder
                 'anexoChamado' => NULL,
                 'statusChamado' => 'aberto',
                 'dataAbertura' => '2026-10-12 16:00:00',
+                'canalChamado' => 'telefone',
+                'motivoChamado' => 'conta_e_dados',
+                'avaliacaoChamado' => '3',
             ),
             3 => 
             array (
@@ -58,6 +67,9 @@ class TbchamadosuporteTableSeeder extends Seeder
                 'anexoChamado' => 'anexos/chamados/4.png',
                 'statusChamado' => 'em_atendimento',
                 'dataAbertura' => '2026-10-07 10:20:00',
+                'canalChamado' => 'email',
+                'motivoChamado' => 'sugestoes',
+                'avaliacaoChamado' => '5',
             ),
             4 => 
             array (
@@ -68,6 +80,9 @@ class TbchamadosuporteTableSeeder extends Seeder
                 'anexoChamado' => NULL,
                 'statusChamado' => 'aberto',
                 'dataAbertura' => '2026-10-12 14:30:00',
+                'canalChamado' => 'email',
+                'motivoChamado' => 'duvida',
+                'avaliacaoChamado' => '4',
             ),
         ));
         

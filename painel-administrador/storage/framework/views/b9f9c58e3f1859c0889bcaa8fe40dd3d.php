@@ -127,7 +127,7 @@
                             <td><span class="lst-status <?php echo e($info['classe']); ?>"><?php echo e($info['rotulo']); ?></span></td>
                             <td>
                                 <?php if($c->statusVerificacao === 'em_analise'): ?>
-                                    <a href="<?php echo e(route('cadastro.aprovar', $c)); ?>" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a>
+                                    <a href="<?php echo e(route('cadastro.aprovar', $c)); ?>" style="color:white" class="lst-btn lst-btn--primario lst-btn--pequeno">Analisar</a>
                                 <?php else: ?>
                                     <a href="<?php echo e(route('cadastro.aprovar', $c)); ?>" class="lst-btn lst-btn--neutro lst-btn--pequeno">Ver</a>
                                 <?php endif; ?>

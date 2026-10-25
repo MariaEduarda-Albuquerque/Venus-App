@@ -100,7 +100,7 @@
                             <option value="">Selecione</option>
                             <option>7 dias</option>
                             <option>15 dias</option>
-                            <option>30 dias (01/07 a 31/07/2026)</option>
+                            <option>30 dias</option>
                             <option>90 dias</option>
                         </select>
                         <span class="dst-erro">Selecione a duração.</span>

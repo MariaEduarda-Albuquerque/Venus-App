@@ -37,6 +37,7 @@ class TbadminTableSeeder extends Seeder
                 'duasEtapasAtiva' => 1,
                 'statusConta' => 'ativa',
                 'dataCadastro' => '2026-09-17 18:19:08',
+                'codpostalAdmin' => '12124334',
             ),
             1 => 
             array (
@@ -55,6 +56,7 @@ class TbadminTableSeeder extends Seeder
                 'duasEtapasAtiva' => 1,
                 'statusConta' => 'ativa',
                 'dataCadastro' => '2026-09-18 19:11:16',
+                'codpostalAdmin' => '67811777',
             ),
         ));
         
