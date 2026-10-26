@@ -7,6 +7,9 @@ use App\Http\Controllers\ProfissionalController;
 use App\Http\Controllers\CadastroController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\destaqueController;
+
+
 // Login
 Route::middleware('guest:admin')->group(function () {
     Route::get('/login', [AdmController::class, 'showLogin'])->name('login');
@@ -49,6 +52,7 @@ Route::middleware('auth:admin')->group(function () {
     // Conteúdos
     Route::view('/conteudos-aprender', 'conteudos.lista-conteudo-aprender')->name('conteudos.aprender');
     Route::view('/destaques-principais', 'conteudos.destaques')->name('destaques');
+    Route::post('/criar-destaque', [destaqueController::class, 'store'])->name('destaques.criar');
     Route::view('/criar-destaque', 'conteudos.criar-destaque')->name('destaques.criar');
 
 

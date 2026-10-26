@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Destaque;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class destaqueController extends Controller
@@ -43,15 +44,13 @@ class destaqueController extends Controller
             'peca_principal' => 'required|image',
         ]);
 
-        // Salva a imagem principal
         $foto = $request->file('peca_principal')->store('destaques', 'public');
 
-        // Datas: começa hoje e termina hoje + duração
         $inicio  = now();
         $termino = now()->addDays((int) $request->duracao);
 
         Destaque::create([
-            'admin_id'                        => auth()->id(),
+            'admin_id'                        => Auth::guard('admin')->user()->codAdmin,
             'tituloDestaque'                  => $request->titulo,
             'objetivoDestaque'                => $request->objetivo,
             'publicoalvoDestaque'             => $request->publico_alvo,
@@ -70,7 +69,7 @@ class destaqueController extends Controller
             'dataterminoDestaque'             => $termino->toDateString(),
         ]);
 
-        return redirect('destaques-principais')->with('sucesso', 'Destaque publicado com sucesso.');
+        return redirect('conteudos.criar-destaque')->with('sucesso', 'Destaque publicado com sucesso.');
     }
 
     /**

@@ -186,11 +186,27 @@
 
             <?php if($consulta): ?>
                 <div class="lst-card">
-                    <h3 class="lst-card-titulo">Verificação externa</h3>
+                    <div class="lst-card-topo">
+                        <h3 class="lst-card-titulo">Verificação externa</h3>
+                        <span class="lst-selo">CFESS</span>
+                    </div>
+
+                    <div class="lst-pessoa lst-pessoa--espaco">
+                        <span class="lst-avatar">C</span>
+                        <div>
+                            <b>CRESS 34.221 (9ª)</b>
+                            <span class="lst-mute">Conselho Regional de Serviço Social</span>
+                        </div>
+                        <button type="button" class="lst-icone-btn lst-pessoa-fim" aria-label="Copiar número do registro"
+                                onclick="navigator.clipboard.writeText('CRESS 34.221 (9ª)')">
+                            <i data-lucide="copy"></i>
+                        </button>
+                    </div>
+
                     <a href="<?php echo e($consulta); ?>" target="_blank" rel="noopener" class="lst-btn lst-btn--primario lst-btn--grande">
                         <i data-lucide="external-link"></i>Abrir consulta pública
                     </a>
-                    <p class="lst-mute lst-dica">Confirme nome e situação no site oficial do conselho.</p>
+                    <p class="lst-mute lst-dica">Confirme nome, número e situação no site oficial.</p>
                 </div>
             <?php endif; ?>
 

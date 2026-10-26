@@ -1,7 +1,5 @@
 
 
-<?php $__env->startSection('titulo', 'Criar destaque - Painel Administrativo - Vênus'); ?>
-
 <?php $__env->startPush('css'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('css/destaque.css')); ?>">
 <?php $__env->stopPush(); ?>
@@ -30,7 +28,9 @@
     </ol>
 
     
-    <form class="dst-trabalho" id="form-destaque" enctype="multipart/form-data" novalidate>
+    <form class="dst-trabalho" id="form-destaque" method="POST" action="<?php echo e(route('destaques.criar')); ?>" enctype="multipart/form-data">
+
+        <?php echo csrf_field(); ?>
 
         
         <div class="dst-card">
@@ -42,7 +42,7 @@
                 <div class="dst-campo" data-campo="titulo">
                     <label for="titulo">Título do destaque <em>*</em></label>
                     <div class="dst-entrada">
-                        <input id="titulo" name="titulo" maxlength="80" placeholder="Ex.: Maio Vermelho — cuide da sua saúde">
+                        <input name="titulo" id="titulo" maxlength="80" placeholder="Ex.: Maio Vermelho — cuide da sua saúde">
                         <span class="dst-contador">0/80</span>
                     </div>
                     <span class="dst-erro">Informe o título do destaque.</span>
@@ -98,10 +98,10 @@
                         <label for="duracao">Duração <em>*</em></label>
                         <select id="duracao" name="duracao">
                             <option value="">Selecione</option>
-                            <option>7 dias</option>
-                            <option>15 dias</option>
-                            <option>30 dias (01/07 a 31/07/2026)</option>
-                            <option>90 dias</option>
+                            <option value="7">7 dias</option>
+                            <option value="15">15 dias</option>
+                            <option value="30">30 dias</option>
+                            <option value="90">90 dias</option>
                         </select>
                         <span class="dst-erro">Selecione a duração.</span>
                     </div>
@@ -334,7 +334,7 @@
             <div class="dst-modal-acoes">
                 <button type="button" class="dst-btn dst-btn--neutro" data-cancelar>Cancelar</button>
                 
-                <button type="button" class="dst-btn dst-btn--primario" data-confirmar
+                <button type="button" class="dst-btn dst-btn--primario" id="btn-confirmar-publicacao" data-confirmar
                         data-destino="<?php echo e(url('destaques-principais')); ?>">Confirmar publicação</button>
             </div>
         </div>
