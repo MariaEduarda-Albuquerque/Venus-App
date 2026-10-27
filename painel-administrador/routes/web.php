@@ -51,9 +51,9 @@ Route::middleware('auth:admin')->group(function () {
 
     // Conteúdos
     Route::view('/conteudos-aprender', 'conteudos.lista-conteudo-aprender')->name('conteudos.aprender');
-    Route::view('/destaques-principais', 'conteudos.destaques')->name('destaques');
-    Route::post('/criar-destaque', [destaqueController::class, 'store'])->name('destaques.criar');
-    Route::view('/criar-destaque', 'conteudos.criar-destaque')->name('destaques.criar');
+    Route::get('/destaques-principais', [destaqueController::class, 'index'])->name('destaques');
+Route::view('/criar-destaque', 'conteudos.criar-destaque')->name('destaques.criar');
+Route::post('/criar-destaque', [destaqueController::class, 'store'])->name('destaques.store');
 
 
     // Outros

@@ -20,42 +20,44 @@
     
     <div class="dst-lista">
 
-        
+    <?php $__currentLoopData = $destaque; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <article class="dst-card dst-destaque">
             <div class="dst-destaque-info">
                 <div class="dst-destaque-titulo">
-                    <h2>Proteja-se: ISTs podem ser prevenidas</h2>
-                    <span class="dst-chip dst-chip--ok">Publicado</span>
+                    <h2><?php echo e($d->tituloDestaque); ?></h2>
+                    <span class="dst-chip <?php echo e($d->statusDestaque === 'ativa' ? 'dst-chip--ok' : ''); ?>"><?php echo e($d->status_texto); ?></span>
                 </div>
 
-                <p class="dst-mute dst-categoria">ISTs (Infecções Sexualmente Transmissíveis)</p>
+                <p class="dst-mute dst-categoria"><?php echo e($d->categoria_texto); ?></p>
 
                 <dl class="dst-resumo">
                     <dt>Objetivo</dt>
-                    <dd>Conscientizar sobre as infecções e a importância do diagnóstico precoce.</dd>
+                    <dd><?php echo e($d->objetivoDestaque); ?></dd>
 
                     <dt>Público</dt>
-                    <dd>Adolescentes e jovens (14 a 25 anos)</dd>
+                    <dd><?php echo e($d->publico_texto); ?></dd>
 
                     <dt>Período</dt>
-                    <dd>01/07/2025 a 31/07/2025</dd>
+                    <dd><?php echo e($d->periodo_texto); ?></dd>
 
                     <dt>Chamada</dt>
-                    <dd>Prevenir é um ato de amor</dd>
+                    <dd><?php echo e($d->ctaDestaque); ?></dd>
 
                     <dt>Tags</dt>
                     <dd>
-                        <span class="dst-chip">#ISTs</span>
-                        <span class="dst-chip">#Prevenção</span>
-                        <span class="dst-chip">#Saúde Sexual</span>
-                        <span class="dst-chip">#Teste</span>
+                        <?php $__empty_1 = true; $__currentLoopData = ($d->tagsDestaque ?? []); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                            <span class="dst-chip">#<?php echo e($tag); ?></span>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            —
+                        <?php endif; ?>
                     </dd>
                 </dl>
             </div>
 
             
-            <div class="dst-imagem">Proteja-se: ISTs podem ser prevenidas!</div>
+            <div class="dst-imagem"><?php echo e($d->mensagemprincipalDestaque); ?></div>
         </article>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
     </div>
 </div>

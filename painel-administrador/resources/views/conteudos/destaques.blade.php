@@ -20,42 +20,44 @@
     {{-- Lista de destaques --}}
     <div class="dst-lista">
 
-        {{-- Exemplo estático: trocar por @foreach quando tiver o back-end (um <article> por destaque) --}}
+    @foreach($destaque as $d)
         <article class="dst-card dst-destaque">
             <div class="dst-destaque-info">
                 <div class="dst-destaque-titulo">
-                    <h2>Proteja-se: ISTs podem ser prevenidas</h2>
-                    <span class="dst-chip dst-chip--ok">Publicado</span>
+                    <h2>{{ $d->tituloDestaque }}</h2>
+                    <span class="dst-chip {{ $d->statusDestaque === 'ativa' ? 'dst-chip--ok' : '' }}">{{ $d->status_texto }}</span>
                 </div>
 
-                <p class="dst-mute dst-categoria">ISTs (Infecções Sexualmente Transmissíveis)</p>
+                <p class="dst-mute dst-categoria">{{ $d->categoria_texto }}</p>
 
                 <dl class="dst-resumo">
                     <dt>Objetivo</dt>
-                    <dd>Conscientizar sobre as infecções e a importância do diagnóstico precoce.</dd>
+                    <dd>{{ $d->objetivoDestaque }}</dd>
 
                     <dt>Público</dt>
-                    <dd>Adolescentes e jovens (14 a 25 anos)</dd>
+                    <dd>{{ $d->publico_texto }}</dd>
 
                     <dt>Período</dt>
-                    <dd>01/07/2025 a 31/07/2025</dd>
+                    <dd>{{ $d->periodo_texto }}</dd>
 
                     <dt>Chamada</dt>
-                    <dd>Prevenir é um ato de amor</dd>
+                    <dd>{{ $d->ctaDestaque }}</dd>
 
                     <dt>Tags</dt>
                     <dd>
-                        <span class="dst-chip">#ISTs</span>
-                        <span class="dst-chip">#Prevenção</span>
-                        <span class="dst-chip">#Saúde Sexual</span>
-                        <span class="dst-chip">#Teste</span>
+                        @forelse (($d->tagsDestaque ?? []) as $tag)
+                            <span class="dst-chip">#{{ $tag }}</span>
+                        @empty
+                            —
+                        @endforelse
                     </dd>
                 </dl>
             </div>
 
             {{-- Degradê com a mensagem principal do destaque --}}
-            <div class="dst-imagem">Proteja-se: ISTs podem ser prevenidas!</div>
+            <div class="dst-imagem">{{ $d->mensagemprincipalDestaque }}</div>
         </article>
+    @endforeach
 
     </div>
 </div>

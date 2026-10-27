@@ -3,48 +3,80 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destaque;
-
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
-class destaqueController extends Controller
+class DestaqueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
+        $destaque = Destaque::all();
+
+                return view('conteudos.destaques', compact('destaque'));
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        // Texto do formulário => valor do enum no banco
+        $publicos = [
+            'Adolescentes e jovens' => 'adolescentes_e_jovens',
+            'Mulheres adultas'      => 'mulheres_adultas',
+            'Gestantes'             => 'gestantes',
+            'Todas as usuárias'     => 'todas_as_usuarias',
+        ];
+
+        $faixas = [
+            '14 a 25 anos'    => '14_25',
+            '26 a 40 anos'    => '26_40',
+            '41 a 60 anos'    => '41_60',
+            'Todas as idades' => 'todas_as_idades',
+        ];
+
+        $categorias = [
+            'ISTs (Infecções Sexualmente Transmissíveis)' => 'ists',
+            'Saúde mental'                                => 'saude_mental',
+            'Saúde reprodutiva'                           => 'saude_reprodutiva',
+            'Prevenção e exames'                          => 'prevencao_e_exames',
+        ];
+
         $request->validate([
             'titulo'         => 'required|max:80',
             'objetivo'       => 'required|max:250',
-            'publico_alvo'   => 'required',
-            'faixa_etaria'   => 'required',
-            'categoria'      => 'required',
-            'duracao'        => 'required',
+            'publico_alvo'   => ['required', Rule::in(array_keys($publicos))],
+            'faixa_etaria'   => ['required', Rule::in(array_keys($faixas))],
+            'categoria'      => ['required', Rule::in(array_keys($categorias))],
+            'duracao'        => 'required|in:7,15,30,90',
             'mensagem'       => 'required|max:80',
             'texto'          => 'required|max:250',
             'cta'            => 'required|max:30',
             'fontes'         => 'required',
             'peca_principal' => 'required|image',
+            'materiais'      => 'nullable|array',
+            'materiais.*'    => 'file|max:10240',
         ]);
 
         $foto = $request->file('peca_principal')->store('destaques', 'public');
+
+        $materiais = [];
+        foreach ($request->file('materiais', []) as $arquivo) {
+            $materiais[] = $arquivo->store('destaques/materiais', 'public');
+        }
+
+        $tags = [];
+        if ($request->filled('tags')) {
+            $decodificado = json_decode($request->tags, true);
+            $tags = is_array($decodificado)
+                ? $decodificado
+                : array_values(array_filter(array_map('trim', explode(',', $request->tags))));
+        }
 
         $inicio  = now();
         $termino = now()->addDays((int) $request->duracao);
@@ -53,52 +85,42 @@ class destaqueController extends Controller
             'admin_id'                        => Auth::guard('admin')->user()->codAdmin,
             'tituloDestaque'                  => $request->titulo,
             'objetivoDestaque'                => $request->objetivo,
-            'publicoalvoDestaque'             => $request->publico_alvo,
-            'faixaetariaDestaque'             => $request->faixa_etaria,
-            'categoriaDestaque'               => $request->categoria,
+            'publicoalvoDestaque'             => $publicos[$request->publico_alvo],
+            'faixaetariaDestaque'             => $faixas[$request->faixa_etaria],
+            'categoriaDestaque'               => $categorias[$request->categoria],
             'duracaoDestaque'                 => $request->duracao,
-            'tagsDestaque'                    => $request->tags,
+            'tagsDestaque'                    => $tags,
             'mensagemprincipalDestaque'       => $request->mensagem,
             'apresentacaoDestaque'            => $request->texto,
             'ctaDestaque'                     => $request->cta,
             'fontesreferenciaDestaque'        => $request->fontes,
             'fotoprincipalDestaque'           => $foto,
-            'materiaiscomplementaresDestaque' => null,
+            'materiaiscomplementaresDestaque' => $materiais,
             'statusDestaque'                  => 'ativa',
             'datainicioDestaque'              => $inicio->toDateString(),
             'dataterminoDestaque'             => $termino->toDateString(),
         ]);
 
-        return redirect('conteudos.criar-destaque')->with('sucesso', 'Destaque publicado com sucesso.');
+        return redirect()
+            ->route('destaques')
+            ->with('sucesso', 'Destaque publicado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //

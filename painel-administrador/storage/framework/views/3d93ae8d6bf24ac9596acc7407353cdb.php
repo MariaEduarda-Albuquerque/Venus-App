@@ -1,5 +1,14 @@
 
 
+<?php
+    $publicos = [
+        'adolescentes_e_jovens' => 'Adolescentes e jovens',
+        'mulheres_adultas'      => 'Mulheres adultas',
+        'gestantes'             => 'Gestantes',
+        'todas_as_usuarias'     => 'Todas as usuárias',
+    ];
+?>
+
 <?php $__env->startPush('css'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('css/destaque.css')); ?>">
 <?php $__env->stopPush(); ?>
@@ -10,6 +19,22 @@
     <div class="dst-topo">
         <h1>Destaques</h1>
     </div>
+
+    
+    <?php if(session('sucesso')): ?>
+        <div class="dst-ok" role="status" style="margin-bottom:16px"><?php echo e(session('sucesso')); ?></div>
+    <?php endif; ?>
+
+    
+    <?php if($errors->any()): ?>
+        <div class="dst-erro" role="alert" style="display:block;margin-bottom:16px">
+            <ul style="margin:0;padding-left:18px">
+                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $erro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li><?php echo e($erro); ?></li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 
     
     <ol class="dst-passos" aria-label="Etapas do destaque">
@@ -28,7 +53,7 @@
     </ol>
 
     
-    <form class="dst-trabalho" id="form-destaque" method="POST" action="<?php echo e(route('destaques.criar')); ?>" enctype="multipart/form-data">
+    <form class="dst-trabalho" id="form-destaque" method="POST" action="<?php echo e(route('destaques.store')); ?>" enctype="multipart/form-data">
 
         <?php echo csrf_field(); ?>
 
@@ -42,7 +67,7 @@
                 <div class="dst-campo" data-campo="titulo">
                     <label for="titulo">Título do destaque <em>*</em></label>
                     <div class="dst-entrada">
-                        <input name="titulo" id="titulo" maxlength="80" placeholder="Ex.: Maio Vermelho — cuide da sua saúde">
+                        <input name="titulo" id="titulo" maxlength="80" value="<?php echo e(old('titulo')); ?>" placeholder="Ex.: Maio Vermelho — cuide da sua saúde">
                         <span class="dst-contador">0/80</span>
                     </div>
                     <span class="dst-erro">Informe o título do destaque.</span>
@@ -51,7 +76,7 @@
                 <div class="dst-campo" data-campo="objetivo">
                     <label for="objetivo">Objetivo do destaque <em>*</em></label>
                     <div class="dst-entrada">
-                        <textarea id="objetivo" name="objetivo" maxlength="250" placeholder="O que este destaque quer alcançar?"></textarea>
+                        <textarea id="objetivo" name="objetivo" maxlength="250" placeholder="O que este destaque quer alcançar?"><?php echo e(old('objetivo')); ?></textarea>
                         <span class="dst-contador">0/250</span>
                     </div>
                     <span class="dst-erro">Descreva o objetivo.</span>
@@ -62,10 +87,9 @@
                         <label for="publico_alvo">Público-alvo <em>*</em></label>
                         <select id="publico_alvo" name="publico_alvo">
                             <option value="">Selecione</option>
-                            <option>Adolescentes e jovens</option>
-                            <option>Mulheres adultas</option>
-                            <option>Gestantes</option>
-                            <option>Todas as usuárias</option>
+                            <?php $__currentLoopData = ['Adolescentes e jovens', 'Mulheres adultas', 'Gestantes', 'Todas as usuárias']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $opcao): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($opcao); ?>" <?php if(old('publico_alvo') === $opcao): echo 'selected'; endif; ?>><?php echo e($opcao); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         <span class="dst-erro">Selecione o público.</span>
                     </div>
@@ -74,10 +98,9 @@
                         <label for="faixa_etaria">Faixa etária <em>*</em></label>
                         <select id="faixa_etaria" name="faixa_etaria">
                             <option value="">Selecione</option>
-                            <option>14 a 25 anos</option>
-                            <option>26 a 40 anos</option>
-                            <option>41 a 60 anos</option>
-                            <option>Todas as idades</option>
+                            <?php $__currentLoopData = ['14 a 25 anos', '26 a 40 anos', '41 a 60 anos', 'Todas as idades']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $opcao): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($opcao); ?>" <?php if(old('faixa_etaria') === $opcao): echo 'selected'; endif; ?>><?php echo e($opcao); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         <span class="dst-erro">Selecione a faixa etária.</span>
                     </div>
@@ -86,10 +109,9 @@
                         <label for="categoria">Categoria <em>*</em></label>
                         <select id="categoria" name="categoria">
                             <option value="">Selecione</option>
-                            <option>ISTs (Infecções Sexualmente Transmissíveis)</option>
-                            <option>Saúde mental</option>
-                            <option>Saúde reprodutiva</option>
-                            <option>Prevenção e exames</option>
+                            <?php $__currentLoopData = ['ISTs (Infecções Sexualmente Transmissíveis)', 'Saúde mental', 'Saúde reprodutiva', 'Prevenção e exames']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $opcao): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($opcao); ?>" <?php if(old('categoria') === $opcao): echo 'selected'; endif; ?>><?php echo e($opcao); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         <span class="dst-erro">Selecione a categoria.</span>
                     </div>
@@ -98,10 +120,9 @@
                         <label for="duracao">Duração <em>*</em></label>
                         <select id="duracao" name="duracao">
                             <option value="">Selecione</option>
-                            <option value="7">7 dias</option>
-                            <option value="15">15 dias</option>
-                            <option value="30">30 dias</option>
-                            <option value="90">90 dias</option>
+                            <?php $__currentLoopData = [7 => '7 dias', 15 => '15 dias', 30 => '30 dias', 90 => '90 dias']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $valor => $rotulo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($valor); ?>" <?php if((string) old('duracao') === (string) $valor): echo 'selected'; endif; ?>><?php echo e($rotulo); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         <span class="dst-erro">Selecione a duração.</span>
                     </div>
@@ -132,7 +153,7 @@
                 <div class="dst-campo" data-campo="mensagem">
                     <label for="mensagem">Mensagem principal <em>*</em></label>
                     <div class="dst-entrada">
-                        <input id="mensagem" name="mensagem" maxlength="80" placeholder="A frase que aparece em destaque">
+                        <input id="mensagem" name="mensagem" maxlength="80" value="<?php echo e(old('mensagem')); ?>" placeholder="A frase que aparece em destaque">
                         <span class="dst-contador">0/80</span>
                     </div>
                     <span class="dst-erro">Escreva a mensagem principal.</span>
@@ -141,7 +162,7 @@
                 <div class="dst-campo" data-campo="texto">
                     <label for="texto">Texto de apresentação <em>*</em></label>
                     <div class="dst-entrada">
-                        <textarea id="texto" name="texto" maxlength="250" placeholder="Explique o tema em poucas linhas"></textarea>
+                        <textarea id="texto" name="texto" maxlength="250" placeholder="Explique o tema em poucas linhas"><?php echo e(old('texto')); ?></textarea>
                         <span class="dst-contador">0/250</span>
                     </div>
                     <span class="dst-erro">Escreva o texto de apresentação.</span>
@@ -150,7 +171,7 @@
                 <div class="dst-campo" data-campo="cta">
                     <label for="cta">Chamada para ação (CTA) <em>*</em></label>
                     <div class="dst-entrada">
-                        <input id="cta" name="cta" maxlength="30" placeholder="Ex.: Agende seu exame">
+                        <input id="cta" name="cta" maxlength="30" value="<?php echo e(old('cta')); ?>" placeholder="Ex.: Agende seu exame">
                         <span class="dst-contador">0/30</span>
                     </div>
                     <span class="dst-erro">Informe a chamada para ação.</span>
@@ -158,7 +179,7 @@
 
                 <div class="dst-campo" data-campo="fontes">
                     <label for="fontes">Fontes de referência <em>*</em></label>
-                    <input id="fontes" name="fontes" placeholder="Ex.: Ministério da Saúde, OMS">
+                    <input id="fontes" name="fontes" value="<?php echo e(old('fontes')); ?>" placeholder="Ex.: Ministério da Saúde, OMS">
                     <span class="dst-erro">Cite ao menos uma fonte.</span>
                 </div>
 
@@ -209,6 +230,7 @@
                     <i data-lucide="plus"></i>Adicionar mais materiais
                 </button>
 
+                
                 <input type="file" id="arquivo-principal" name="peca_principal" accept="image/*" hidden>
                 <input type="file" id="arquivo-complementar" name="materiais[]" multiple hidden>
 
@@ -334,8 +356,7 @@
             <div class="dst-modal-acoes">
                 <button type="button" class="dst-btn dst-btn--neutro" data-cancelar>Cancelar</button>
                 
-                <button type="button" class="dst-btn dst-btn--primario" id="btn-confirmar-publicacao" data-confirmar
-                        data-destino="<?php echo e(url('destaques-principais')); ?>">Confirmar publicação</button>
+                <button type="button" class="dst-btn dst-btn--primario" id="btn-confirmar-publicacao" data-confirmar>Confirmar publicação</button>
             </div>
         </div>
     </div>
@@ -357,5 +378,25 @@
     </div>
 
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('form-destaque');
+        var btnConfirmar = document.getElementById('btn-confirmar-publicacao');
+        if (!form || !btnConfirmar) return;
+
+        // Captura o clique ANTES de qualquer JS antigo (que só redirecionava para a lista)
+        // e envia o formulário de verdade.
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('#btn-confirmar-publicacao')) return;
+            e.preventDefault();
+            e.stopPropagation();
+
+            btnConfirmar.disabled = true;
+            form.submit();
+        }, true);
+    });
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laravel\Venus-App\Painel-Administrador\resources\views/conteudos/criar-destaque.blade.php ENDPATH**/ ?>
