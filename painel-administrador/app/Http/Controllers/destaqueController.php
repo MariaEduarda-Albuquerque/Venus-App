@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
+
 class DestaqueController extends Controller
 {
     public function index()
     {
         //
-        $destaque = Destaque::all();
+        $admin = Auth::guard('admin')->id();
+        $destaque = Destaque::where('admin_id', $admin)->get();
 
                 return view('conteudos.destaques', compact('destaque'));
 
