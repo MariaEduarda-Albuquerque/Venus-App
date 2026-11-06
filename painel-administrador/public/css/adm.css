@@ -64,6 +64,7 @@
     cursor: pointer;
     font-family: inherit;
     white-space: nowrap;
+    text-decoration: none;
 }
 
 .btn.p {

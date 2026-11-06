@@ -56,12 +56,6 @@
             </div>
 
             <button type="submit">Entrar</button>
-
-            <div class="colocar-ladoAlado2">
-                <p>Ainda não é cadastrado?</p>
-                
-                <a href="#">Solicitar acesso</a>
-            </div>
         </form>
     </div>
 

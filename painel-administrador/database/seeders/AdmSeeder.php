@@ -12,7 +12,7 @@ class AdmSeeder extends Seeder
     {
         DB::table('tbadmin')->insert([
             'codAdmin' => 2,
-            'nomeAdmin' => 'Admin',
+            'nomeAdmin' => 'Clodo',
             'emailAdmin' => 'admin@sistema.com',
             'senhaAdmin' => Hash::make('adm123'),
             'codPapel' => 1,

@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ChamadoSuporte extends Model
 {
-    //
     protected $table = 'tbchamadosuporte';
+
     protected $primaryKey = 'codChamado';
 
-    const CREATED_AT = 'dataAbertura';
+    public $timestamps = false;
 
     protected $fillable = [
         'codProfissionalSaude',
@@ -21,13 +23,28 @@ class ChamadoSuporte extends Model
         'canalChamado',
         'motivoChamado',
         'avaliacaoChamado',
-        'dataAbertura',
     ];
 
-    protected function casts(): array
+    protected $casts = [
+        'dataAbertura' => 'datetime',
+        'avaliacaoChamado' => 'integer',
+    ];
+
+    public function mensagens(): HasMany
     {
-        return [
-            'dataAbertura'    => 'datetime',
-        ];
+        return $this->hasMany(
+            ChamadoMensagem::class,
+            'codChamado',
+            'codChamado'
+        )->orderBy('dataMensagem', 'asc');
+    }
+
+    public function profissional(): BelongsTo
+    {
+        return $this->belongsTo(
+            ProfissionalModel::class,
+            'codProfissionalSaude',
+            'codProfissionalSaude'
+        );
     }
 }

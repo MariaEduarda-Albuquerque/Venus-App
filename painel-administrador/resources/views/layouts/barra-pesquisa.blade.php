@@ -10,7 +10,7 @@
         <input type="text" id="pesquisar" name="pesquisar" placeholder="Pesquisar…">
     </form>
 
-    <a href="" class="ib" aria-label="Notificações">
+    <a href="{{ route('conversas') }}" class="ib" aria-label="Notificações">
         <i data-lucide="bell"></i>
         <span class="dot"></span>
     </a>

@@ -8,6 +8,10 @@
 
 <div class="wrap">
 
+    <?php if(session('sucesso')): ?>
+        <div class="alerta ok" role="status"><?php echo e(session('sucesso')); ?></div>
+    <?php endif; ?>
+
     <div class="card">
         <div class="pcover">
         </div>
@@ -19,11 +23,7 @@
 
             <div class="grow">
                 <h1><?php echo e($nomeCompleto); ?></h1>
-                <p class="sm">
-                    <span class="stt dk"><i data-lucide="shield-check"></i> Admin</span>
-                   <?php echo e($cargo); ?> · <?php echo e($cidade); ?>, <?php echo e($pais); ?>
-
-                </p>
+                <p class="sm"><?php echo e(collect([$cidade, $pais])->filter()->implode(', ')); ?></p>
             </div>
 
             <a href="/editar/perfil" class="btn p">
@@ -56,7 +56,7 @@
 
                 <div class="ct">
                     <div class="ico"><i data-lucide="map-pin"></i></div>
-                    <div><label>Localização</label><b><?php echo e($cidade); ?>, <?php echo e($pais); ?></b></div>
+                    <div><label>Localização</label><b><?php echo e(collect([$cidade, $pais])->filter()->implode(', ')); ?></b></div>
                 </div>
             </div>
 
@@ -77,9 +77,9 @@
                 <div class="line">
                     <div>
                         <b>Senha</b>
-                        <div class="sm">Alterada há 42 dias.</div>
+                        <div class="sm">Troque a senha de vez em quando para manter a conta segura.</div>
                     </div>
-                    <a href="#" class="btn g s">
+                    <a href="<?php echo e(route('perfil.senha')); ?>" class="btn g s">
                         <i data-lucide="key-round"></i> Alterar
                     </a>
                 </div>

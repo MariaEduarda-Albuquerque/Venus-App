@@ -16,8 +16,6 @@
     <div class="sub" id="g1">
         <a class="nav <?php echo e(request()->is('/') ? 'on' : ''); ?>" href="/">Visão geral</a>
         <a class="nav <?php echo e(request()->is('relatorio') ? 'on' : ''); ?>" href="/relatorio">Relatório</a>
-        <a class="nav <?php echo e(request()->is('grc') ? 'on' : ''); ?>" href="/grc">GRC</a>
-        <a class="nav <?php echo e(request()->is('logistica') ? 'on' : ''); ?>" href="/logistica">Logística</a>
     </div>
 
     <div class="nl">Gestão</div>
@@ -28,7 +26,7 @@
         <i data-lucide="chevron-down" class="chev"></i>
     </button>
     <div class="sub" id="g2">
-        <a class="nav <?php echo e(request()->is('usuarios') ? 'on' : ''); ?>" href="/usuarios">Contas de Usuarias</a>
+        <a class="nav <?php echo e(request()->is('usuarios') ? 'on' : ''); ?>" href="/usuarios">Contas de Usuárias</a>
         <a class="nav <?php echo e(request()->is('profissionais') ? 'on' : ''); ?>" href="/profissionais">Contas de Profissionais</a>
         <a class="nav <?php echo e(request()->is('aprovar-cadastros') ? 'on' : ''); ?>" href="/aprovar-cadastros">
             Aprovação de cadastros<span class="bd">5</span>
@@ -46,6 +44,7 @@
     </button>
     <div class="sub" id="g3">
         <a class="nav <?php echo e(request()->is('conteudos-aprender') ? 'on' : ''); ?>" href="/conteudos-aprender">Lista conteúdos aprender</a>
+        <a class="nav <?php echo e(request()->is('meus-conteudos') ? 'on' : ''); ?>" href="/meus-conteudos">Meus Conteúdos</a>
         <a class="nav <?php echo e(request()->is('destaques-principais') ? 'on' : ''); ?>" href="/destaques-principais">Destaque sazonal</a>
     </div>
 
@@ -73,7 +72,6 @@
     <div class="sub" id="g4">
         <a class="nav <?php echo e(request()->is('atividades-recentes') ? 'on' : ''); ?>" href="/atividades-recentes">Atividades recentes</a>
         <a class="nav <?php echo e(request()->is('acessos') ? 'on' : ''); ?>" href="/acessos">Acessos</a>
-        <a class="nav <?php echo e(request()->is('meus-conteudos') ? 'on' : ''); ?>" href="/meus-conteudos">Meus Conteúdos</a>
     </div>
 
     <div class="nl">Atendimento</div>

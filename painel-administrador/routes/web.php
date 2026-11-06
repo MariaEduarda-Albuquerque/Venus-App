@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,9 @@ use App\Http\Controllers\CadastroController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\destaqueController;
+use App\Http\Controllers\DenunciaController;
+use App\Http\Controllers\SuporteController;
+use App\Http\Controllers\ConteudoController;
 
 
 // Login
@@ -27,7 +31,10 @@ Route::middleware('auth:admin')->group(function () {
 
     // Perfil/Configuração
     Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
-    Route::view('/editar/perfil', 'perfil-config.editar-perfil' )->name('perfil.editar');
+    Route::get('/editar/perfil', [PerfilController::class, 'esditar'])->name('perfil.editar');
+    Route::put('/editar/perfil', [PerfilController::class, 'atualizar'])->name('perfil.atualizar');
+    Route::get('/alterar-senha', [PerfilController::class, 'senha'])->name('perfil.senha');
+    Route::put('/alterar-senha', [PerfilController::class, 'atualizarSenha'])->name('perfil.senha.atualizar');
     Route::view('/configuracoes', 'perfil-config.configuracoes')->name('configuracoes');
 
     // Usuários
@@ -62,15 +69,20 @@ Route::post('/criar-destaque', [destaqueController::class, 'store'])->name('dest
     Route::view('/conversas', 'outros.conversas')->name('conversas');
 
     // Painel
-    Route::view('/relatorio', 'painel.relatorio')->name('painel.relatorio');
-    Route::view('/grc', 'painel.grc')->name('painel.grc');
-    Route::view('/logistica', 'painel.logistica')->name('painel.logistica');
+    Route::get('/relatorio', [RelatorioController::class, 'Geral'])->name('painel.relatorio');
 
     // Histórico
     Route::view('/atividades-recentes', 'historico.atividades-recentes')->name('historico.atividades');
     Route::view('/acessos', 'historico.acessos')->name('historico.acessos');
-    Route::view('/criar-conteudo', 'historico.criar-conteudo')->name('conteudo.criar');
-    Route::view('/meus-conteudos', 'historico.meus-conteudos')->name('meus.conteudos');
+
+    Route::get('/criar-conteudo', [ConteudoController::class, 'create'])
+        ->name('conteudo.criar');
+
+    Route::post('/criar-conteudo', [ConteudoController::class, 'store'])
+        ->name('conteudo.store');
+
+    Route::get('/meus-conteudos', [ConteudoController::class, 'index'])
+        ->name('meus.conteudos');
 
     // Relatórios
     Route::prefix('relatorios')->name('relatorios.')->group(function () {

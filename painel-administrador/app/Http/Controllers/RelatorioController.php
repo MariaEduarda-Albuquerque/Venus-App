@@ -80,6 +80,101 @@ class RelatorioController extends Controller
         ));
     }
 
+    /**
+     * Painel > Relatório: visão geral da plataforma (cadastros, conteúdos e distribuição das contas)
+     */
+    public function Geral(Request $request)
+    {
+        $periodo = (int) $request->input('periodo', 30);
+        if (!in_array($periodo, [30, 90, 365])) {
+            $periodo = 30;
+        }
+
+        $inicio = now()->subDays($periodo)->startOfDay();
+
+        // Novos cadastros no período
+        $novasUsuarias      = Usuaria::where('dataCadastro', '>=', $inicio)->count();
+        $novosProfissionais = ProfissionalModel::where('dataCadastro', '>=', $inicio)->count();
+
+        // Evolução dos cadastros: por semana (30 e 90 dias) ou por mês (último ano)
+        $evolucaoCadastros = [];
+        if ($periodo === 365) {
+            for ($i = 11; $i >= 0; $i--) {
+                $ini = now()->startOfMonth()->subMonths($i);
+                $fim = $ini->copy()->endOfMonth();
+                $evolucaoCadastros[] = [
+                    $ini->copy()->locale('pt_BR')->translatedFormat('M/y'),
+                    Usuaria::whereBetween('dataCadastro', [$ini, $fim])->count(),
+                    ProfissionalModel::whereBetween('dataCadastro', [$ini, $fim])->count(),
+                ];
+            }
+        } else {
+            $semanas = (int) ceil($periodo / 7);
+            for ($i = $semanas - 1; $i >= 0; $i--) {
+                $fim = now()->subWeeks($i)->endOfDay();
+                $ini = $fim->copy()->subDays(6)->startOfDay();
+                if ($ini->lt($inicio)) {
+                    $ini = $inicio->copy();
+                }
+                $evolucaoCadastros[] = [
+                    $ini->format('d/m'),
+                    Usuaria::whereBetween('dataCadastro', [$ini, $fim])->count(),
+                    ProfissionalModel::whereBetween('dataCadastro', [$ini, $fim])->count(),
+                ];
+            }
+        }
+
+        // Conteúdos criados no período, por status
+        $conteudosPorStatus = [];
+        $conteudosPublicados = 0;
+        foreach (['publicado' => 'Publicado', 'em_revisao' => 'Em revisão', 'recusado' => 'Recusado', 'rascunho' => 'Rascunho'] as $chave => $rotulo) {
+            $total = Conteudo::where('statusConteudo', $chave)->where('dataCriacao', '>=', $inicio)->count();
+            $conteudosPorStatus[] = [$rotulo, $total];
+            if ($chave === 'publicado') {
+                $conteudosPublicados = $total;
+            }
+        }
+
+        // Profissionais ativos por especialidade (6 maiores + "Outras")
+        $especialidades = ProfissionalModel::where('statusConta', 'ativa')
+            ->select(
+                DB::raw("COALESCE(NULLIF(especialidadeProfissionalSaude, ''), 'Não informada') as nome"),
+                DB::raw('count(*) as total')
+            )
+            ->groupBy('nome')
+            ->orderByDesc('total')
+            ->get()
+            ->map(fn ($e) => [$e->nome, (int) $e->total])
+            ->values();
+
+        if ($especialidades->count() > 6) {
+            $outras = $especialidades->slice(6)->sum(fn ($e) => $e[1]);
+            $especialidades = $especialidades->take(6)->push(['Outras', $outras])->values();
+        }
+
+        // Usuárias ativas por região
+        $regioes = [
+            'Sudeste'      => ['SP', 'RJ', 'MG', 'ES'],
+            'Nordeste'     => ['AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE'],
+            'Sul'          => ['PR', 'RS', 'SC'],
+            'Centro-Oeste' => ['DF', 'GO', 'MT', 'MS'],
+            'Norte'        => ['AC', 'AM', 'AP', 'PA', 'RO', 'RR', 'TO'],
+        ];
+        $usuariasPorRegiao = [];
+        foreach ($regioes as $nome => $ufs) {
+            $usuariasPorRegiao[] = [$nome, Usuaria::where('statusUsuario', 'ativa')->whereIn('ufUsuario', $ufs)->count()];
+        }
+
+        return view('painel.relatorio', compact(
+            'periodo',
+            'novasUsuarias', 'novosProfissionais',
+            'evolucaoCadastros',
+            'conteudosPorStatus', 'conteudosPublicados',
+            'especialidades',
+            'usuariasPorRegiao'
+        ));
+    }
+
     public function Denuncias(Request $request)
     {
         $periodo = (int) $request->input('periodo', 30);

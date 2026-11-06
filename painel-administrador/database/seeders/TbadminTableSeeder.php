@@ -23,7 +23,7 @@ class TbadminTableSeeder extends Seeder
             0 => 
             array (
                 'codAdmin' => 1,
-                'nomeAdmin' => 'Admin',
+                'nomeAdmin' => 'Clodo',
                 'emailAdmin' => 'admin@admin.com',
                 'telAdmin' => NULL,
                 'paisAdmin' => NULL,
@@ -42,7 +42,7 @@ class TbadminTableSeeder extends Seeder
             1 => 
             array (
                 'codAdmin' => 2,
-                'nomeAdmin' => 'Admin',
+                'nomeAdmin' => 'Clodo',
                 'emailAdmin' => 'admin@sistema.com',
                 'telAdmin' => NULL,
                 'paisAdmin' => NULL,

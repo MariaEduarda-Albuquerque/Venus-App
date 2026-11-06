@@ -128,6 +128,44 @@ function paginaRelatorio() {
             return r;
         }
 
+        // Linha: uma linha para cada coluna depois da primeira (ex.: ['Período', 'Usuárias', 'Profissionais'])
+        if (grafico.tipo === 'linha') {
+            const nomesSeries = (grafico.colunas || []).slice(1);
+            const rotulos = [];
+            for (let i = 0; i < grafico.d.length; i++) {
+                rotulos.push(grafico.d[i][0]);
+            }
+
+            const series = [];
+            for (let k = 0; k < nomesSeries.length; k++) {
+                const valores = [];
+                for (let i = 0; i < grafico.d.length; i++) {
+                    valores.push(grafico.d[i][k + 1]);
+                }
+                series.push({ name: nomesSeries[k], type: 'line', smooth: true, symbolSize: 6, data: valores });
+            }
+
+            const l = echarts.init(caixa);
+            l.setOption({
+                textStyle: { fontFamily: 'Nunito' },
+                color: ['#D6576A', '#9B1B2A'],
+                animationDuration: 800,
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: '#fff',
+                    borderWidth: 0,
+                    textStyle: { color: '#2B1F22' },
+                    extraCssText: 'box-shadow:0 4px 16px rgba(0,0,0,.1);border-radius:10px'
+                },
+                legend: { right: 0, top: 0, icon: 'circle', itemWidth: 8, textStyle: { color: '#7E7075' } },
+                grid: { left: 36, right: 16, top: 36, bottom: 24 },
+                xAxis: { type: 'category', data: rotulos, boundaryGap: false, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#7E7075' } },
+                yAxis: { type: 'value', minInterval: 1, axisLabel: { color: '#7E7075' }, splitLine: { lineStyle: { color: '#F1EAEB' } } },
+                series: series
+            });
+            return l;
+        }
+
         // Pizza
         const itens = [];
         for (let i = 0; i < grafico.d.length; i++) {
@@ -200,7 +238,7 @@ function paginaRelatorio() {
         // Cria as caixas dos gráficos
         let html = '';
         for (let i = 0; i < dados.length; i++) {
-            html += '<div class="rel-card">'
+            html += '<div class="rel-card' + (dados[i].tipo === 'linha' ? ' rel-card--largo' : '') + '">'
                   +   '<h3>' + dados[i].t + '</h3>'
                   +   '<p>' + dados[i].s + '</p>'
                   +   '<div class="rel-grafico" id="rch' + i + '"></div>'

@@ -15,7 +15,7 @@
 <div class="alert">
     <i data-lucide="alert-circle"></i>
     <span><b>Atenção:</b> existem <?php echo e($denunciasAltaGravidadeUltimas24h); ?> denúncias de gravidade alta pendentes há mais de 24 horas.</span>
-    <button class="btn p s">Ver denúncias</button>
+    <a href="<?php echo e(route('denuncias')); ?>" class="btn p s">Ver denúncias</a>
 </div>
 
 <div class="grid g3">
@@ -54,7 +54,7 @@
             <?php endif; ?>
 
             
-            <button class="btn g s mt fila-botao" style="width:100%;justify-content:center">Ver todas as pendências</button>
+            <a href="<?php echo e(route('cadastros.aprovar')); ?>" class="btn g s mt fila-botao" style="width:100%;justify-content:center">Ver todas as pendências</a>
         </div>
     </div>
 
@@ -67,7 +67,7 @@
         <div class="card kpi">
             <div class="ico"><i data-lucide="file-text"></i></div>
             <div style="flex:1"><b><?php echo e($conteudosAguardandoRev); ?></b><span>Conteúdos aguardando revisão · <?php echo e($conteudosAguardandoRevArtigo); ?> artigos e <?php echo e($conteudosAguardandoRevVideo); ?> vídeos</span></div>
-            <button class="btn g s">Ir para conteúdos</button>
+            <a href="<?php echo e(route('conteudos.aprender')); ?>" class="btn g s">Ir para conteúdos</a>
         </div>
     </div>
 </div>

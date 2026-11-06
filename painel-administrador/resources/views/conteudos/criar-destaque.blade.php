@@ -207,7 +207,7 @@
                     </button>
 
                     {{-- Com arquivo --}}
-                    <div class="dst-arquivo dst-arquivo--grande" id="principal-arquivo" hidden>
+                    <div class="dst-arquivo-grande dst-arquivo--grande" id="principal-arquivo" hidden>
                         <div class="dst-miniatura" id="principal-miniatura"><i data-lucide="image"></i></div>
                         <div class="dst-arquivo-info">
                             <b id="principal-nome"></b>
@@ -224,7 +224,7 @@
                 </div>
 
                 <label class="dst-rotulo">Materiais complementares <span class="dst-mute">(opcional)</span></label>
-                <div class="dst-arquivos" id="complementares"></div>
+                <div class="dst-arquivos" id="complementares"><div class="sub-dst-complementares"></div></div>
 
                 <button type="button" class="dst-adicionar" data-escolher="complementares">
                     <i data-lucide="plus"></i>Adicionar mais materiais

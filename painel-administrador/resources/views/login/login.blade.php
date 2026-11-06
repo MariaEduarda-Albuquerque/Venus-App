@@ -56,12 +56,6 @@
             </div>
 
             <button type="submit">Entrar</button>
-
-            <div class="colocar-ladoAlado2">
-                <p>Ainda não é cadastrado?</p>
-                {{-- troque o # pela rota da tela "Solicitar acesso" quando ela existir --}}
-                <a href="#">Solicitar acesso</a>
-            </div>
         </form>
     </div>
 
