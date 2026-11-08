@@ -367,6 +367,14 @@ function confirmarDecisao() {
     setTimeout(irParaLista, 900);
 }
 
+
+const btn = document.getElementById('btnNaoNecessita');
+
+btn.addEventListener('click', () => {
+  const ativo = btn.getAttribute('aria-pressed') === 'true';
+  btn.setAttribute('aria-pressed', String(!ativo));
+});
+
 function irParaLista() {
     window.location.href = document.getElementById('dc-confirmar').dataset.destino;
 }

@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Denuncia extends Model
 {
-    //
-        protected $table = 'tbdenuncia';
+    protected $table = 'tbdenuncia';
+
     protected $primaryKey = 'codDenuncia';
 
-        const CREATED_AT = 'dataDenuncia';
+    const CREATED_AT = 'dataDenuncia';
+    const UPDATED_AT = null;
 
-        protected $fillable = [
+    protected $fillable = [
         'tipoAlvo',
         'codAlvo',
         'codUsuarioDenunciante',
@@ -23,19 +24,19 @@ class Denuncia extends Model
         'dataDenuncia',
     ];
 
-            protected function casts(): array
+    protected function casts(): array
     {
         return [
-            'dataDenuncia'    => 'datetime',
+            'dataDenuncia' => 'datetime',
         ];
     }
 
-            public function tbusuario()
-        {
-            return $this->belongsTo(
-                    Usuario::class, 
-                    'codUsuarioDenunciante', // Chave estrangeira que está na tabela 'tbconteudo'
-                    'codUsuario'  // Chave primária que está na tabela 'profissionais' (ou 'id' se lá for 'id')
-                ); 
-        }
+    public function tbusuario()
+    {
+        return $this->belongsTo(
+            Usuaria::class,
+            'codUsuarioDenunciante',
+            'codUsuario'
+        );
+    }
 }

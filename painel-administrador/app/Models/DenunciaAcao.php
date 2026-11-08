@@ -3,17 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Denuncia;
 
 class DenunciaAcao extends Model
 {
-    //
     protected $table = 'tbdenunciaacao';
+
     protected $primaryKey = 'codDenunciaAcao';
 
     const CREATED_AT = 'dataAcao';
+    const UPDATED_AT = null;
 
-        protected $fillable = [
+    protected $fillable = [
         'codDenuncia',
         'codAdmin',
         'acaoTomada',
@@ -24,16 +24,16 @@ class DenunciaAcao extends Model
     protected function casts(): array
     {
         return [
-            'dataAcao'    => 'datetime',
+            'dataAcao' => 'datetime',
         ];
     }
 
     public function tbdenuncia()
     {
         return $this->belongsTo(
-            Denuncia::class, 
-            'codDenuncia', // Chave estrangeira que está na tabela 'tbconteudo'
-            'codDenuncia'  // Chave primária que está na tabela 'profissionais' (ou 'id' se lá for 'id')
-        ); 
+            Denuncia::class,
+            'codDenuncia',
+            'codDenuncia'
+        );
     }
 }

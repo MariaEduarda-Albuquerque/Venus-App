@@ -98,42 +98,27 @@ class ProfissionalController extends Controller
             'documento' => 'documentoComplementarProfissional',
         ];
 
-        // Disco(s) onde cada tipo de arquivo é gravado
+        // Documentos ficam no disco privado compartilhado; a foto, no storage público do site do profissional
         $discos = [
-            'foto'      => ['perfil_profissional'],
-            'conselho'  => ['venus'],
-            'documento' => ['venus'],
+            'foto'      => 'perfil_profissional',
+            'conselho'  => 'documentos',
+            'documento' => 'documentos',
         ];
 
-        abort_unless(isset($campos[$tipo]), 404, 'Tipo inválido: ' . $tipo);
+        abort_unless(isset($campos[$tipo]), 404);
 
         $caminho = $profissional->{$campos[$tipo]};
-        abort_unless($caminho, 404, 'Sem caminho no banco.');
+        abort_unless($caminho, 404);
 
-        $tentados = [];
+        $disco = $discos[$tipo];
 
-        foreach ($discos[$tipo] as $disco) {
-            if (! array_key_exists($disco, config('filesystems.disks'))) {
-                $tentados[] = "$disco: DISCO NÃO CONFIGURADO";
-                continue;
-            }
+        abort_unless(array_key_exists($disco, config('filesystems.disks')), 404);
+        abort_unless(Storage::disk($disco)->exists($caminho), 404);
 
-            $tentados[] = "$disco: " . Storage::disk($disco)->path($caminho);
-
-            if (Storage::disk($disco)->exists($caminho)) {
-                $arquivo = Storage::disk($disco)->get($caminho);
-
-                $mime = Storage::disk($disco)->mimeType($caminho)
-                    ?: 'application/octet-stream';
-
-                return response($arquivo, 200)
-                    ->header('Content-Type', $mime)
-                    ->header('X-Content-Type-Options', 'nosniff')
-                    ->header('Cache-Control', 'no-cache, no-store, must-revalidate');
-            }
-        }
-
-        abort(404, "Arquivo não encontrado.\n" . implode("\n", $tentados));
+        return Storage::disk($disco)->response($caminho, null, [
+            'Cache-Control'          => 'no-cache, no-store, must-revalidate',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
     public function atualizarVerificacao(Request $request, ProfissionalModel $profissional)
     {

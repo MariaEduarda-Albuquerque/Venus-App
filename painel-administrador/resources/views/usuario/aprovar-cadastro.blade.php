@@ -126,7 +126,7 @@
                                     <i data-lucide="external-link"></i>Abrir em nova aba
                                 </a>
                             @else
-                                <p class="lst-mute">Não enviado.</p>
+                                <p class="lst-erro">Documento não enviado.</p>
                             @endif
                         </div>
                     @endforeach
@@ -186,9 +186,9 @@
                 <div class="lst-card">
                     <div class="lst-card-topo">
                         <h3 class="lst-card-titulo">Verificação externa</h3>
-                        <span class="lst-selo">CFESS</span>
+                        <!-- <span class="lst-selo">CFESS</span> -->
                     </div>
-
+<!-- 
                     <div class="lst-pessoa lst-pessoa--espaco">
                         <span class="lst-avatar">C</span>
                         <div>
@@ -199,12 +199,18 @@
                                 onclick="navigator.clipboard.writeText('CRESS 34.221 (9ª)')">
                             <i data-lucide="copy"></i>
                         </button>
-                    </div>
+                    </div> -->
 
                     <a href="{{ $consulta }}" target="_blank" rel="noopener" class="lst-btn lst-btn--primario lst-btn--grande">
                         <i data-lucide="external-link"></i>Abrir consulta pública
                     </a>
-                    <p class="lst-mute lst-dica">Confirme nome, número e situação no site oficial.</p>
+                    <div class="linha-confirma">
+                        <p class="lst-mute lst-dica">Confirme nome, número e situação no site oficial.</p>
+                        <button type="button" class="btn-opcao" id="btnNaoNecessita" aria-pressed="false">
+                            <span class="btn-opcao__check" aria-hidden="true"></span>
+                            Não necessita
+                        </button>
+                    </div>
                 </div>
             @endif
 

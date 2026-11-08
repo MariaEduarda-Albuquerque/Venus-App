@@ -1990,14 +1990,13 @@ a.lst-pag-item:hover {
    Esconde a barra, mas o conteúdo continua rolando.
    ========================================================= */
 
-/* Tabela, modais, painel lateral e a própria página de listas */
+/* Tabela, modais, painel lateral e menus (a barra da página inteira continua natural) */
 .lst-tabela-wrap,
 .lst-modal,
 .lst-modal-caixa,
 .lst-painel-caixa,
 .lst-menu,
-.lst-page,
-html:has(.lst-page) {
+.lst-page {
     scrollbar-width: none;          /* Firefox */
     -ms-overflow-style: none;       /* Edge antigo */
 }
@@ -2008,8 +2007,7 @@ html:has(.lst-page) {
 .lst-modal-caixa::-webkit-scrollbar,
 .lst-painel-caixa::-webkit-scrollbar,
 .lst-menu::-webkit-scrollbar,
-.lst-page::-webkit-scrollbar,
-html:has(.lst-page)::-webkit-scrollbar {
+.lst-page::-webkit-scrollbar {
     display: none;
     width: 0;
     height: 0;
@@ -2476,4 +2474,82 @@ html:has(.lst-page)::-webkit-scrollbar {
     #m-confirma-modal > div {
         padding: 1.5rem 1.125rem 1.25rem;
     }
+}
+
+.lst-erro{
+    color: red;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30%;
+    color: var(--danger);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.linha-confirma {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.linha-confirma__texto {
+  margin: 0;
+  font-size: 14px;
+  color: #777;
+}
+
+.btn-opcao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  color: #9b1c2b;
+  background: transparent;
+  border: none;               /* tira a borda */
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-opcao:hover {
+  background: #fbeff1;
+}
+
+.btn-opcao:focus-visible {
+  outline: 3px solid rgba(155, 28, 43, 0.35);
+  outline-offset: 2px;
+}
+
+/* Bolinha (vazia) */
+.btn-opcao__check {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+/* Selecionado: só a bolinha fica preenchida em vinho */
+.btn-opcao[aria-pressed="true"] .btn-opcao__check {
+  background: #9b1c2b;
+}
+
+.btn-opcao[aria-pressed="true"] .btn-opcao__check {
+  background: #9b1c2b;
+}
+
+/* Telas muito estreitas: quebra para a linha de baixo */
+@media (max-width: 380px) {
+  .linha-confirma {
+    flex-wrap: wrap;
+  }
 }

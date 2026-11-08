@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('titulo', ($nome ?? 'Acessos') . ' - Painel Administrativo - Vênus'); ?>
 
 <?php $__env->startPush('css'); ?>

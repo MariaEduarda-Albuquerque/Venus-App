@@ -563,13 +563,15 @@ h3 {
 }
 
 
-/* ---------- Esconde todas as barras de rolagem ---------- */
-* {
+/* ---------- Esconde as barras de rolagem (menos a da página) ----------
+   Vale para todos os elementos EXCETO html e body, então a barra
+   natural do Chrome continua aparecendo na página. */
+*:not(html):not(body) {
     scrollbar-width: none;      /* Firefox */
     -ms-overflow-style: none;   /* IE/Edge antigo */
 }
 
-*::-webkit-scrollbar {
+*:not(html):not(body)::-webkit-scrollbar {
     display: none;              /* Chrome, Safari, Edge */
 }
 

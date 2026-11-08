@@ -207,7 +207,7 @@
 }
 
 .dst-resumo dt {
-    color: gray;
+    color: #4A3E41;
     font-weight: 700;
 }
 
@@ -390,14 +390,13 @@
 .dst-campo select {
     width: 100%;
     padding: .6em .7em;
-    border: none;
+    border: 1.5px solid var(--line);
     border-radius: .6em;
     background: #FDFCFC;
     color: var(--ink);
     font: inherit;
     outline: 0;
     transition: .15s;
-    border: 1px solid rgb(229, 229, 229);
 }
 
 .dst-campo textarea {
@@ -408,6 +407,7 @@
 .dst-campo input:focus,
 .dst-campo textarea:focus,
 .dst-campo select:focus {
+    border-color: var(--wine);
     box-shadow: 0 0 0 3px var(--rose);
     background: #fff;
 }
@@ -462,11 +462,9 @@
 
 /* Campos lado a lado */
 .dst-duas {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;  /* Permite que os itens quebrem para a linha de baixo */
-    gap: 1em 0.8em;   /* Espaçamento vertical e horizontal entre os campos */
-    margin-bottom: .6em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14em, 1fr));
+    gap: 0 .85em;
 }
 
 /* ---------- Tags ---------- */
@@ -475,13 +473,14 @@
     flex-wrap: wrap;
     gap: .35em;
     padding: .4em;
-    border: none;
+    border: 1.5px solid var(--line);
     border-radius: .6em;
     background: #FDFCFC;
 }
-.dst-duas > * {
-    width: calc(50% - 0.4em); /* Divide exatamente em 2 colunas */
-    min-width: 0;             /* Evita que estoure o layout */
+
+.dst-tags:focus-within {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 3px var(--rose);
 }
 
 .dst-campo .dst-tags input {
@@ -493,9 +492,6 @@
     border-radius: 0;
     background: none;
     box-shadow: none;
-    border: 1px solid rgb(229, 229, 229);
-    padding: 11px;
-    border-radius: 10px;
 }
 
 .dst-tag {
@@ -583,8 +579,7 @@
 
 .dst-arquivos {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap; 
+    flex-direction: column;
     gap: .6em;
     margin-bottom: .6em;
 }
@@ -601,17 +596,6 @@
     padding: .6em .7em;
     border: 1.5px solid var(--line);
     border-radius: .7em;
-    width: calc(50% - 0.3em);
-}
-
-.dst-arquivo-grande {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-    padding: .8em;
-    border: 1.5px solid var(--rose2);
-    border-radius: .8em;
-    background: var(--rose);
 }
 
 .dst-arquivo--grande {
@@ -1239,7 +1223,6 @@
     .dst-campo select,
     .dst-campo select::picker(select) {
         appearance: base-select;
-        border: 1px solid rgb(229, 229, 229);
     }
 
     /* Seta no mesmo estilo da seta nativa da imagem 1 */
@@ -1271,7 +1254,7 @@
 
     .dst-campo select option:hover,
     .dst-campo select option:focus {
-        background: var(--line);
+        background: #FCF4F5;
         color: var(--ink);
     }
 

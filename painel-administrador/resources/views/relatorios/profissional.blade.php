@@ -70,7 +70,7 @@ window.RELATORIO = {
               ['Outro', {{ $categoriaOutro }}]] },
         { t: 'Conteúdos por categoria', s: 'Conteúdos publicados em cada categoria', rosa: true,
           d: @json($conteudosPorCategoria) },
-        { t: 'Ranking de profissionais', s: 'Conteúdos publicados e alcance', tipo: 'ranking',
+        { t: 'Ranking de profissionais', s: 'Conteúdos publicados e alcance (passe o mouse)', tipo: 'ranking',
           d: @json($rankingProfissionais) }
     ]
 };

@@ -18,13 +18,14 @@ body {
     box-sizing: border-box;
 }
 
-/* Oculta todas as barras visuais */
-* {
+/* Oculta as barras visuais de todos os elementos, EXCETO html e body,
+   para a barra natural do Chrome continuar aparecendo na página */
+*:not(html):not(body) {
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
 }
 
-*::-webkit-scrollbar {
+*:not(html):not(body)::-webkit-scrollbar {
     width: 0 !important;
     height: 0 !important;
     display: none !important;
@@ -440,4 +441,3 @@ body {
         margin-left: auto;
     }
 }
- 

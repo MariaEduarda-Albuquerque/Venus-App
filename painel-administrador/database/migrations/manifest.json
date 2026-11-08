@@ -1,0 +1,518 @@
+{
+  "source": "dbvenus (4).sql",
+  "table_count_in_dump": 61,
+  "migration_count": 60,
+  "excluded_framework_table": "migrations",
+  "creation_order": [
+    "cache",
+    "cache_locks",
+    "categorias",
+    "codtipocategoria",
+    "failed_jobs",
+    "job_batches",
+    "jobs",
+    "notifications",
+    "password_reset_tokens",
+    "sessions",
+    "tbdatasaude",
+    "tbdestaque",
+    "tbnotaclinica",
+    "tbnotificacao",
+    "tbpapel",
+    "tbprofissionalsaude",
+    "tbservicounidade",
+    "tbtipoatendimento",
+    "tbtipoconteudo",
+    "tbtipodiario",
+    "tbunidadesaude",
+    "tbusuario",
+    "tbverificacaoprofissional",
+    "users",
+    "tbtrilhaaprendizado",
+    "tbadmin",
+    "tbatendimento",
+    "tbbloqueioagenda",
+    "tbchamadosuporte",
+    "tbconselho",
+    "tbevento",
+    "tbdisponibilidadeprofissional",
+    "tbunidadeservico",
+    "tbavaliacaounidade",
+    "tbciclomenstrual",
+    "tbconsulta",
+    "tbdenuncia",
+    "tbdiario",
+    "tbexame",
+    "tbfeedback",
+    "tbforumpublicacao",
+    "tbhumordiario",
+    "tbinteresseusuario",
+    "tblembreteremedio",
+    "tbvacina",
+    "tbconteudo",
+    "tbconteudolog",
+    "tbchamadomensagem",
+    "tbinscricaoevento",
+    "tbsintomaciclo",
+    "tbavaliacaoconsulta",
+    "tbmensagem",
+    "tbdenunciaacao",
+    "tbforumreacao",
+    "tbforumresposta",
+    "tbconteudoadmin",
+    "tbconteudosalvo",
+    "tbprogressotrilha",
+    "tbpublicacao",
+    "tbtrilhaconteudo"
+  ],
+  "details": {
+    "cache": {
+      "columns": 3,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": []
+    },
+    "cache_locks": {
+      "columns": 3,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": []
+    },
+    "categorias": {
+      "columns": 3,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "id"
+      ]
+    },
+    "codtipocategoria": {
+      "columns": 3,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codTipoCategoria"
+      ]
+    },
+    "failed_jobs": {
+      "columns": 7,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "id"
+      ]
+    },
+    "job_batches": {
+      "columns": 10,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": []
+    },
+    "jobs": {
+      "columns": 7,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "id"
+      ]
+    },
+    "notifications": {
+      "columns": 8,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": []
+    },
+    "password_reset_tokens": {
+      "columns": 3,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": []
+    },
+    "sessions": {
+      "columns": 6,
+      "indexes": 3,
+      "foreign_keys": 0,
+      "auto_increment_columns": []
+    },
+    "tbdatasaude": {
+      "columns": 7,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codDataSaude"
+      ]
+    },
+    "tbdestaque": {
+      "columns": 20,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codDestaque"
+      ]
+    },
+    "tbnotaclinica": {
+      "columns": 6,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codNota"
+      ]
+    },
+    "tbnotificacao": {
+      "columns": 8,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codNotificacao"
+      ]
+    },
+    "tbpapel": {
+      "columns": 3,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codPapel"
+      ]
+    },
+    "tbprofissionalsaude": {
+      "columns": 26,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codProfissionalSaude"
+      ]
+    },
+    "tbservicounidade": {
+      "columns": 2,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codServico"
+      ]
+    },
+    "tbtipoatendimento": {
+      "columns": 2,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "idTipoAtendimento"
+      ]
+    },
+    "tbtipoconteudo": {
+      "columns": 2,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codTipoConteudo"
+      ]
+    },
+    "tbtipodiario": {
+      "columns": 2,
+      "indexes": 1,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codTipoDiario"
+      ]
+    },
+    "tbunidadesaude": {
+      "columns": 8,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codUnidade"
+      ]
+    },
+    "tbusuario": {
+      "columns": 22,
+      "indexes": 4,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "codUsuario"
+      ]
+    },
+    "tbverificacaoprofissional": {
+      "columns": 7,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "id"
+      ]
+    },
+    "users": {
+      "columns": 8,
+      "indexes": 2,
+      "foreign_keys": 0,
+      "auto_increment_columns": [
+        "id"
+      ]
+    },
+    "tbtrilhaaprendizado": {
+      "columns": 4,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codTrilha"
+      ]
+    },
+    "tbadmin": {
+      "columns": 16,
+      "indexes": 3,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codAdmin"
+      ]
+    },
+    "tbatendimento": {
+      "columns": 8,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codAtendimento"
+      ]
+    },
+    "tbbloqueioagenda": {
+      "columns": 7,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codBloqueio"
+      ]
+    },
+    "tbchamadosuporte": {
+      "columns": 10,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codChamado"
+      ]
+    },
+    "tbconselho": {
+      "columns": 6,
+      "indexes": 3,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codConselho"
+      ]
+    },
+    "tbevento": {
+      "columns": 10,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codEvento"
+      ]
+    },
+    "tbdisponibilidadeprofissional": {
+      "columns": 7,
+      "indexes": 3,
+      "foreign_keys": 2,
+      "auto_increment_columns": [
+        "codDisponibilidade"
+      ]
+    },
+    "tbunidadeservico": {
+      "columns": 2,
+      "indexes": 2,
+      "foreign_keys": 2,
+      "auto_increment_columns": []
+    },
+    "tbavaliacaounidade": {
+      "columns": 7,
+      "indexes": 3,
+      "foreign_keys": 2,
+      "auto_increment_columns": [
+        "codAvaliacao"
+      ]
+    },
+    "tbciclomenstrual": {
+      "columns": 4,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codCiclo"
+      ]
+    },
+    "tbconsulta": {
+      "columns": 10,
+      "indexes": 4,
+      "foreign_keys": 3,
+      "auto_increment_columns": [
+        "codConsulta"
+      ]
+    },
+    "tbdenuncia": {
+      "columns": 9,
+      "indexes": 3,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codDenuncia"
+      ]
+    },
+    "tbdiario": {
+      "columns": 7,
+      "indexes": 3,
+      "foreign_keys": 2,
+      "auto_increment_columns": [
+        "codDiario"
+      ]
+    },
+    "tbexame": {
+      "columns": 8,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codExame"
+      ]
+    },
+    "tbfeedback": {
+      "columns": 10,
+      "indexes": 3,
+      "foreign_keys": 2,
+      "auto_increment_columns": [
+        "codFeedback"
+      ]
+    },
+    "tbforumpublicacao": {
+      "columns": 8,
+      "indexes": 3,
+      "foreign_keys": 2,
+      "auto_increment_columns": [
+        "codForumPublicacao"
+      ]
+    },
+    "tbhumordiario": {
+      "columns": 3,
+      "indexes": 1,
+      "foreign_keys": 1,
+      "auto_increment_columns": []
+    },
+    "tbinteresseusuario": {
+      "columns": 3,
+      "indexes": 2,
+      "foreign_keys": 2,
+      "auto_increment_columns": []
+    },
+    "tblembreteremedio": {
+      "columns": 6,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codLembreteRemedio"
+      ]
+    },
+    "tbvacina": {
+      "columns": 7,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codVacina"
+      ]
+    },
+    "tbconteudo": {
+      "columns": 30,
+      "indexes": 8,
+      "foreign_keys": 4,
+      "auto_increment_columns": [
+        "codConteudo"
+      ]
+    },
+    "tbconteudolog": {
+      "columns": 5,
+      "indexes": 3,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codLog"
+      ]
+    },
+    "tbchamadomensagem": {
+      "columns": 7,
+      "indexes": 3,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codMensagem"
+      ]
+    },
+    "tbinscricaoevento": {
+      "columns": 3,
+      "indexes": 2,
+      "foreign_keys": 2,
+      "auto_increment_columns": []
+    },
+    "tbsintomaciclo": {
+      "columns": 3,
+      "indexes": 1,
+      "foreign_keys": 1,
+      "auto_increment_columns": []
+    },
+    "tbavaliacaoconsulta": {
+      "columns": 4,
+      "indexes": 1,
+      "foreign_keys": 1,
+      "auto_increment_columns": []
+    },
+    "tbmensagem": {
+      "columns": 7,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codMensagem"
+      ]
+    },
+    "tbdenunciaacao": {
+      "columns": 6,
+      "indexes": 3,
+      "foreign_keys": 2,
+      "auto_increment_columns": [
+        "codDenunciaAcao"
+      ]
+    },
+    "tbforumreacao": {
+      "columns": 3,
+      "indexes": 2,
+      "foreign_keys": 2,
+      "auto_increment_columns": []
+    },
+    "tbforumresposta": {
+      "columns": 7,
+      "indexes": 4,
+      "foreign_keys": 3,
+      "auto_increment_columns": [
+        "codForumResposta"
+      ]
+    },
+    "tbconteudoadmin": {
+      "columns": 6,
+      "indexes": 3,
+      "foreign_keys": 2,
+      "auto_increment_columns": [
+        "codConteudoAdmin"
+      ]
+    },
+    "tbconteudosalvo": {
+      "columns": 3,
+      "indexes": 2,
+      "foreign_keys": 2,
+      "auto_increment_columns": []
+    },
+    "tbprogressotrilha": {
+      "columns": 4,
+      "indexes": 3,
+      "foreign_keys": 3,
+      "auto_increment_columns": []
+    },
+    "tbpublicacao": {
+      "columns": 7,
+      "indexes": 2,
+      "foreign_keys": 1,
+      "auto_increment_columns": [
+        "codPublicacao"
+      ]
+    },
+    "tbtrilhaconteudo": {
+      "columns": 3,
+      "indexes": 2,
+      "foreign_keys": 2,
+      "auto_increment_columns": []
+    }
+  }
+}

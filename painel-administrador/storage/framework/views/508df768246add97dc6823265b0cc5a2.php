@@ -1,5 +1,3 @@
-
-
 <?php $__env->startPush('css'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('css/relatorios.css')); ?>">
 <?php $__env->stopPush(); ?>

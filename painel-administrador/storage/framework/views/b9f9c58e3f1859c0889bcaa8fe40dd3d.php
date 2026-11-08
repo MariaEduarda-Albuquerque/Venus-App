@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('titulo', 'Aprovação de Cadastros - Painel Administrativo - Vênus'); ?>
 
 <?php $__env->startPush('css'); ?>
@@ -64,21 +62,20 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
-            <select class="lst-abas lst-abas--fim" aria-label="Filtrar por categoria" onchange="window.location.href = this.value;">
-                <option value="<?php echo e(route('cadastros.aprovar', $q(['conselho' => '']))); ?>" 
-                        <?php echo e($conselho === '' ? 'selected' : ''); ?>>Todos</option>
-                        
+            <div class="lst-abas lst-abas--fim" aria-label="Filtrar por categoria">
+                <a href="<?php echo e(route('cadastros.aprovar', $q(['conselho' => '']))); ?>"
+                   class="lst-aba <?php echo e($conselho === '' ? 'is-active' : ''); ?>">Todos</a>
                 <?php $__currentLoopData = $conselhos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <option value="<?php echo e(route('cadastros.aprovar', $q(['conselho' => $c]))); ?>" 
-                            <?php echo e($conselho === $c ? 'selected' : ''); ?>><?php echo e($c); ?></option>
+                    <a href="<?php echo e(route('cadastros.aprovar', $q(['conselho' => $c]))); ?>"
+                       class="lst-aba <?php echo e($conselho === $c ? 'is-active' : ''); ?>"><?php echo e($c); ?></a>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </select>
+            </div>
 
             <form method="GET" action="<?php echo e(route('cadastros.aprovar')); ?>" class="lst-busca">
                 <input type="hidden" name="aba" value="<?php echo e($aba); ?>">
                 <?php if($conselho !== ''): ?> <input type="hidden" name="conselho" value="<?php echo e($conselho); ?>"> <?php endif; ?>
                 <button type="submit" class="lst-icone-btn" aria-label="Pesquisar"><i data-lucide="search"></i></button>
-                <input class="pesquisar-aprovar-cadastros" type="search" name="busca" value="<?php echo e($busca); ?>" placeholder="Nome ou nº de conselho…">
+                <input type="search" name="busca" value="<?php echo e($busca); ?>" placeholder="Nome ou nº de conselho…">
             </form>
         </div>
 

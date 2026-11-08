@@ -413,12 +413,14 @@
     margin-top: auto;
 }
 
-/* Esconde todas as barras de rolagem */
-* {
+/* Esconde as barras de rolagem de TODOS os elementos (cards, listas, modais...)
+   EXCETO a barra principal da página (html e body), que continua sendo a
+   barra natural do Chrome. */
+*:not(html):not(body) {
     scrollbar-width: none;      /* Firefox */
     -ms-overflow-style: none;   /* IE/Edge antigo */
 }
 
-*::-webkit-scrollbar {
+*:not(html):not(body)::-webkit-scrollbar {
     display: none;              /* Chrome, Safari, Edge */
 }
