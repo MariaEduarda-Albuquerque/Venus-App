@@ -41,14 +41,20 @@ Route::middleware('auth:admin')->group(function () {
 
 
     // Perfil / Configuração
-    Route::get('/perfil', [AdmController::class, 'perfil'])
-        ->name('perfil.show');
+      Route::get('/perfil', [AdmController::class, 'perfil'])
+          ->name('perfil.show');
 
-    Route::get('/editar/perfil', [AdmController::class, 'editarPerfil'])
-        ->name('perfil.editar');
+      Route::get('/editar/perfil', [AdmController::class, 'editarPerfil'])
+          ->name('perfil.editar');
 
-    Route::put('/perfil', [AdmController::class, 'atualizarPerfil'])
+     Route::put('/perfil', [AdmController::class, 'atualizarPerfil'])
         ->name('perfil.atualizar');
+    Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
+    Route::get('/editar/perfil', [PerfilController::class, 'editar'])->name('perfil.editar');
+    Route::put('/editar/perfil', [PerfilController::class, 'atualizar'])->name('perfil.atualizar');
+    Route::get('/alterar-senha', [PerfilController::class, 'senha'])->name('perfil.senha');    Route::get('/alterar-senha', [PerfilController::class, 'senha'])->name('perfil.senha');
+    Route::put('/alterar-senha', [PerfilController::class, 'atualizarSenha'])->name('perfil.senha.atualizar');    Route::put('/alterar-senha', [PerfilController::class, 'atualizarSenha'])->name('perfil.senha.atualizar');
+    Route::view('/configuracoes', 'perfil-config.configuracoes')->name('configuracoes');
 
 
     // Usuários e denúncias

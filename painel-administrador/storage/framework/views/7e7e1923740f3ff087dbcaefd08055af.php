@@ -394,6 +394,39 @@
 
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.querySelector('[data-pdf]');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+        if (!window.jspdf) {
+            alert('Biblioteca de PDF não carregou.');
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Só as linhas visíveis (respeita filtro e busca)
+        const linhas = [...document.querySelectorAll('#dn-corpo tr[data-id]')]
+            .filter(tr => !tr.hidden && tr.style.display !== 'none')
+            .map(tr => [...tr.querySelectorAll('td')].map(td => td.innerText.trim()));
+
+        doc.setFontSize(14);
+        doc.text('Lista de denúncias - Vênus', 14, 16);
+
+        doc.autoTable({
+            head: [['ID', 'Solicitante', 'Assunto', 'Data', 'Status']],
+            body: linhas,
+            startY: 22,
+            styles: { fontSize: 9 },
+        });
+
+        doc.save('denuncias.pdf');
+    });
+});
+</script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
 <?php $__env->stopPush(); ?>

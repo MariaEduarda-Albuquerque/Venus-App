@@ -153,7 +153,7 @@ class AdmController extends Controller
         ]);
 
         return redirect()
-            ->route('perfil.show')
+            ->route('perfil')
             ->with('sucesso', 'Perfil atualizado com sucesso!');
     }
 
