@@ -59,7 +59,7 @@
 }
 
 .lst-page :focus-visible {
-    outline: 2px solid var(--wine);
+    /* outline: 2px solid var(--wine); */
     outline-offset: 2px;
 }
 
@@ -624,8 +624,8 @@ a.lst-pag-item:hover {
 }
 
 .lst-escrever:focus-within {
-    /* border-color: var(--wine); */
-    box-shadow: 0 0 0 3px var(--rose);
+     border-color: var(--wine); 
+    box-shadow: 0 0 0 3px var(--rose); 
     background: #fff;
 }
 

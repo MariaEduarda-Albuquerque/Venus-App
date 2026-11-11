@@ -384,9 +384,6 @@
                             Anexar
                         </button>
 
-                        <span class="sm">
-                            Ctrl + Enter envia
-                        </span>
 
                         <button
                             type="submit"

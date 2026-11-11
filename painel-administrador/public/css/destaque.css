@@ -407,7 +407,7 @@
 .dst-campo input:focus,
 .dst-campo textarea:focus,
 .dst-campo select:focus {
-    border-color: var(--wine);
+    /* border-color: var(--wine); */
     box-shadow: 0 0 0 3px var(--rose);
     background: #fff;
 }
@@ -1324,4 +1324,18 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+/* =========================================================
+   CORREÇÃO - Borda duplicada no campo de Tags
+   O input de dentro não desenha foco nenhum; quem desenha
+   é o contêiner (.dst-tags:focus-within).
+   ========================================================= */
+.dst-campo .dst-tags input,
+.dst-campo .dst-tags input:focus,
+.dst-campo .dst-tags input:focus-visible {
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    background: none;
 }

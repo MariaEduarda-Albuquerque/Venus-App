@@ -49,6 +49,16 @@
     background: none;
     border: 0;
     cursor: pointer;
+    
+}
+
+.cfg-topo > button{
+    font: inherit;
+    color: inherit;
+    border: 0;
+    cursor: pointer;
+    color: white;
+    background-color: var(--wine);
 }
 
 .cfg-page :focus-visible {

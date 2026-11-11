@@ -441,3 +441,4 @@ input[type="checkbox"] {
 *:not(html):not(body)::-webkit-scrollbar {
     display: none;              /* Chrome, Safari, Edge */
 }
+

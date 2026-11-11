@@ -62,14 +62,15 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
-            <div class="lst-abas lst-abas--fim" aria-label="Filtrar por categoria">
-                <a href="<?php echo e(route('cadastros.aprovar', $q(['conselho' => '']))); ?>"
-                   class="lst-aba <?php echo e($conselho === '' ? 'is-active' : ''); ?>">Todos</a>
+            <select class="lst-abas lst-abas--fim" aria-label="Filtrar por categoria" onchange="window.location.href = this.value;">
+                <option value="<?php echo e(route('cadastros.aprovar', $q(['conselho' => '']))); ?>" 
+                        <?php echo e($conselho === '' ? 'selected' : ''); ?>>Todos</option>
+                        
                 <?php $__currentLoopData = $conselhos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <a href="<?php echo e(route('cadastros.aprovar', $q(['conselho' => $c]))); ?>"
-                       class="lst-aba <?php echo e($conselho === $c ? 'is-active' : ''); ?>"><?php echo e($c); ?></a>
+                    <option value="<?php echo e(route('cadastros.aprovar', $q(['conselho' => $c]))); ?>" 
+                            <?php echo e($conselho === $c ? 'selected' : ''); ?>><?php echo e($c); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
+            </select>
 
             <form method="GET" action="<?php echo e(route('cadastros.aprovar')); ?>" class="lst-busca">
                 <input type="hidden" name="aba" value="<?php echo e($aba); ?>">

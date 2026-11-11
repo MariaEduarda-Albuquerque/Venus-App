@@ -1,5 +1,3 @@
-
-
 <?php
     $publicos = [
         'adolescentes_e_jovens' => 'Adolescentes e jovens',
@@ -131,7 +129,7 @@
                 <div class="dst-campo">
                     <label for="tag-entrada">Tags <span class="dst-mute">(opcional)</span></label>
                     <div class="dst-tags" id="tags">
-                        <input id="tag-entrada" placeholder="Digite e pressione Enter">
+                        <input class="tirar-borda" id="tag-entrada" placeholder="Digite e pressione Enter">
                     </div>
                     <input type="hidden" name="tags" id="tags-valor">
                     <div class="dst-dica" id="tag-dica">Até 8 tags. Use Enter ou vírgula para adicionar.</div>
@@ -207,7 +205,7 @@
                     </button>
 
                     
-                    <div class="dst-arquivo-grande dst-arquivo--grande" id="principal-arquivo" hidden>
+                    <div class="dst-arquivo dst-arquivo--grande" id="principal-arquivo" hidden>
                         <div class="dst-miniatura" id="principal-miniatura"><i data-lucide="image"></i></div>
                         <div class="dst-arquivo-info">
                             <b id="principal-nome"></b>
@@ -224,7 +222,7 @@
                 </div>
 
                 <label class="dst-rotulo">Materiais complementares <span class="dst-mute">(opcional)</span></label>
-                <div class="dst-arquivos" id="complementares"><div class="sub-dst-complementares"></div></div>
+                <div class="dst-arquivos" id="complementares"></div>
 
                 <button type="button" class="dst-adicionar" data-escolher="complementares">
                     <i data-lucide="plus"></i>Adicionar mais materiais

@@ -72,7 +72,7 @@
                         <b class="cfg-valor">ClodoAlmeida@gmail.com</b>
                     </div>
                     {{-- TODO (back-end): trocar # pela rota de editar perfil --}}
-                    <a href="#" class="cfg-btn cfg-btn--neutro cfg-btn--pequeno">
+                    <a href="/editar/perfil" class="cfg-btn cfg-btn--neutro cfg-btn--pequeno">
                         <i data-lucide="pencil"></i>Editar
                     </a>
                 </div>
@@ -83,10 +83,10 @@
                         <div class="cfg-mute">Recomendamos trocar a cada 90 dias.</div>
                     </div>
                     {{-- TODO: ligar ao envio do link de redefinição de senha --}}
-                    <button type="button" class="cfg-btn cfg-btn--neutro cfg-btn--pequeno"
-                            data-toast="Enviamos um link para redefinir sua senha.">
+                    <a href="{{ route('perfil.senha') }}" type="button" class="cfg-btn cfg-btn--neutro cfg-btn--pequeno"
+                          >
                         <i data-lucide="key-round"></i>Alterar senha
-                    </button>
+                    </a>
                 </div>
 
                 <h3 class="cfg-subtitulo">Sessões ativas</h3>

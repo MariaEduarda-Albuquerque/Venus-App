@@ -131,7 +131,7 @@
                 <div class="dst-campo">
                     <label for="tag-entrada">Tags <span class="dst-mute">(opcional)</span></label>
                     <div class="dst-tags" id="tags">
-                        <input id="tag-entrada" placeholder="Digite e pressione Enter">
+                        <input class="tirar-borda" id="tag-entrada" placeholder="Digite e pressione Enter">
                     </div>
                     <input type="hidden" name="tags" id="tags-valor">
                     <div class="dst-dica" id="tag-dica">Até 8 tags. Use Enter ou vírgula para adicionar.</div>

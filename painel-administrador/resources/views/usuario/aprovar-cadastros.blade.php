@@ -63,14 +63,15 @@
                 @endforeach
             </div>
 
-            <div class="lst-abas lst-abas--fim" aria-label="Filtrar por categoria">
-                <a href="{{ route('cadastros.aprovar', $q(['conselho' => ''])) }}"
-                   class="lst-aba {{ $conselho === '' ? 'is-active' : '' }}">Todos</a>
+            <select class="lst-abas lst-abas--fim" aria-label="Filtrar por categoria" onchange="window.location.href = this.value;">
+                <option value="{{ route('cadastros.aprovar', $q(['conselho' => ''])) }}" 
+                        {{ $conselho === '' ? 'selected' : '' }}>Todos</option>
+                        
                 @foreach ($conselhos as $c)
-                    <a href="{{ route('cadastros.aprovar', $q(['conselho' => $c])) }}"
-                       class="lst-aba {{ $conselho === $c ? 'is-active' : '' }}">{{ $c }}</a>
+                    <option value="{{ route('cadastros.aprovar', $q(['conselho' => $c])) }}" 
+                            {{ $conselho === $c ? 'selected' : '' }}>{{ $c }}</option>
                 @endforeach
-            </div>
+            </select>
 
             <form method="GET" action="{{ route('cadastros.aprovar') }}" class="lst-busca">
                 <input type="hidden" name="aba" value="{{ $aba }}">
