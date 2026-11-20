@@ -275,7 +275,7 @@
 
     </div>
 
-    {{-- ===================== MODAL EXCLUIR CONTA (somente visual) ===================== --}}
+    {{-- ===================== MODAL EXCLUIR CONTA ===================== --}}
     <div id="modalExcluir" class="cf-modal">
         <div class="cf-modal-box">
             <button type="button" class="cf-modal-close" onclick="fecharModalExcluir()" aria-label="Fechar">&times;</button>
@@ -284,10 +284,24 @@
             <h2>Excluir conta?</h2>
             <p>Essa ação é permanente. Todos os dados associados à sua conta serão processados conforme a política de privacidade.</p>
 
-            <div class="cf-modal-actions">
-                <button type="button" class="cf-btn-cancel" onclick="fecharModalExcluir()">Cancelar</button>
-                <button type="button" class="cf-btn-danger" onclick="fecharModalExcluir()">Continuar</button>
-            </div>
+            <form action="{{ route('conta.excluir') }}" method="POST" id="formExcluirConta">
+                @csrf
+                @method('DELETE')
+
+                <div id="excluirEtapa2" style="display: none;">
+                    <label class="cf-label" for="senhaConfirmacao">Confirme sua senha</label>
+                    <input type="password" id="senhaConfirmacao" name="senhaConfirmacao" class="cf-select" autocomplete="current-password" style="margin-bottom: 6px;">
+                    @error('senhaConfirmacao')
+                        <p style="color: #d92d20; margin-bottom: 12px;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="cf-modal-actions">
+                    <button type="button" class="cf-btn-cancel" onclick="fecharModalExcluir()">Cancelar</button>
+                    <button type="button" class="cf-btn-danger" id="btnExcluirContinuar" onclick="avancarExclusao()">Continuar</button>
+                    <button type="submit" class="cf-btn-danger" id="btnExcluirConfirmar" style="display: none;">Excluir definitivamente</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -297,6 +311,20 @@
         function abrirModalExcluir() {
             modalExcluir.classList.add('open');
         }
+
+        function avancarExclusao() {
+            document.getElementById('excluirEtapa2').style.display = 'block';
+            document.getElementById('btnExcluirContinuar').style.display = 'none';
+            document.getElementById('btnExcluirConfirmar').style.display = '';
+            document.getElementById('senhaConfirmacao').focus();
+        }
+
+        @if ($errors->has('senhaConfirmacao'))
+            document.addEventListener('DOMContentLoaded', function () {
+                abrirModalExcluir();
+                avancarExclusao();
+            });
+        @endif
 
         function fecharModalExcluir() {
             modalExcluir.classList.remove('open');

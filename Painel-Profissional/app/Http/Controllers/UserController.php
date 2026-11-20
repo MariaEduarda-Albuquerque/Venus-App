@@ -6,7 +6,9 @@ use App\Http\Requests\CadastroProfissionalRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -466,6 +468,46 @@ class UserController extends Controller
         session()->forget('id');
 
         return redirect('/')->with('sucesso', 'Sua conta foi desativada.');
+    }
+
+    public function excluirConta(Request $request)
+    {
+        $request->validate([
+            'senhaConfirmacao' => 'required|string',
+        ], [
+            'senhaConfirmacao.required' => 'Informe sua senha para confirmar a exclusão.',
+        ]);
+
+        $profissional = User::find(session('id'));
+
+        if (!$profissional) {
+            return redirect('/')->with('erro', 'Profissional não encontrado.');
+        }
+
+        if (!Hash::check($request->senhaConfirmacao, $profissional->senhaProfissionalSaude)) {
+            return back()->withErrors(['senhaConfirmacao' => 'Senha incorreta.']);
+        }
+
+        $arquivos = array_filter([
+            $profissional->fotoPerfilProfissional,
+            $profissional->comprovanteConselhoClasseProfissional,
+            $profissional->documentoComplementarProfissional,
+        ], fn ($a) => is_string($a) && $a !== '');
+
+        // Consultas, mensagens, notas, disponibilidade e bloqueios são removidos
+        // em cascata pelas chaves estrangeiras; conteúdos ficam sem autor (nullOnDelete).
+        DB::transaction(function () use ($profissional) {
+            $profissional->delete();
+        });
+
+        foreach ($arquivos as $arquivo) {
+            Storage::disk('public')->delete($arquivo);
+        }
+
+        $request->session()->flush();
+        $request->session()->regenerate();
+
+        return redirect('/')->with('sucesso', 'Sua conta foi excluída permanentemente.');
     }
 
     public function dashboard()

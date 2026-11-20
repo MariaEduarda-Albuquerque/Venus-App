@@ -313,6 +313,8 @@ body {
     justify-content: center;
     gap: 10px;
     transition: background 0.15s ease;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 .btn-google:hover {
@@ -5006,3 +5008,16 @@ html.tema-escuro .ag-slot,
 html.tema-escuro .ag-detalhes > div,
 html.tema-escuro .pb-detalhe-acoes,
 html.tema-escuro .pb-form-card .ag-modal-actions { border-color: var(--ln); }
+
+/* ---------- Modal "Fale com a equipe" (Suporte) ---------- */
+.modal-suporte { border-top-color: var(--maroon); }
+.modal-suporte h2 { font-size: 16px; color: var(--maroon-dark); }
+.modal-suporte textarea { min-height: 120px; resize: vertical; line-height: 1.5; }
+.suporte-erro { color: #d92d20; font-size: 12px; margin: 6px 0 0; }
+
+/* o card "Chat online" agora é <button>: zera o visual padrão */
+button.sp-channel { width: 100%; text-align: left; font-family: var(--font); cursor: pointer; }
+
+html.tema-escuro .modal-suporte { border-top-color: var(--wn); }
+html.tema-escuro .modal-suporte h2 { color: var(--ink); }
+html.tema-escuro .suporte-erro { color: #f4877e; }

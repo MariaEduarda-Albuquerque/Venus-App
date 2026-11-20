@@ -174,7 +174,7 @@
 
                         <label class="checkbox terms-checkbox">
                             <input type="checkbox" name="aceiteTermos" id="aceiteTermos" value="1" {{ old('aceiteTermos') ? 'checked' : '' }} required>
-                            <span>Li e aceito os Termos de Uso e a Política de Privacidade.</span>
+                            <span>Li e aceito os <a href="{{ route('termos.uso') }}" target="_blank" rel="noopener">Termos de Uso</a> e a Política de Privacidade.</span>
                         </label>
 
                         <div class="wizard-actions">

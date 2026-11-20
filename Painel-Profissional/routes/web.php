@@ -10,6 +10,9 @@ use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PublicacaoController;
+use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\SuporteContatoController;
+
 
 
 //Públicas
@@ -18,6 +21,13 @@ Route::post('user.cadastro', [UserController::class, 'store'])->name('cadastro.s
 Route::get('user.cadastro/verificar', [UserController::class, 'verificarDuplicidade'])->name('cadastro.verificar');
 Route::post('/login', [UserController::class, 'login'])->name('auth.login');
 Route::post('/logout', [UserController::class, 'logout'])->name('auth.logout');
+
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
+
+Route::get('/termos-de-uso', function () {
+    return view('termos-de-uso');
+})->name('termos.uso');
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -81,6 +91,9 @@ Route::put('user.update-profissional', [UserController::class, 'atualizar'])->na
 Route::get('user.mudar-senha', [UserController::class, 'mudarSenha']);
 Route::put('user.mudar-senha', [UserController::class, 'atualizarSenha'])->name('senha.atualizar');
 
+Route::delete('/excluir-conta', [UserController::class, 'excluirConta'])->name('conta.excluir');
 Route::put('/desativar-conta', [UserController::class, 'desativarConta'])->name('conta.desativar');
+
+Route::post('/suporte/contato', [SuporteContatoController::class, 'store'])->name('suporte.enviar');
 
 });

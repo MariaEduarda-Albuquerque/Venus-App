@@ -199,10 +199,10 @@
                         <h3>Fale com a equipe</h3>
                         <p>Tem alguma dúvida ou situação que não conseguiu resolver? Nossa equipe está pronta para te ajudar.</p>
 
-                        <a href="mailto:SuporteVenus&#64;gmail.com?subject=Atendimento%20-%20Portal%20do%20Profissional" class="btn-primary-sm">
+                        <button type="button" class="btn-primary-sm" onclick="abrirModalSuporte()">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.6A8 8 0 1 1 21 12Z" /></svg>
                             Iniciar atendimento
-                        </a>
+                        </button>
 
                         <span class="sp-online">Atendimento online</span>
                         <span class="sp-hours">Seg a Sex · 8h às 18h</span>
@@ -367,16 +367,16 @@
                         </div>
 
                         <div class="sp-channels">
-                            <a href="mailto:SuporteVenus&#64;gmail.com?subject=Atendimento%20-%20Portal%20do%20Profissional" class="sp-channel">
+                            <button type="button" class="sp-channel" onclick="abrirModalSuporte()">
                                 <span class="sp-channel-icon">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.6A8 8 0 1 1 21 12Z" /></svg>
                                 </span>
                                 <div>
                                     <strong>Chat online</strong>
-                                    <span>Atendimento em tempo real</span>
+                                <span>Atendimento em tempo real</span>
                                 </div>
                                 <svg class="sp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" /></svg>
-                            </a>
+                            </button>
 
                             <a href="mailto:SuporteVenus&#64;gmail.com" class="sp-channel">
                                 <span class="sp-channel-icon">
@@ -410,10 +410,70 @@
 
         </div>
 
+        </div>{{-- fim .app-shell --}}
+
+    @if (session('sucesso'))
+        <div class="toast-sucesso" id="toastSucesso">
+            <span class="toast-icone">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+            </span>
+            <span>{{ session('sucesso') }}</span>
+            <button type="button" class="toast-fechar" onclick="this.parentElement.remove()">&times;</button>
+        </div>
+    @endif
+
+    <div id="modalSuporte" class="cf-modal">
+        <div class="cf-modal-box modal-suporte">
+            <button type="button" class="cf-modal-close" onclick="fecharModalSuporte()" aria-label="Fechar">&times;</button>
+
+            <h2>Fale com a equipe</h2>
+            <p>Descreva o problema que você está tendo e já vamos resolver.</p>
+
+            <form action="{{ route('suporte.enviar') }}" method="POST">
+                @csrf
+                <textarea name="descricaoSuporte" class="cf-select" rows="5" maxlength="2000"
+                    placeholder="Conte o que aconteceu...">{{ old('descricaoSuporte') }}</textarea>
+                @error('descricaoSuporte')
+                    <p class="suporte-erro">{{ $message }}</p>
+                @enderror
+
+                <div class="cf-modal-actions" style="margin-top: 14px;">
+                    <button type="button" class="btn-outline-sm" onclick="fecharModalSuporte()">Cancelar</button>
+                    <button type="submit" class="btn-primary-sm">Enviar</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>
-        // Central de ajuda: busca + botões de categoria filtram as perguntas frequentes
+        // ---------- Modal "Fale com a equipe" ----------
+        function abrirModalSuporte() {
+            var m = document.getElementById('modalSuporte');
+            if (m) m.classList.add('open');
+        }
+        function fecharModalSuporte() {
+            var m = document.getElementById('modalSuporte');
+            if (m) m.classList.remove('open');
+        }
+
+        document.getElementById('modalSuporte').addEventListener('click', function (e) {
+            if (e.target === this) fecharModalSuporte();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') fecharModalSuporte();
+        });
+
+        @if ($errors->has('descricaoSuporte'))
+            document.addEventListener('DOMContentLoaded', abrirModalSuporte);
+        @endif
+
+        // ---------- Toast ----------
+        setTimeout(function () {
+            var t = document.getElementById('toastSucesso');
+            if (t) { t.classList.add('saindo'); setTimeout(function () { t.remove(); }, 300); }
+        }, 4000);
+
+        // ---------- Central de ajuda: busca + categorias filtram as perguntas ----------
         (function () {
             var busca = document.getElementById('spBusca');
             var perguntas = document.querySelectorAll('#spFaq details');
@@ -448,10 +508,9 @@
             }
 
             function escolher(cat) {
-                categoria = (cat === categoria) ? '' : cat;   // clicar de novo desmarca
+                categoria = (cat === categoria) ? '' : cat;
                 aplicar();
                 if (categoria) {
-                    // abre a primeira pergunta da categoria e leva a pessoa até a lista
                     perguntas.forEach(function (d) { d.open = false; });
                     var primeira = document.querySelector('#spFaq details[data-cat="' + categoria + '"]');
                     if (primeira) primeira.open = true;

@@ -211,3 +211,29 @@ Feito por **Leonni Cruz e Lívia de Oliveira**.
 Vênus · A Saúde da Mulher 💗
 
 </div>
+
+## Como abrir o projeto em outro computador
+
+Requisitos: XAMPP com PHP 8.2+ (extensões `zip` e `curl` ativadas no `php.ini`), MySQL ligado, Composer e Node.
+
+1. `composer install`
+2. Copie `.env.example` para `.env` e preencha as chaves do Google (e e-mail, se for usar)
+3. Crie o banco `dbvenus` no phpMyAdmin
+4. `php artisan key:generate`
+5. Banco de dados: importe o arquivo `dbvenus` **ou** rode `php artisan migrate` num banco vazio (não faça os dois)
+6. `php artisan storage:link`
+7. `php artisan config:clear`
+8. `php artisan serve` e abra **sempre** `http://localhost:8000`
+
+Se o `composer install` não trouxer o Socialite, rode `composer require laravel/socialite`.
+
+## Login com Google
+
+1. No [Google Cloud Console](https://console.cloud.google.com/auth/clients) crie um **ID do cliente OAuth** (Aplicativo da Web) e cadastre em *URIs de redirecionamento autorizados*:
+   - `http://localhost:8000/auth/google/callback`
+2. Preencha `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` e `GOOGLE_REDIRECT_URI` no `.env`
+3. Enquanto o app estiver em "Testando", cadastre os e-mails em *Público-alvo > Usuários de teste*
+
+Regras: só entra quem já tem cadastro com o mesmo e-mail da conta Google, com `statusVerificacao` = Aprovado e `statusConta` = Ativa. No primeiro acesso o `googleIdProfissional` é vinculado à conta.
+
+Observação: o controller usa `stateless()` (ambiente local). Em produção, remova o `->stateless()` das duas funções de `GoogleAuthController`.
